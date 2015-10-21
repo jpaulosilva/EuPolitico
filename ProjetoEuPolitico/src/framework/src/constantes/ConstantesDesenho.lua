@@ -1,0 +1,14 @@
+constantesDesenho = 
+{
+	LIM_SUP_DESENHO = 30,
+	LIM_INF_DESENHO = 30,
+	LIM_ESQ_DESENHO = 15,
+	LIM_DIR_DESENHO = 30,
+	
+	TAMANHO_FONTE = 16,
+	FONTE = 'tiresias',
+	TAMANHO_FONTE_TITULO = 20,
+	FONTE_TITULO = 'tiresias',
+	ESPACO_NIVEL = 20,
+	ESPACO_LINHA = 21
+}
