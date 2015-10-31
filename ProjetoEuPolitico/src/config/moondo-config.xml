@@ -1,0 +1,39 @@
+<moondoConfig>
+  <projectName>Exemplo_MoonDo</projectName>
+  <location>C:/workspace_ncl</location>
+  <moondoBean>
+  
+    <scene id="CenaPrincipal" name="CenaPrincipal">
+      <frame id="FrameInteracao" name="FrameInteracao" isDefault="true"/>
+      <frame id="FramePrincipal" name="FramePrincipal" />
+    </scene>
+    
+  </moondoBean>
+  
+  <navigations>
+  
+  	<!--Tela Default-->
+    <navigationRule default="true">
+      <navigationCase default="true">
+        <to scene="CenaPrincipal" frame="FrameInteracao"/>
+      </navigationCase>
+    </navigationRule>
+    
+    <navigationRule>
+		<from scene="CenaPrincipal" frame="FrameInteracao" />
+		<navigationCase>
+			<key class="controlKey" key="GREEN" />
+			<to scene="CenaPrincipal" frame="FramePrincipal" />
+		</navigationCase>
+	</navigationRule>
+	
+	<navigationRule>
+		<from scene="CenaPrincipal" frame="FramePrincipal" />
+		<navigationCase>
+			<key class="controlKey" key="RED" />
+			<to scene="CenaPrincipal" frame="FrameInteracao" />
+		</navigationCase>
+	</navigationRule>
+    
+  </navigations>
+</moondoConfig>
