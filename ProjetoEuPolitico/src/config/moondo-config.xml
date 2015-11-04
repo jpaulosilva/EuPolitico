@@ -8,6 +8,20 @@
       <frame id="FramePrincipal" name="FramePrincipal" />
     </scene>
     
+     <scene id="CenaAtualizacoes" name="CenaAtualizacoes">
+      <frame id="FrameAtualizacoes" name="FrameAtualizacoes" isDefault="true"/>
+    </scene>
+    
+    <scene id="CenaBusca" name="CenaBusca">
+      <frame id="FramePesquisaResultados" name="FramePesquisaResultados" isDefault="true"/>
+      <frame id="FrameCandidatos" name="FrameCandidatos" />
+      <frame id="FramePoliticos" name="FramePoliticos" />
+    </scene>
+    
+    <scene id="CenaEstatisticas" name="CenaEstatisticas">
+      <frame id="FrameEstatisticas" name="FrameEstatisticas" isDefault="true"/>
+    </scene>
+    
   </moondoBean>
   
   <navigations>
@@ -32,6 +46,95 @@
 		<navigationCase>
 			<key class="controlKey" key="RED" />
 			<to scene="CenaPrincipal" frame="FrameInteracao" />
+		</navigationCase>
+	</navigationRule>
+	
+	<!--Navegacao Menu-->
+	<navigationRule>
+		<from scene="CenaPrincipal" frame="FramePrincipal" />
+		<navigationCase>
+			<key class="ruleKey" key="acessarFrameAtualizacoes" />
+			<to scene="CenaAtualizacoes" frame="FrameAtualizacoes" />
+		</navigationCase>
+	</navigationRule>
+	
+	<navigationRule>
+		<from scene="CenaAtualizacoes" frame="FrameAtualizacoes" />
+		<navigationCase>
+			<key class="controlKey" key="RED" />
+			<to scene="CenaPrincipal" frame="FramePrincipal" />
+		</navigationCase>
+	</navigationRule>
+	
+	<!--Cena Busca-->
+	<navigationRule>
+		<from scene="CenaPrincipal" frame="FramePrincipal" />
+		<navigationCase>
+			<key class="ruleKey" key="acessarFramePesquisasResultados" />
+			<to scene="CenaBusca" frame="FramePesquisaResultados" />
+		</navigationCase>
+	</navigationRule>
+	
+	<navigationRule>
+		<from scene="CenaBusca" frame="FramePesquisasResultados" />
+		<navigationCase>
+			<key class="controlKey" key="RED" />
+			<to scene="CenaPrincipal" frame="FramePrincipal" />
+		</navigationCase>
+	</navigationRule>
+	
+	
+	<navigationRule>
+		<from scene="CenaPrincipal" frame="FramePrincipal" />
+		<navigationCase>
+			<key class="ruleKey" key="acessarFrameCandidatos" />
+			<to scene="CenaBusca" frame="FrameCandidatos" />
+		</navigationCase>
+	</navigationRule>
+	
+	<navigationRule>
+		<from scene="CenaBusca" frame="FrameCandidatos" />
+		<navigationCase>
+			<key class="controlKey" key="RED" />
+			<to scene="CenaPrincipal" frame="FramePrincipal" />
+		</navigationCase>
+	</navigationRule>
+	
+	
+	
+	<navigationRule>
+		<from scene="CenaPrincipal" frame="FramePrincipal" />
+		<navigationCase>
+			<key class="ruleKey" key="acessarFramePoliticos" />
+			<to scene="CenaBusca" frame="FramePoliticos" />
+		</navigationCase>
+	</navigationRule>
+	
+	<navigationRule>
+		<from scene="CenaBusca" frame="FramePoliticos" />
+		<navigationCase>
+			<key class="controlKey" key="RED" />
+			<to scene="CenaPrincipal" frame="FramePrincipal" />
+		</navigationCase>
+	</navigationRule>
+	
+	
+	
+	
+	<!--Cena Estatisticas-->
+	<navigationRule>
+		<from scene="CenaPrincipal" frame="FramePrincipal" />
+		<navigationCase>
+			<key class="ruleKey" key="acessarFrameEstatisticas" />
+			<to scene="CenaEstatisticas" frame="FrameEstatisticas" />
+		</navigationCase>
+	</navigationRule>
+	
+	<navigationRule>
+		<from scene="CenaEstatisticas" frame="FrameEstatisticas" />
+		<navigationCase>
+			<key class="controlKey" key="RED" />
+			<to scene="CenaPrincipal" frame="FramePrincipal" />
 		</navigationCase>
 	</navigationRule>
     

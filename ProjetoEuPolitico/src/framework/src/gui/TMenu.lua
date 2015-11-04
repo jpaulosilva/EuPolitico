@@ -327,6 +327,11 @@ function TMenu:setIsVisibleSetas(isVisibleSetas)
 	self.changed = true;
 end
 
+function TMenu:setIsItensCentralizados(isItensCentralizados)
+  self.isItensCentralizados = isItensCentralizados;
+  self.changed = true;
+end
+
 function TMenu:setIsCiclico(isCiclico)
 	self.isCiclico = isCiclico;
 	self.changed = true;
