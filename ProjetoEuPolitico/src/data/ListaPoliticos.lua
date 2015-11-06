@@ -1,0 +1,13 @@
+ListaPoliticos = {}
+ListaPoliticos.politicos = {};
+
+function ListaPoliticos:new(o)
+  o = o or {}
+  setmetatable (o, self)
+  self.__index = self
+  return o
+end
+
+function ListaPoliticos:getPoliticos()
+	return self.politicos;
+end
