@@ -71,7 +71,7 @@
 		<from scene="CenaPrincipal" frame="FramePrincipal" />
 		<navigationCase>
 			<key class="ruleKey" key="acessarFramePesquisasResultados" />
-			<to scene="CenaBusca" frame="FramePesquisaResultados" />
+			<to scene="CenaBusca" frame="FramePesquisasResultados" />
 		</navigationCase>
 	</navigationRule>
 	
