@@ -57,7 +57,7 @@ end,
 --Retorno:
 ------------------------------------------------
 newImagem = function (nb_l,nb_a)
-	BibliotecaAuxiliarLog.registrarLog('BibliotecaAuxiliarDesenho: newImagem('..nb_l..', '..nb_a..')');
+	--BibliotecaAuxiliarLog.registrarLog('BibliotecaAuxiliarDesenho: newImagem('..nb_l..', '..nb_a..')');
 	local imagem = canvas:new(nb_l,nb_a);
 	return imagem;
 end,

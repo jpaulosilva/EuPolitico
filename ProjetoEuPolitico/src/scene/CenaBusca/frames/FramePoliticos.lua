@@ -2,6 +2,8 @@ BibliotecaAuxiliarScript.execute('framework.src.gui.TFrame');
 BibliotecaAuxiliarScript.execute('framework.src.util.gui.Cor');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TLabel');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TPanel');
+BibliotecaAuxiliarScript.execute('framework.src.gui.TField');
+BibliotecaAuxiliarScript.execute('framework.src.gui.TChoicer');
 
 FramePoliticos = TFrame.new();
 FramePoliticos.id = 'FramePoliticos';
@@ -23,29 +25,24 @@ function FramePoliticos:inicialize()
   font_logo.cor = Cor.new({r=255,g=94,b=94});
   
   
+  
+  CenaBusca.painelConsultarPolitico = CenaBusca:buildPainelConsultarPolitico(FramePoliticos);
+  CenaBusca.painelResultados = CenaBusca:buildPainelResultados(FramePoliticos);
+  
+  
+  
   local label = TLabel.new();
-  label:setTexto("Frame Políticos");
+  label:setTexto("Políticos em Mandato");
   label:setFonte(font_label);
   label:setPx(10);
   label:setPy(10);
   
-  --*************************Legendas**************************************
-  local labelBtTelaInicial = TLabel.new();
-  labelBtTelaInicial:setTexto("TELA INICIAL");
-  labelBtTelaInicial:setFonte(font_logo);
 
-  local imageBtTelaInicial= TImage.new();
-  imageBtTelaInicial:setSrcArquivoExterno("../media/legenda_vermelho_30.png");
-
-
-  local iconeBtTelaInicial = TIcon.new();
-  iconeBtTelaInicial:setTImage(imageBtTelaInicial);
-  iconeBtTelaInicial:setTLabel(labelBtTelaInicial);
-  iconeBtTelaInicial:setOrientacao(TIcon.TITULO_RIGHT);
-  iconeBtTelaInicial:setPx(1050);
-  iconeBtTelaInicial:setPy(660);
   
   FramePoliticos:addComponent(label,1);
-  FramePoliticos:addComponent(iconeBtTelaInicial,2);
+  FramePoliticos:addComponent(CenaBusca.painelConsultarPolitico,2);
+  FramePoliticos:addComponent(CenaBusca.painelResultados,3);
+  FramePoliticos:addComponent(buildPainelTV1_2(),4);
+  FramePoliticos:addComponent(buildPainelLegendas("NAVEGAÇÃO","DETALHES",nil,"MENU","BUSCAR",nil,"BUSCA AVANÇADA"),5);
   
 end
