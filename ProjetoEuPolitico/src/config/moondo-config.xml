@@ -16,6 +16,7 @@
       <frame id="FramePesquisaResultados" name="FramePesquisaResultados" isDefault="true"/>
       <frame id="FrameCandidatos" name="FrameCandidatos" />
       <frame id="FramePoliticos" name="FramePoliticos" />
+      <frame id="FrameDetalhesPolitico" name="FrameDetalhesPolitico" />
     </scene>
     
     <scene id="CenaEstatisticas" name="CenaEstatisticas">
@@ -115,6 +116,15 @@
 		<navigationCase>
 			<key class="controlKey" key="RED" />
 			<to scene="CenaPrincipal" frame="FramePrincipal" />
+		</navigationCase>
+	</navigationRule>
+	
+	
+	<navigationRule>
+		<from scene="CenaBusca" frame="FramePoliticos" />
+		<navigationCase>
+			<key class="controlKey" key="YELLOW" />
+			<to scene="CenaBusca" frame="FrameDetalhesPolitico" />
 		</navigationCase>
 	</navigationRule>
 	

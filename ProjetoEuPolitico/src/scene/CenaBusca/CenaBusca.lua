@@ -2,6 +2,7 @@ BibliotecaAuxiliarScript.execute('framework.src.util.app.Scene')
 BibliotecaAuxiliarScript.execute('scene.CenaBusca.frames.FramePesquisasResultados');
 BibliotecaAuxiliarScript.execute('scene.CenaBusca.frames.FrameCandidatos');
 BibliotecaAuxiliarScript.execute('scene.CenaBusca.frames.FramePoliticos');
+BibliotecaAuxiliarScript.execute('scene.CenaBusca.frames.FrameDetalhesPolitico');
 BibliotecaAuxiliarScript.execute('utils.Utils');
 
 
@@ -24,11 +25,13 @@ function CenaBusca:inicialize()
   CenaBusca:addFrame(FramePesquisasResultados,FramePesquisasResultados.id);
   CenaBusca:addFrame(FrameCandidatos,FrameCandidatos.id);
   CenaBusca:addFrame(FramePoliticos,FramePoliticos.id);
+  CenaBusca:addFrame(FrameDetalhesPolitico,FrameDetalhesPolitico.id);
 
 
   FramePesquisasResultados:inicialize();
   FrameCandidatos:inicialize();
   FramePoliticos:inicialize();
+  FrameDetalhesPolitico:inicialize();
 
 end
 
@@ -382,4 +385,49 @@ function CenaBusca:buildPainelResultados(frame)
   painelResultados:addComponent(line,1);
 
   return painelResultados;
+end
+
+
+function CenaBusca:getItensMenuDetalhesPolitico()
+
+  local itensPrimitivos = {
+    {'../media/icone.png'    ,'Gastos por Tipo',''},
+    {'../media/icone.png' , 'Gastos por Empresa', ''},
+    {'../media/icone.png'   ,'Projetos',''},
+    {'../media/icone.png','Comissões',''},
+  };
+
+  local itens = {};
+
+  local font_data= Fonte.new({nome='tiresias', tamanho=32,is_negrito = true});
+  font_data.cor = Cor.new({r=255,g=94,b=94})
+
+
+  for i,v in pairs(itensPrimitivos) do
+    local src = v[1];
+    local nome = v[2];
+    local action = v[3];
+
+    local image = TImage.new();
+    image:setSrcArquivoExterno(src);
+
+    local label = TLabel.new();
+    label:setTexto(nome);
+    label:setFonte(font_data);
+
+    local icone = TIcon.new();
+    icone:setTImage(image);
+    icone:setTLabel(label);
+    icone:setOrientacao(TIcon.TITULO_RIGHT);
+
+    icone.action = function (self,evt)
+      evt.rule_key = action;
+    end
+
+    table.insert(itens,icone);
+
+  end
+
+  return itens;
+
 end
