@@ -1,34 +1,27 @@
 BibliotecaAuxiliarScript.execute('framework.src.util.gui.BibliotecaAuxiliarDesenho');
 
 Display = {};
-
-Display.buffer = BibliotecaAuxiliarDesenho.newImagem(canvas:attrSize());
 Display.tempoUltimaExibicao = 0;
 Display.currentFrame = nil;
 
 function Display.show()
 	local tempoAgora =  event.uptime();
-	local diferencaTempo = tempoAgora - Display.tempoUltimaExibicao;
+	local diferencaTempo = (tempoAgora - Display.tempoUltimaExibicao)/1000;
 	
 	if(Display.currentFrame ~= nil) then
-		if(diferencaTempo > 0.2 or Display.tempoUltimaExibicao == 0)then
+		if(diferencaTempo > 0.1 or Display.tempoUltimaExibicao == 0)then
 			--limpa tela
-			BibliotecaAuxiliarDesenho.limparTela(Display.buffer,Cor.new());
+			Display.buffer = BibliotecaAuxiliarDesenho.newImagem(canvas:attrSize());
 			BibliotecaAuxiliarDesenho.limparTela(canvas,Cor.new());
-			 
+
 			--desenha frame corrente
-			local canvas_draw = Display.currentFrame:draw();
-			
-			BibliotecaAuxiliarDesenho.desenharImagem(Display.currentFrame:getPx(),Display.currentFrame:getPy(),canvas_draw,Display.buffer);
-				
-			--mostra na tela.
-			
+			Display.currentFrame:draw(Display.buffer,0,0,canvas:attrSize());
 		
-			--BibliotecaAuxiliarDesenho.desenharTextoAlerta(200,200,'Testando',Display.buffer)
 			BibliotecaAuxiliarDesenho.desenharImagem(0,0,Display.buffer,canvas);
 			BibliotecaAuxiliarDesenho.mostrarTela(canvas);
 			
 			Display.tempoUltimaExibicao = tempoAgora;
+			Display.buffer = nil;
 		end
 	end
 end

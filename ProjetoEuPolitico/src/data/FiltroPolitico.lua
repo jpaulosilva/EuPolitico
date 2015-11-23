@@ -8,8 +8,8 @@ FiltroPolitico.regiaoAlterado = false;
 FiltroPolitico.cidade = nil;
 FiltroPolitico.cidadeAlterado = false;
 
-FiltroPolitico.uf = nil;
-FiltroPolitico.ufAlterado = false;
+FiltroPolitico.estado = nil;
+FiltroPolitico.estadoAlterado = false;
 
 FiltroPolitico.nomeParlamentar = nil;
 FiltroPolitico.nomeParlamentarAlterado = false;
@@ -69,12 +69,12 @@ function FiltroPolitico:setCidade(cidade)
 	self.cidadeAlterado = true;
 end
 
-function FiltroPolitico:getUf()
-	return self.uf;
+function FiltroPolitico:getEstado()
+	return self.estado;
 end
-function FiltroPolitico:setUf(uf)
-	self.uf = uf;
-	self.ufAlterado = true;
+function FiltroPolitico:setEstado(estado)
+	self.estado = estado;
+	self.estadoAlterado = true;
 end
 
 function FiltroPolitico:getNomeParlamentar()
@@ -179,8 +179,8 @@ function FiltroPolitico:toParams()
 		params.cidade = self.cidade;
 	end
 	
-	if (self.ufAlterado) then
-		params.uf = self.uf;
+	if (self.estadoAlterado) then
+		params.estado = self.estado;
 	end
 	
 	if (self.nomeParlamentarAlterado) then

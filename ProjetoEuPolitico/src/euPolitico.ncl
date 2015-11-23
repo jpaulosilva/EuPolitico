@@ -13,7 +13,7 @@
 		<media id="settings" type="application/x-ginga-settings">
 			<property name="channel.keyCapture" value="true"/>
 		</media>
-		<media id="application" type="application/x-ginga-NCLua" src="euPolitico.lua" descriptor="dsAplicacao"/>
+		<media id="application" type="application/x-ginga-NCLua" src="EuPolitico.lua" descriptor="dsAplicacao"/>
 		
 
 	</body>

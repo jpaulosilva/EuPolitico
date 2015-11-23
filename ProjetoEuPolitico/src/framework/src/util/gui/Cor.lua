@@ -1,8 +1,8 @@
 Cor = {};
 
-Cor.r = 0;
-Cor.g = 0;
-Cor.b = 0;
+Cor.r = 255;
+Cor.g = 255;
+Cor.b = 255;
 Cor.alpha = 255;
 
 function Cor.__index(tabela,chave)

@@ -15,7 +15,7 @@ TComponent.largura =  nil;
 TComponent.px =  0;
 TComponent.py =  0;
 TComponent.isFoco =  true;
-TComponent.isFocoVisible =  true;
+TComponent.isFocoVisible =  false;
 TComponent.margemEsquerda =  2;
 TComponent.margemSuperior =  2;
 TComponent.margemInferior =  2;
@@ -52,7 +52,7 @@ function TComponent.new(obj)
 end
 
 --~Funcoes 
-function TComponent:draw()
+function TComponent:draw(source,x,y,largura,altura)
 	error('TComponent: Funcao draw nao implementada!');
 end
 
@@ -208,5 +208,10 @@ function TComponent:setMargemDireita(margemDireita)
 	self.changed = true;
 	self.isAttMargemDireitaAlterado = true;
 end
+
+function TComponent:limpar()
+
+end
+
 
 module("TComponent",package.seeall);

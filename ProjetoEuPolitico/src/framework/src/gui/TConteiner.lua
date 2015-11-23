@@ -1,6 +1,7 @@
 BibliotecaAuxiliarScript.execute('framework.src.gui.TComponent');
+BibliotecaAuxiliarScript.execute('framework.src.gui.TMenuItem');
 
-TConteiner = TComponent.new();
+TConteiner = TMenuItem.new();
 
 --~Atributos 
 TConteiner.id = "TConteiner";
@@ -20,40 +21,29 @@ function TConteiner.new(obj)
 	return retorno;
 end
 
-function TConteiner:draw()
-	local fundo = nil;
-	
+function TConteiner:draw(source,x,y,largura,altura)
 	if(self.isFoco and self.isFocoVisible) then
-		local foco = BibliotecaAuxiliarDesenho.newImagem(self.largura,self.altura);
-		BibliotecaAuxiliarDesenho.limparTela(foco,Cor.new({r=0,g=255,b=0}));
-		local fundo_foco = BibliotecaAuxiliarDesenho.newImagem(self.largura-(self.margemEsquerda+self.margemDireita),self.altura-(self.margemInferior+self.margemSuperior));
-		BibliotecaAuxiliarDesenho.limparTela(fundo_foco,self.corFundo);
-		BibliotecaAuxiliarDesenho.desenharImagem(self.margemEsquerda,self.margemSuperior,fundo_foco,foco);
-		
-		fundo = foco;
+		BibliotecaAuxiliarDesenho.setCor(Cor.new({r=0,g=255,b=0}),source);
+    BibliotecaAuxiliarDesenho.desenharRetangulo('fill',x + self.px,y + self.py,self.largura,self.altura,source);
+    BibliotecaAuxiliarDesenho.setCor(self.corFundo,source);
+    BibliotecaAuxiliarDesenho.desenharRetangulo('fill',x + self.px + self.margemEsquerda,y + self.py + self.margemSuperior,self.largura-(self.margemEsquerda+self.margemDireita),self.altura-(self.margemInferior+self.margemSuperior),source);
+
 	else
-		local img = BibliotecaAuxiliarDesenho.newImagem(self.largura,self.altura);
-		BibliotecaAuxiliarDesenho.limparTela(img,self.corFundo);
-		fundo = img;
+    BibliotecaAuxiliarDesenho.setCor(self.corFundo,source);
+    BibliotecaAuxiliarDesenho.desenharRetangulo('fill',x + self.px,y + self.py,self.largura,self.altura,source);
 	end		
 	
 	
 	for i,v in pairs(self.components) do
 		
 		if(v.isVisible ~= nil and v.isVisible == false)then
-			BibliotecaAuxiliarDesenho.desenharImagem(v.px,v.py,v:draw(),fundo);	
+		  v:draw(source,x + self.px,y + self.py,self.largura,self.altura);
 		end
 	end
-	
-	return fundo;
+
 end
 
 function TConteiner:handler(evt)
-	
-	if(self.beforeHandler ~= nil)then
-		self:beforeHandler(evt);
-	end
-	
 	for i,v in pairs(self.components) do
 		if(v.isFoco ~= nil and v.isFoco == true)then
 			if(v.handler ~= nil)then
@@ -63,15 +53,11 @@ function TConteiner:handler(evt)
 				
 				v:handler(evt);
 				
-				if(v.beforeHandler ~= nil)then
-					v:beforeHandler(evt);
+				if(v.afterHandler ~= nil)then
+					v:afterHandler(evt);
 				end
 			end
 		end
-	end
-	
-	if(self.beforeHandler ~= nil)then
-		self:beforeHandler(evt);
 	end
 end
 
@@ -80,6 +66,7 @@ function TConteiner:update()
 		v:update();
 	end
 end
+
 
 --~Funcoes 
 

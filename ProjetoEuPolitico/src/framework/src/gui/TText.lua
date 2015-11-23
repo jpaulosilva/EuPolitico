@@ -34,37 +34,30 @@ function TText.new(obj)
 end
 
 --~Funcoes 
-function TText:draw()
-	
-	local updated = false;
-	
-	BibliotecaAuxiliarLog.registrarLog('entrou2'..tostring(self:isChanged()));
-	
+function TText:draw(source,x,y,largura,altura)
 	if(self:isChanged()) then
 		self:update();
-		updated = true;
 	end
 	
-	local fundo = BibliotecaAuxiliarDesenho.newImagem(self.largura,self.altura);
-	BibliotecaAuxiliarDesenho.limparTela(fundo,self.corFundo);
+	BibliotecaAuxiliarDesenho.setCor(self.corFundo,source);
+    BibliotecaAuxiliarDesenho.desenharRetangulo('fill',x + self.px,y + self.py,self.largura,self.altura,source);
 	
 	if(self.texto ~= nil)then
 		local px_inicial = self.px_texto;
 		local py_inicial = self.py_texto;
 	
-		BibliotecaAuxiliarLog.registrarLog('entrou');
-	
 		for i = 1, #self.tb_texto_quebrado do
-			BibliotecaAuxiliarDesenho.desenharTexto(self.fonte,px_inicial,py_inicial,tostring(self.tb_texto_quebrado[i]),fundo);
+		  local palavra = tostring(self.tb_texto_quebrado[i]);
+
+      if(palavra == "nil" or palavra == nil)then
+         palavra = "";
+      end
+          
+			BibliotecaAuxiliarDesenho.desenharTexto(self.fonte,x + self.px + px_inicial,y + self.py + py_inicial,palavra,source);
 			py_inicial = py_inicial + self.altura_linha;
-			BibliotecaAuxiliarLog.registrarLog('entrou'..tostring(i));
 		end
 		
 	end
-	
-	BibliotecaAuxiliarLog.registrarLog('entrou'..tostring(updated));
-	
-	return fundo,updated;
 
 end
 
@@ -81,25 +74,18 @@ end
 
 
 function TText:update()
-	BibliotecaAuxiliarLog.registrarLog('entrouA');
-
-	
 	self.tb_texto_quebrado = BibliotecaAuxiliarTexto.quebrarTexto(self.fonte,self.texto,self.largura - self.margemEsquerda - self.margemDireita);
 
-	BibliotecaAuxiliarLog.registrarLog('entrouB');
 	BibliotecaAuxiliarLog.registrarLog(tostring(self.tb_texto_quebrado[1]));	
 	self.altura_linha = BibliotecaAuxiliarDesenho.getAlturaTexto(self.fonte,self.tb_texto_quebrado[1]) + 2;
 	
-	BibliotecaAuxiliarLog.registrarLog('entrouC');
 	
 	self.altura_texto = (#self.tb_texto_quebrado)*self.altura_linha;
 	self:setAltura(self.altura_texto + self.margemSuperior + self.margemInferior)
-	BibliotecaAuxiliarLog.registrarLog('entrouD');
 		
 	self.px_texto = self.margemEsquerda;
 	self.py_texto = self.margemSuperior;
 
-	BibliotecaAuxiliarLog.registrarLog('entrouE');
 	self.isAttTextoAlterado = false;
 	self.isAttFonteAlterado = false;
 end

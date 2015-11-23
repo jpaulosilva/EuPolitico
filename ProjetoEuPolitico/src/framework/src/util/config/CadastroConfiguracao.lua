@@ -1,6 +1,6 @@
 BibliotecaAuxiliarScript.execute('framework.src.file.Cadastro');
 
-CadastroConfiguracao = Cadastro.new();
+CadastroConfiguracao = Cadastro:new();
 
 CadastroConfiguracao.st_arquivo = SystemProperties.PROJECT_PATH.."/config/moondo-config.xml";
 CadastroConfiguracao:getDados();

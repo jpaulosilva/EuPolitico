@@ -33,7 +33,7 @@ end
 function getProjectPath()
 	path = tokenize(package.path,";");
 	for i,v in pairs(path)do
-		if(string.find(v,"HelloWorld")~=nil)then
+		if(string.find(v,"ProjetoEducacaoInteligente")~=nil)then
 			local fim = string.find(v,"?");
 			if(fim ~= nil)then
 				fim = fim-1;

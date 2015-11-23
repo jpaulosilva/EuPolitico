@@ -16,11 +16,11 @@ local function extrairDeputados(str)
 
     local deputado = Politico:new();
 
---    print(data)
+    print(data)
 
     for campo in data:split(",") do
 
---      print(campo);
+      print(campo);
 
       chave,valor = string.match(campo,'"(.*)":(.*)')
 
@@ -82,7 +82,7 @@ function carregaDeputadosWeb(f_callback,parametros)
 
   print("***Buscando Deputados***")
 
-  local url = "http://www.meucongressonacional.com/api/001/deputado"
+  local url = 'http://www.meucongressonacional.com/api/001/deputado'
 
   local criterio_busca = parametros;
 

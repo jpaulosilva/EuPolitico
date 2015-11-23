@@ -1,0 +1,1 @@
+[{"anoCenso":2013,"cod":11000023,"nome":"EEEE PROFESSOR ABNAEL MACHADO DE LIMA - CENE","cidade":"PORTO VELHO","estado":"RO","regiao":"Norte"},{"anoCenso":2013,"cod":11000040,"nome":"EMEIEF PEQUENOS TALENTOS","cidade":"PORTO VELHO","estado":"RO","regiao":"Norte"}]

@@ -1,29 +1,25 @@
---imports
-BibliotecaAuxiliarScript.execute('framework.src.gui.TFrame');
+-- Imports
 BibliotecaAuxiliarScript.execute('framework.src.util.gui.Cor');
-BibliotecaAuxiliarScript.execute('framework.src.gui.TLabel');
+BibliotecaAuxiliarScript.execute('framework.src.gui.TFrame');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TPanel');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TMenu');
+
 
 FramePrincipal = TFrame.new();
 FramePrincipal.id = 'FramePrincipal';
 
 function FramePrincipal:inicialize()
-
   -- Alterar propriedades do FramePrincipal
-  FramePrincipal:setLargura(1280);
+  FramePrincipal:setLargura(1280); --320
   FramePrincipal:setAltura(720);
   FramePrincipal:setPx(0);
   FramePrincipal:setPy(0);
-  FramePrincipal:setCorFundo(Cor.new({r=255,g=255,b=255,alpha=255}));
-  
-  local font_label= Fonte.new({nome='tiresias', tamanho=24, is_negrito = true});
-  font_label.cor = Cor.new({r=0,g=0,b=0});
-  
+  FramePrincipal:setCorFundo(CenaPrincipal.cor);
+
+
   local font_logo= Fonte.new({nome='tiresias', tamanho=24, is_negrito = true});
-  font_logo.cor = Cor.new({r=255,g=94,b=94});
-  
-  
+  font_logo.cor = Cor.new({r=153,g=204,b=51});
+
   local menu = TMenu.new();
   menu:addAllItens(CenaPrincipal:getItensMenu());
   menu:setOrientacao(TMenu.VERTICAL);
@@ -35,24 +31,31 @@ function FramePrincipal:inicialize()
 
   menu:setPx(20)--(FramePrincipal:getLargura() - menu:getLargura())/2);
   menu:setPy(100)--(FramePrincipal:getAltura() - menu:getAltura())/2);
-  
-  -- Incluir componentes gráficos
---  local panel= TPanel.new();
---  panel:setLargura(640);
---  panel:setAltura(360);
---  panel:setPx(10);
---  panel:setPy(10);
---  panel:setCorFundo(Cor.new({r=255,g=0,b=0}));
---  panel:addComponent(label,1);  
 
-  local label = TLabel.new();
-  label:setTexto("Eu Político");
-  label:setFonte(font_label);
-  label:setPx(10);
-  label:setPy(10);
   
-  --**************************Legendas*********************
-  --Legenda Selecionar
+  
+  --Painel imagem de TV
+  local panelTV= TPanel.new();
+  panelTV:setLargura(1270); --630
+  panelTV:setAltura(630); --350
+  panelTV:setPx(5); --550
+  panelTV:setPy(5); --100
+  panelTV:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  
+  
+  local imageTV= TImage.new();
+  imageTV:setSrcArquivoExterno("../media/imagem_exemplo_tv_623x350.png");
+  imageTV:setPx(550);
+  imageTV:setPy(100);
+  
+  panelTV:addComponent(imageTV,1);
+
+
+
+
+
+  --********************************************Legendas**************************************************
+  
   local labelBtOk = TLabel.new();
   labelBtOk:setTexto("SELECIONAR");
   labelBtOk:setFonte(font_logo);
@@ -83,10 +86,16 @@ function FramePrincipal:inicialize()
   iconeBtSair:setOrientacao(TIcon.TITULO_RIGHT);
   iconeBtSair:setPx(740);
   iconeBtSair:setPy(660);
-
   
-  FramePrincipal:addComponent(label,1);
-  FramePrincipal:addComponent(menu,2);
-  FramePrincipal:addComponent(iconeBtOk,3);
-  FramePrincipal:addComponent(iconeBtSair,4);
+  
+
+
+  FramePrincipal:addComponent(buildBackground(),1); 
+  FramePrincipal:addComponent(panelTV,2); 
+  FramePrincipal:addComponent(menu,3);
+  FramePrincipal:addComponent(iconeBtOk,4);
+  FramePrincipal:addComponent(iconeBtSair,5)
+  
+  
+
 end

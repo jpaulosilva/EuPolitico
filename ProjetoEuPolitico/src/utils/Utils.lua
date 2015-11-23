@@ -63,8 +63,7 @@ function buildPainelTV1_2()
   panelTV:setLargura(630);
   panelTV:setAltura(350);
   panelTV:setPx(10);
-  panelTV:setPy(40);
-  panelTV:setCorFundo(Cor.new({r=255,g=255,b=255}));
+  panelTV:setPy(20);
 
   local imageTV= TImage.new();
   imageTV:setSrcArquivoExterno("../media/imagem_exemplo_tv_623x350.png");
@@ -113,12 +112,12 @@ function  buildPainelLegendas(nomeNavegacao,nomeOk,nomeApagar,nomeVermelho,nomeV
   panel:setAltura(60);
   panel:setPx(5);
   panel:setPy(655);
-  panel:setCorFundo(Cor.new({r=200,g=255,b=255,alpha=255}));--{r=200,g=255,b=255,alpha=255}));
+  panel:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));--{r=200,g=255,b=255,alpha=255}));
 
   local font_logo= Fonte.new({nome='tiresias', tamanho=24, is_negrito = true});
-  font_logo.cor = Cor.new({r=0,g=0,b=0,alpha=255});--{r=153,g=204,b=51,alpha=255});
+  font_logo.cor = Cor.new({r=255,g=255,b=255,alpha=255});--{r=153,g=204,b=51,alpha=255});
 
-  local font_data= Fonte.new({nome='tiresias', tamanho=20,is_negrito = false,cor = Cor.new({r=255,g=94,b=94})});--{r=255,g=94,b=94})});
+  local font_data= Fonte.new({nome='tiresias', tamanho=20,is_negrito = false,cor = Cor.new({r=255,g=255,b=255})});--{r=255,g=94,b=94})});
 
   local labelEducaInte = TLabel.new();
   labelEducaInte:setTexto("EU POLÍTICO");
