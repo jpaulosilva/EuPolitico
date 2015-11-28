@@ -34,7 +34,7 @@ function CenaPrincipal:getItensMenu()
   local itensPrimitivos = {
     {'../media/ajuda.png'     ,'Pesquisas e Resultados','acessarFramePesquisasResultados'},
     {'../media/quem_somos.png'    ,'Políticos em Mandato','acessarCenaBusca'},
-    {'../media/quem_somos.png' , 'Candidatos', 'acessarCenaBusca'},
+    {'../media/quem_somos.png' , 'Candidatos', 'acessarCenaBuscaCandidatos'},
     {'../media/indices.png'   ,'Estatísticas ','acessarCenaEstatisticas'},
     {'../media/quem_somos.png','Atualizações','acessarFrameAtualizacoes'}};
 

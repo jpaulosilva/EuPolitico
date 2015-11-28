@@ -2,31 +2,75 @@ BibliotecaAuxiliarScript.execute('utils.json');
 BibliotecaAuxiliarScript.execute('utils.tcp');
 BibliotecaAuxiliarScript.execute('utils.Webs');
 BibliotecaAuxiliarScript.execute('data.Politico');
+BibliotecaAuxiliarScript.execute('data.FiltroPolitico');
 
 
 -- Função para tratar os dados brutos
 local function extrairDeputados(str)
 
   local deputados = {};
+  local deputadosSelecionados = '';
 
   local data = string.match(str,"{(.*)}")
 
 
   if data ~= nil then
 
+    --print(data)
+
+    for linhaDeputado in data:split("},{") do
+
+      print(linhaDeputado);
+
+
+      for campo in linhaDeputado:split(",") do
+
+        print(campo);
+
+        chave,valor = string.match(campo,'"(.*)":(.*)')
+
+        valor = string.match(valor,'"(.*)"') or valor --Elimina aspas
+
+        --        print("CHAVE -> "..chave);
+        --        print("VALOR -> "..valor);
+        --
+        --        print("VALOR PEGO NO FILTRO: "..CenaBusca.filtro:getPartido());
+
+
+
+        if chave == "partido" and valor == CenaBusca.filtro:getPartido() then
+
+          print("ENTROU NA CHAVE PARTIDO!")
+
+          deputadosSelecionados = deputadosSelecionados..','..linhaDeputado
+
+        end
+
+
+      end
+
+
+
+      print("************************************************")
+
+    end
+
+
+    local deputadosFiltrados = string.match(deputadosSelecionados,",(.*)");
+
+    print("LISTA DEPUTADOS FILTRADOS: "..deputadosFiltrados);
+
     local deputado = Politico:new();
 
-    print(data)
+    for keyValue in deputadosFiltrados:split(",") do
+    
+      print(keyValue);
 
-    for campo in data:split(",") do
-
-      print(campo);
-
-      chave,valor = string.match(campo,'"(.*)":(.*)')
+      chave,valor = string.match(keyValue,'"(.*)":(.*)')
 
       valor = string.match(valor,'"(.*)"') or valor --Elimina aspas
 
-      
+
       if chave == "id" then
         deputado:setId(valor);
       elseif chave == "regiao" then
@@ -34,7 +78,7 @@ local function extrairDeputados(str)
       elseif chave == "cidade" then
         deputado:setCidade(valor);
       elseif chave == "uf" then
-        deputado:setUf(valor);           
+        deputado:setUf(valor);
       elseif chave == "nomeParlamentar" then
         deputado:setNomeParlamentar(valor);
       elseif chave == "nomeCompleto" then
@@ -46,18 +90,19 @@ local function extrairDeputados(str)
       elseif chave == "mandato" then
         deputado:setMandato(valor);
       elseif chave == "sexo" then
-        deputado:setSexo(valor);               
+        deputado:setSexo(valor);
       elseif chave == "telefone" then
         deputado:setTelefone(valor);
       elseif chave == "email" then
-        deputado:setEmail(valor); 
+        deputado:setEmail(valor);
       elseif chave == "nascimento" then
         deputado:setNascimento(valor);
       elseif chave == "gastoTotal" then
         deputado:setGastoTotal(valor);
       elseif chave == "gastoPorDia" then
-        deputado:setGastoPorDia(valor);                
+        deputado:setGastoPorDia(valor);
       end
+
 
     end
 
@@ -65,6 +110,8 @@ local function extrairDeputados(str)
 
 
   end
+
+
 
   return deputados;
 
@@ -82,17 +129,19 @@ function carregaDeputadosWeb(f_callback,parametros)
 
   print("***Buscando Deputados***")
 
-  local url = 'http://www.meucongressonacional.com/api/001/deputado'
+  local dataTest = {160976}
+
+  local url = 'http://www.meucongressonacional.com/api/001/deputado';
 
   local criterio_busca = parametros;
 
-  local dados = webs_get(url,criterio_busca);
+  local dados = webs_get(url,{});
 
   if (dados ~= nil and dados ~= 0) then
 
     print("Endereço encontrado!")
 
-    deputados = extrairDeputados(dados);
+    deputados = extrairDeputados(dados,parametros);
 
     if #deputados ~= 0 then
 

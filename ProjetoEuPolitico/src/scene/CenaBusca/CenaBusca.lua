@@ -270,7 +270,7 @@ function CenaBusca:getItensResultado(itens)
     local cargo = v:getCargo() or "-";
     local nome = v:getNomeParlamentar() or "-";
     local cidade = v:getCidade() or "-";
-    local estado = v:getEstado() or "-";
+    local estado = v:getUf() or "-";
     local idade = v:getIdade() or "-";
     local sexo = v:getSexo() or "-";
     local escolaridade = v:getEscolaridade() or "-";
@@ -290,7 +290,7 @@ function CenaBusca:getItensResultado(itens)
 
     line.action = function (self,evt)
 
-      evt.rule_key = "acessarCenaVisualizarEscola";
+      evt.rule_key = "acessarCenaVisualizarPolitico";
       CenaBusca.escolaSelecionada = v;
       CenaBusca.isCarregandoDetalhes = true;
 

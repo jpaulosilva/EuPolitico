@@ -8,6 +8,13 @@
 			<frame id="FrameVisualizarPolitico" name="FrameVisualizarPolitico" />
 			<frame id="FramePesquisasResultados" name="FramePesquisasResultados" />
 		</scene>
+		
+		<scene id="CenaBuscaCandidatos" name="CenaBuscaCandidatos">
+			<frame id="FrameConsultarCandidato" name="FrameConsultarCandidato" isDefault="true" />
+			<frame id="FrameConsultarCandidatoAvancado" name="FrameConsultarPoliticoAvancado" />
+			<frame id="FrameVisualizarCandidato" name="FrameVisualizarCandidato" />
+		</scene>
+		
 		<scene id="CenaPrincipal" name="CenaPrincipal">
 			<frame id="FrameInteracao" name="FrameInteracao" isDefault="true" />
 			<frame id="FramePrincipal" name="FramePrincipal" />
@@ -59,6 +66,11 @@
 			<navigationCase>
 				<key class="ruleKey" key="acessarCenaBusca" />
 				<to scene="CenaBusca" frame="FrameConsultarPolitico" />
+			</navigationCase>
+			
+			<navigationCase>
+				<key class="ruleKey" key="acessarCenaBuscaCandidatos" />
+				<to scene="CenaBuscaCandidatos" frame="FrameConsultarCandidato" />
 			</navigationCase>
 			<navigationCase>
 				<key class="ruleKey" key="acessarCenaEstatisticas" />
@@ -117,7 +129,7 @@
 			</navigationCase>
 		</navigationRule>	
 
-		<!-- ESCOLA -->
+		<!-- POLITICO -->
 		<navigationRule>
 			<from scene="CenaBusca" frame="FrameConsultarPolitico" />
 			<navigationCase>
@@ -125,7 +137,7 @@
 				<to scene="CenaBusca" frame="FrameConsultarPoliticoAvancado" />
 			</navigationCase>
 			<navigationCase>
-				<key class="ruleKey" key="acessarCenaVisualizarEscola" />
+				<key class="ruleKey" key="acessarCenaVisualizarPolitico" />
 				<to scene="CenaBusca" frame="FrameVisualizarPolitico" />
 			</navigationCase>
 			<navigationCase>
@@ -141,7 +153,7 @@
 				<to scene="CenaBusca" frame="FrameConsultarPolitico" />
 			</navigationCase>
 			<navigationCase>
-				<key class="ruleKey" key="acessarCenaVisualizarEscola" />
+				<key class="ruleKey" key="acessarCenaVisualizarPolitico" />
 				<to scene="CenaBusca" frame="FrameVisualizarPolitico" />
 			</navigationCase>
 			<navigationCase>
@@ -173,7 +185,7 @@
 		<navigationRule>
 			<from scene="CenaBusca" frame="FrameVisualizarPoliticoComparar" />
 			<navigationCase>
-				<key class="ruleKey" key="acessarCenaVisualizarEscola" />
+				<key class="ruleKey" key="acessarCenaVisualizarPolitico" />
 				<to scene="CenaBusca" frame="FrameVisualizarPolitico" />
 			</navigationCase>
 			<navigationCase>
@@ -181,6 +193,76 @@
 				<to scene="CenaPrincipal" frame="FramePrincipal" />
 			</navigationCase>
 		</navigationRule>
+		
+		
+		<!-- ******************************* CANDIDATO ***************************************-->
+		
+		<navigationRule>
+			<from scene="CenaBuscaCandidatos" frame="FrameConsultarCandidato" />
+			<navigationCase>
+				<key class="ruleKey" key="acessarFrameConsultarCandidatoAvancado" />
+				<to scene="CenaBuscaCandidatos" frame="FrameConsultarCandidatoAvancado" />
+			</navigationCase>
+			<navigationCase>
+				<key class="ruleKey" key="acessarCenaVisualizarCandidato" />
+				<to scene="CenaBuscaCandidatos" frame="FrameVisualizarCandidato" />
+			</navigationCase>
+			<navigationCase>
+				<key class="controlKey" key="RED" />
+				<to scene="CenaPrincipal" frame="FramePrincipal" />
+			</navigationCase>
+		</navigationRule>
+
+		<navigationRule>
+			<from scene="CenaBuscaCandidatos" frame="FrameConsultarCandidatoAvancado" />
+			<navigationCase>
+				<key class="ruleKey" key="acessarFrameConsultarCandidato" />
+				<to scene="CenaBuscaCandidatos" frame="FrameConsultarCandidato" />
+			</navigationCase>
+			<navigationCase>
+				<key class="ruleKey" key="acessarCenaVisualizarCandidato" />
+				<to scene="CenaBuscaCandidatos" frame="FrameVisualizarCandidato" />
+			</navigationCase>
+			<navigationCase>
+				<key class="controlKey" key="RED" />
+				<to scene="CenaPrincipal" frame="FramePrincipal" />
+			</navigationCase>
+		</navigationRule>
+
+		<navigationRule>
+			<from scene="CenaBuscaCandidatos" frame="FrameVisualizarCandidato" />
+			<navigationCase>
+				<key class="ruleKey" key="acessarFrameConsultarCandidato" />
+				<to scene="CenaBuscaCandidatos" frame="FrameConsultarCandidatos" />
+			</navigationCase>
+			<navigationCase>
+				<key class="ruleKey" key="acessarFrameConsultarCandidatoAvancado" />
+				<to scene="CenaBuscaCandidatos" frame="FrameConsultarCandidatosAvancado" />
+			</navigationCase>
+			<navigationCase>
+				<key class="ruleKey" key="acessarFrameVisualizarCandidatoComparar" />
+				<to scene="CenaBuscaCandidatos" frame="FrameVisualizarCandidatosComparar" />
+			</navigationCase>
+			<navigationCase>
+				<key class="controlKey" key="RED" />
+				<to scene="CenaPrincipal" frame="FramePrincipal" />
+			</navigationCase>
+		</navigationRule>
+		
+		<navigationRule>
+			<from scene="CenaBuscaCandidatos" frame="FrameVisualizarCandidatoComparar" />
+			<navigationCase>
+				<key class="ruleKey" key="acessarCenaVisualizarCandidato" />
+				<to scene="CenaBuscaCandidatos" frame="FrameVisualizarCandidato" />
+			</navigationCase>
+			<navigationCase>
+				<key class="controlKey" key="RED" />
+				<to scene="CenaPrincipal" frame="FramePrincipal" />
+			</navigationCase>
+		</navigationRule>
+		
+		
+		
 
 		<navigationRule>
 			<from scene="CenaPrincipal" frame="FrameCEP" />
