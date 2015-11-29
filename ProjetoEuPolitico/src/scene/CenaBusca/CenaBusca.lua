@@ -39,7 +39,7 @@ CenaBusca.indiceCidade = 1;
 CenaBusca.indiceCargo = 1;
 CenaBusca.indicePartido = 1;
 CenaBusca.resultado = {};
-CenaBusca.escolaSelecionada = nil;
+CenaBusca.politicoSelecionado = nil;
 CenaBusca.indiceEscolaMenu = 1;
 CenaBusca.itensMenuAvancado = nil;
 CenaBusca.painelConsultarPolitico = nil;
@@ -267,13 +267,13 @@ function CenaBusca:getItensResultado(itens)
   for i,v in pairs(CenaBusca.resultado) do
 
     local partido = v:getPartido() or "-";
-    local cargo = v:getCargo() or "-";
+    local cargo =  "-"; --v:getCargo() or
     local nome = v:getNomeParlamentar() or "-";
-    local cidade = v:getCidade() or "-";
+    local cidade =  "-"; --v:getCidade() or
     local estado = v:getUf() or "-";
-    local idade = v:getIdade() or "-";
+    local idade =  "-"; --v:getIdade() or
     local sexo = v:getSexo() or "-";
-    local escolaridade = v:getEscolaridade() or "-";
+    local escolaridade =  "-"; --v:getEscolaridade() or
 
     local line = TConteiner.new();
     line:setLargura(1270);
@@ -291,7 +291,7 @@ function CenaBusca:getItensResultado(itens)
     line.action = function (self,evt)
 
       evt.rule_key = "acessarCenaVisualizarPolitico";
-      CenaBusca.escolaSelecionada = v;
+      CenaBusca.politicoSelecionado = v;
       CenaBusca.isCarregandoDetalhes = true;
 
       FrameVisualizarPolitico:inicialize();
@@ -299,8 +299,8 @@ function CenaBusca:getItensResultado(itens)
       local APP = coroutine.create (
         function ()
 
-          local f_callback = function(escolaModificada)
-            CenaBusca.escolaSelecionada = escolaModificada;
+          local f_callback = function(politicoModificado)
+            CenaBusca.politicoSelecionado = politicoModificado;
             FrameVisualizarPolitico:inicialize();
             CenaBusca.isCarregandoDetalhes = false;
 
@@ -308,7 +308,7 @@ function CenaBusca:getItensResultado(itens)
             Display.show();
           end
 
-          carregaDetalhesEscola(f_callback,CenaBusca.escolaSelecionada);
+          carregaDetalhesDeputado(f_callback,CenaBusca.politicoSelecionado);
         end
       )
 
@@ -579,7 +579,7 @@ function CenaBusca:clear()
   CenaBusca.indiceIdebAnosFinaisMin = 1;
   CenaBusca.indiceIdebAnosFinaisMax = 1;
   CenaBusca.resultado = {};
-  CenaBusca.escolaSelecionada = nil;
+  CenaBusca.politicoSelecionado = nil;
   CenaBusca.indiceEscolaMenu = 1;
 end
 
@@ -1265,7 +1265,7 @@ function CenaBusca:getItensResultadoDetalhesComparar(itens)
 
   if(CenaBusca.listaNacional.estatisticas[1] ~=nil)then
 
-    local estatisticasEscola = CenaBusca.escolaSelecionada:toEstatistica();
+    local estatisticasEscola = CenaBusca.politicoSelecionado:toEstatistica();
 
     for i,v in pairs(CenaBusca.colunas) do
       local estatistica = v.titulo;
@@ -1328,7 +1328,7 @@ function CenaBusca:getItensResultadoDetalhesCompararMelhoresPiores(itens)
 
   if(CenaBusca.listaNacionalMelhores.melhoresEscolas[1] ~=nil)then
 
-    local estatisticasEscola = CenaBusca.escolaSelecionada:toEstatistica();
+    local estatisticasEscola = CenaBusca.politicoSelecionado:toEstatistica();
     for i,v in pairs(CenaBusca.colunas) do
       local estatistica = v.titulo;
       local escola = " - ";
@@ -1383,11 +1383,6 @@ function CenaBusca:getItensResultadoDetalhesCompararMelhoresPiores(itens)
     end
   end
 
-
-
-
-
-
 end
 
 --Formata o dado estatístico em duas casas decimais após a vírgula
@@ -1401,4 +1396,48 @@ function CenaBusca:getEstatistica(estatistica, isPercentual)
 end
 
 
+
+function CenaBusca:getItensMenuDetalhesPolitico()
+
+  local itensPrimitivos = {
+    {'../media/icone.png'    ,'Gastos por Tipo',''},
+    {'../media/icone.png' , 'Gastos por Empresa', ''},
+    {'../media/icone.png'   ,'Projetos',''},
+    {'../media/icone.png','Comissões',''},
+  };
+
+  local itens = {};
+
+  local font_data= Fonte.new({nome='tiresias', tamanho=32,is_negrito = true});
+  font_data.cor = Cor.new({r=255,g=94,b=94})
+
+
+  for i,v in pairs(itensPrimitivos) do
+    local src = v[1];
+    local nome = v[2];
+    local action = v[3];
+
+    local image = TImage.new();
+    image:setSrcArquivoExterno(src);
+
+    local label = TLabel.new();
+    label:setTexto(nome);
+    label:setFonte(font_data);
+
+    local icone = TIcon.new();
+    icone:setTImage(image);
+    icone:setTLabel(label);
+    icone:setOrientacao(TIcon.TITULO_RIGHT);
+
+    icone.action = function (self,evt)
+    evt.rule_key = action;
+    end
+
+    table.insert(itens,icone);
+
+  end
+
+  return itens;
+
+end
 

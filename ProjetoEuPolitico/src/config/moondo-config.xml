@@ -180,6 +180,11 @@
 				<key class="controlKey" key="RED" />
 				<to scene="CenaPrincipal" frame="FramePrincipal" />
 			</navigationCase>
+			
+			<navigationCase>
+				<key class="controlKey" key="YELLOW" />
+				<to scene="CenaBusca" frame="FrameConsultarPolitico" />
+			</navigationCase>
 		</navigationRule>
 		
 		<navigationRule>
