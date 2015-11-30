@@ -1,3 +1,4 @@
+Norte;10;BR
 Norte;11;RO
 Norte;12;AC
 Norte;13;AM
@@ -5,6 +6,7 @@ Norte;14;RR
 Norte;15;PA
 Norte;16;AP
 Norte;17;TO
+Nordeste;20;BR
 Nordeste;21;MA
 Nordeste;22;PI
 Nordeste;23;CE
@@ -14,13 +16,16 @@ Nordeste;26;PE
 Nordeste;27;AL
 Nordeste;28;SE
 Nordeste;29;BA
+Sudeste;30;BR
 Sudeste;31;MG
 Sudeste;32;ES
 Sudeste;33;RJ
 Sudeste;35;SP
+Sul;40;BR
 Sul;41;PR
 Sul;42;SC
 Sul;43;RS
+Centro_Oeste;49;BR
 Centro_Oeste;50;MS
 Centro_Oeste;51;MT
 Centro_Oeste;52;GO

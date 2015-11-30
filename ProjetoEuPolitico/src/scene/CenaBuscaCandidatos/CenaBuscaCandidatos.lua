@@ -38,7 +38,7 @@ CenaBuscaCandidatos.indiceCidade = 1;
 CenaBuscaCandidatos.indiceCargo = 1;
 CenaBuscaCandidatos.indicePartido = 1;
 CenaBuscaCandidatos.resultado = {};
-CenaBuscaCandidatos.escolaSelecionada = nil;
+CenaBuscaCandidatos.candidatoSelecionado = nil;
 CenaBuscaCandidatos.indiceEscolaMenu = 1;
 CenaBuscaCandidatos.itensMenuAvancado = nil;
 CenaBuscaCandidatos.painelConsultarCandidato = nil;
@@ -264,14 +264,14 @@ function CenaBuscaCandidatos:getItensResultado(itens)
 
   for i,v in pairs(CenaBuscaCandidatos.resultado) do
 
-    local partido = v:getNomePartido() or "-";
+    local partido = v:getSiglaPartido() or "-";
     local cargo = v:getNomeCargo() or "-";
     local nome = v:getNomeParlamentar() or "-";
     local cidade = v:getCidade() or "-";
     local estado = v:getEstado() or "-";
     local idade = v:getIdade() or "-";
-    local sexo = v:getSexo() or "-";
-    local escolaridade = v:getNomeEscolaridade() or "-";
+    local sexo =  "-"; --v:getSexo() or
+    local escolaridade =  "-"; --v:getNomeEscolaridade() or
 
     local line = TConteiner.new();
     line:setLargura(1270);
@@ -289,7 +289,7 @@ function CenaBuscaCandidatos:getItensResultado(itens)
     line.action = function (self,evt)
 
       evt.rule_key = "acessarCenaVisualizarCandidato";
-      CenaBuscaCandidatos.escolaSelecionada = v;
+      CenaBuscaCandidatos.candidatoSelecionado = v;
       CenaBuscaCandidatos.isCarregandoDetalhes = true;
 
       FrameVisualizarCandidato:inicialize();
@@ -297,16 +297,16 @@ function CenaBuscaCandidatos:getItensResultado(itens)
       local APP = coroutine.create (
         function ()
 
-          local f_callback = function(escolaModificada)
-            CenaBuscaCandidatos.escolaSelecionada = escolaModificada;
-            FrameVisualizarPolitico:inicialize();
+          local f_callback = function(candidatoModificado)
+            CenaBuscaCandidatos.candidatoSelecionado = candidatoModificado;
+            FrameVisualizarCandidato:inicialize();
             CenaBuscaCandidatos.isCarregandoDetalhes = false;
 
             FrameVisualizarCandidato:inicialize();
             Display.show();
           end
 
-          carregaDetalhesEscola(f_callback,CenaBuscaCandidatos.escolaSelecionada);
+          carregaDetalhesCandidato(f_callback,CenaBuscaCandidatos.candidatoSelecionado);
         end
       )
 
@@ -577,7 +577,7 @@ function CenaBuscaCandidatos:clear()
   CenaBuscaCandidatos.indiceIdebAnosFinaisMin = 1;
   CenaBuscaCandidatos.indiceIdebAnosFinaisMax = 1;
   CenaBuscaCandidatos.resultado = {};
-  CenaBuscaCandidatos.escolaSelecionada = nil;
+  CenaBuscaCandidatos.candidatoSelecionado = nil;
   CenaBuscaCandidatos.indiceEscolaMenu = 1;
 end
 
@@ -1263,7 +1263,7 @@ function CenaBuscaCandidatos:getItensResultadoDetalhesComparar(itens)
 
   if(CenaBuscaCandidatos.listaNacional.estatisticas[1] ~=nil)then
 
-    local estatisticasEscola = CenaBuscaCandidatos.escolaSelecionada:toEstatistica();
+    local estatisticasEscola = CenaBuscaCandidatos.candidatoSelecionado:toEstatistica();
 
     for i,v in pairs(CenaBuscaCandidatos.colunas) do
       local estatistica = v.titulo;
@@ -1326,7 +1326,7 @@ function CenaBuscaCandidatos:getItensResultadoDetalhesCompararMelhoresPiores(ite
 
   if(CenaBuscaCandidatos.listaNacionalMelhores.melhoresEscolas[1] ~=nil)then
 
-    local estatisticasEscola = CenaBuscaCandidatos.escolaSelecionada:toEstatistica();
+    local estatisticasEscola = CenaBuscaCandidatos.candidatoSelecionado:toEstatistica();
     for i,v in pairs(CenaBuscaCandidatos.colunas) do
       local estatistica = v.titulo;
       local escola = " - ";

@@ -9,136 +9,97 @@ BibliotecaAuxiliarScript.execute('data.FiltroPolitico');
 local function extrairCandidatos(str)
 
   local candidatos = {};
-  local candidatosSelecionados = '';
 
   local data = string.match(str,"%[{(.*)}%]")
-
 
   if data ~= nil then
 
     print(data)
 
     for linhaCandidato in data:split("},{") do
+      
+      local candidato = Candidato:new();
+      print("****************************************************************")
 
       print(linhaCandidato);
 
+      print("*****************************************************************")
 
       for campo in linhaCandidato:split(',') do
 
         print(campo);
 
-        chave,valor = string.match(campo,'"(.*)":(.*)')
+        chave,valor = string.match(campo,'"(.*)":"(.*)"')
 
-        valor = string.match(valor,'"(.*)"') or valor --Elimina aspas
+        --valor = string.match(valor,'"(.*)"') or valor --Elimina aspas
 
-        --        print("CHAVE -> "..chave);
-        --        print("VALOR -> "..valor);
+--                print("CHAVE -> "..chave);
+--                print("VALOR -> "..valor);
         --
         --        print("VALOR PEGO NO FILTRO: "..CenaBuscaCandidatos.filtro:getPartido());
 
 
+        if chave == "id" then
+          candidato:setId(valor);
+        elseif chave == "regiao" then
+          candidato:setRegiao(valor);
+        elseif chave == "cidade" then
+          candidato:setCidade(valor);
+        elseif chave == "uf" then
+          candidato:setEstado(valor);
+        elseif chave == "nomeParlamentar" then
+          candidato:setNomeParlamentar(valor);
+        elseif chave == "nomeCompleto" then
+          candidato:setNomeCompleto(valor);
 
-        if chave == "siglaPartido" and valor == CenaBuscaCandidatos.filtro:getSiglaPartido() then
-
-          print("ENTROU NA CHAVE PARTIDO!")
-
-          candidatosSelecionados = candidatosSelecionados..'},{'..linhaCandidato
-
+        elseif chave == "numero" then
+          candidato:setNumero(valor);
+        elseif chave == "nomeSitCandidatura" then
+          candidato:setNomeSitCandidatura(valor);
+        elseif chave == "siglaPartido" then
+          candidato:setSiglaPartido(valor);
+        elseif chave == "nomePartido" then
+          candidato:setNomePartido(valor);
+        elseif chave == "nomeLegenda" then
+          candidato:setNomeLegenda(valor);
+        elseif chave == "codLegenda" then
+          candidato:setCodLegenda(valor);
+        elseif chave == "composicaoLegenda" then
+          candidato:setComposicaoLegenda(valor);
+        elseif chave == "sexo" then
+          candidato:setSexo(valor);
+        elseif chave == "nomeRaca" then
+          candidato:setNomeRaca(valor);
+        elseif chave == "nomeOcupacao" then
+          candidato:setNomeOcupacao(valor);
+        elseif chave == "nomeEscolaridade" then
+          candidato:setNomeEscolaridade(valor);
+        elseif chave == "municipioNascimento" then
+          candidato:setMunicipioNascimento(valor);
+        elseif chave == "estadoNascimento" then
+          candidato:setEstadoNascimento(valor);
+        elseif chave == "totalBens" then
+          candidato:setTotalBens(valor);
+        elseif chave == "totalArrecadado" then
+          candidato:setTotalArrecadado(valor);
+        elseif chave == "ehParlamentarAtual" then
+          candidato:setEhParlamentarAtual(valor);
+        elseif chave == "cargoParlamentarAtual" then
+          candidato:setCargoParlamentarAtual(valor);
+        elseif chave == "codParlamentarAtual" then
+          candidato:setCodParlamentarAtual(valor);
         end
 
 
       end
-
-
-
-      print("************************************************")
+      table.insert(candidatos,candidato);
 
     end
-
-    if candidatosSelecionados ~= "" then
-
-
-      local candidatosFiltrados = string.match(candidatosSelecionados,",{(.*)");
-
-      print("LISTA candidatoS FILTRADOS: "..candidatosFiltrados);
-
-      for objetoCandidato in candidatosFiltrados:split("},{") do
-
-        local candidato = Politico:new();
-
-        print(objetoCandidato);
-
-        for keyValue in objetoCandidato:split(",") do
-
-          print(keyValue);
-
-          chave,valor = string.match(keyValue,'"(.*)":(.*)')
-
-          valor = string.match(valor,'"(.*)"') or valor --Elimina aspas
-
-
-          if chave == "id" then
-            candidato:setId(valor);
-          elseif chave == "regiao" then
-            candidato:setRegiao(valor);
-          elseif chave == "cidade" then
-            candidato:setCidade(valor);
-          elseif chave == "uf" then
-            candidato:setEstado(valor);
-          elseif chave == "nomeParlamentar" then
-            candidato:setNomeParlamentar(valor);
-          elseif chave == "nomeCompleto" then
-            candidato:setNomeCompleto(valor);
-
-          elseif chave == "numero" then
-            candidato:setNumero(valor);
-          elseif chave == "nomeSitCandidatura" then
-            candidato:setNomeSitCandidatura(valor);
-          elseif chave == "siglaPartido" then
-            candidato:setSiglaPartido(valor);
-          elseif chave == "nomePartido" then
-            candidato:setNomePartido(valor);
-          elseif chave == "nomeLegenda" then
-            candidato:setNomeLegenda(valor);
-          elseif chave == "codLegenda" then
-            candidato:setCodLegenda(valor);
-          elseif chave == "composicaoLegenda" then
-            candidato:setComposicaoLegenda(valor);
-          elseif chave == "sexo" then
-            candidato:setSexo(valor);
-          elseif chave == "nomeRaca" then
-            candidato:setNomeRaca(valor);
-          elseif chave == "nomeOcupacao" then
-            candidato:setNomeOcupacao(valor);
-          elseif chave == "nomeEscolaridade" then
-            candidato:setNomeEscolaridade(valor);
-          elseif chave == "municipioNascimento" then
-            candidato:setMunicipioNascimento(valor);
-          elseif chave == "estadoNascimento" then
-            candidato:setEstadoNascimento(valor);
-          elseif chave == "totalBens" then
-            candidato:setTotalBens(valor);
-          elseif chave == "totalArrecadado" then
-            candidato:setTotalArrecadado(valor);
-          elseif chave == "ehParlamentarAtual" then
-            candidato:setEhParlamentarAtual(valor);
-          elseif chave == "cargoParlamentarAtual" then
-            candidato:setCargoParlamentarAtual(valor);
-          elseif chave == "codParlamentarAtual" then
-            candidato:setCodParlamentarAtual(valor);
-          end
-
-        end
-
-        table.insert(candidatos,candidato);
-
-      end
-
-    end
-
   end
 
   return candidatos;
+
+
 
 end
 
@@ -156,7 +117,7 @@ function carregaCandidatosWeb(f_callback,parametros)
 
   local dataTest = {160976}
 
-  local url = 'http://meucongressonacional.com/api/001/candidatos/2014/GOVERNADOR';
+  local url = 'http://meucongressonacional.com/api/001/candidatos/2014/'..tostring(CenaBuscaCandidatos.filtro:getNomeCargo())..'/'..tostring(CenaBuscaCandidatos.filtro:getEstado());
 
   local criterio_busca = parametros;
 
@@ -197,10 +158,10 @@ local function extrairDetalhesCandidato(str,candidato)
   local data = string.match(str,"{(.*)}")
 
   for campo in data:split(",") do
-    chave,valor = string.match(campo,'"(.*)":(.*)')
+    chave,valor = string.match(campo,'"(.*)":"(.*)"')
 
-    if(valor ~= nil) then
-      valor = string.match(valor,'"(.*)"') or valor
+--    if(valor ~= nil) then
+--      valor = string.match(valor,'"(.*)"') or valor
 
       if chave == "id" then
         candidato:setId(valor);
@@ -253,7 +214,7 @@ local function extrairDetalhesCandidato(str,candidato)
         candidato:setCodParlamentarAtual(valor);
       end
 
-    end
+--    end
   end
 
 end
@@ -261,7 +222,7 @@ end
 
 function carregaDetalhesCandidato(f_callback, candidato)
 
-  local url = 'http://meucongressonacional.com/api/001/candidato/'..candidato:getId();
+  local url = 'http://meucongressonacional.com/api/001/candidato/2014/'..candidato:getId();
 
   local dados = webs_get(url,{});
 
@@ -279,5 +240,6 @@ function carregaDetalhesCandidato(f_callback, candidato)
   f_callback(candidato);
 
 end
+
 
 
