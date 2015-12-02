@@ -308,7 +308,6 @@ function CenaBusca:getItensResultado(itens)
 
             FrameVisualizarPolitico:inicialize();
             
-            
             print("FRAME VISUALIZAR POLITICO!*********************************")
             
             Display.show();

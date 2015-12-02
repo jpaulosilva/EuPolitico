@@ -306,7 +306,6 @@ function CenaBuscaCandidatos:getItensResultado(itens)
 
             FrameVisualizarCandidato:inicialize();
             
-            
             print("FRAME VIZUALIZAR CANDIDATO!************************************")
             
             Display.show();
