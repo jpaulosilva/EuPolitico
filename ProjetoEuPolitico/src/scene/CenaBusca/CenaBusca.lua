@@ -295,6 +295,8 @@ function CenaBusca:getItensResultado(itens)
       CenaBusca.isCarregandoDetalhes = true;
 
       FrameVisualizarPolitico:inicialize();
+      
+      print("FRAME VISUALIZAR POLITICO!%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 
       local APP = coroutine.create (
         function ()
@@ -305,10 +307,13 @@ function CenaBusca:getItensResultado(itens)
             CenaBusca.isCarregandoDetalhes = false;
 
             FrameVisualizarPolitico:inicialize();
+            print("FRAME VISUALIZAR POLITICO!*********************************")
+            
             Display.show();
           end
 
           carregaDetalhesDeputado(f_callback,CenaBusca.politicoSelecionado);
+          print("CHAMOU CARREGA DETALHES POLÍTICO!!")
         end
       )
 

@@ -1158,7 +1158,7 @@ function FrameVisualizarCandidato:buildPainelDetalhes()
 
 
 
-  return panelDetalhesEscola;
+  return panelDetalhesCandidato;
 
 end
 

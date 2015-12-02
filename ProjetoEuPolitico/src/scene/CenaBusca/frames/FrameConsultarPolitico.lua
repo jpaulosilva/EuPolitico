@@ -60,8 +60,8 @@ function FrameConsultarPolitico:action(evt)
       CenaBusca.panelFoco = "painelConsultarPolitico";
       CenaBusca.labelAcao = "BUSCAR"
       CenaBusca.resultado = {};
-      CenaBusca.escolaSelecionada = nil;
-      CenaBusca.indiceEscolaMenu = 1;
+      CenaBusca.politicoSelecionado = nil;
+      CenaBusca.indicePoliticoMenu = 1;
       FrameConsultarPolitico.inicialize();
     end
   elseif(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoAzul(evt)) then

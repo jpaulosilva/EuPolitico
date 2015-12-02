@@ -266,9 +266,6 @@
 			</navigationCase>
 		</navigationRule>
 		
-		
-		
-
 		<navigationRule>
 			<from scene="CenaPrincipal" frame="FrameCEP" />
 			<navigationCase>
