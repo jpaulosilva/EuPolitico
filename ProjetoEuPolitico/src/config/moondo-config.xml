@@ -208,7 +208,6 @@
 				<key class="ruleKey" key="acessarFrameConsultarCandidatoAvancado" />
 				<to scene="CenaBuscaCandidatos" frame="FrameConsultarCandidatoAvancado" />
 			</navigationCase>
-			
 			<navigationCase>
 				<key class="ruleKey" key="acessarCenaVisualizarCandidato" />
 				<to scene="CenaBuscaCandidatos" frame="FrameVisualizarCandidato" />

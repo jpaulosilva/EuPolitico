@@ -120,7 +120,6 @@ function FrameVisualizarCandidato:buildPainelDetalhes()
   panelDetalhesCandidato:addComponent(fieldNome,3);
 
 
-
   return panelDetalhesCandidato;
 
 end

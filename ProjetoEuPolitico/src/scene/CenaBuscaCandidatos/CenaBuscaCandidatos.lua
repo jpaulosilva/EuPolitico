@@ -305,7 +305,10 @@ function CenaBuscaCandidatos:getItensResultado(itens)
             CenaBuscaCandidatos.isCarregandoDetalhes = false;
 
             FrameVisualizarCandidato:inicialize();
+            
+            
             print("FRAME VIZUALIZAR CANDIDATO!************************************")
+            
             Display.show();
           end
 
