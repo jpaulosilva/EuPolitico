@@ -307,6 +307,7 @@ function CenaBusca:getItensResultado(itens)
             CenaBusca.isCarregandoDetalhes = false;
 
             FrameVisualizarPolitico:inicialize();
+            
             print("FRAME VISUALIZAR POLITICO!*********************************")
             
             Display.show();

@@ -293,6 +293,7 @@ function CenaBuscaCandidatos:getItensResultado(itens)
       CenaBuscaCandidatos.isCarregandoDetalhes = true;
 
       FrameVisualizarCandidato:inicialize();
+      
       print("FRAME VIZUALIZAR CANDIDATO!%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
       
       local APP = coroutine.create (
