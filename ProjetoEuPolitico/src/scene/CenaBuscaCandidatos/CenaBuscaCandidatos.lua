@@ -2,19 +2,12 @@ BibliotecaAuxiliarScript.execute('framework.src.util.app.Scene');
 BibliotecaAuxiliarScript.execute('scene.CenaBuscaCandidatos.frames.FrameConsultarCandidato');
 BibliotecaAuxiliarScript.execute('scene.CenaBuscaCandidatos.frames.FrameConsultarCandidatoAvancado');
 BibliotecaAuxiliarScript.execute('scene.CenaBuscaCandidatos.frames.FrameVisualizarCandidato');
-BibliotecaAuxiliarScript.execute('scene.CenaBuscaCandidatos.frames.FrameVisualizarEscolaComparar');
 BibliotecaAuxiliarScript.execute('data.Localizacoes');
 BibliotecaAuxiliarScript.execute('data.ListaCandidatos');
 BibliotecaAuxiliarScript.execute('data.Candidato');
 BibliotecaAuxiliarScript.execute('data.FiltroCandidato');
-BibliotecaAuxiliarScript.execute('data.ListaEstatisticas');
-BibliotecaAuxiliarScript.execute('data.Estatistica');
-BibliotecaAuxiliarScript.execute('data.FiltroEstatisticasRegiao');
 BibliotecaAuxiliarScript.execute('utils.Utils');
-
-BibliotecaAuxiliarScript.execute('data.ListaMelhoresEscolas');
-BibliotecaAuxiliarScript.execute('data.MelhoresEscolas');       --[[código adicionado]]--
-BibliotecaAuxiliarScript.execute('data.FiltroMelhoresEscolas');
+BibliotecaAuxiliarScript.execute('data.CarregarCandidatos');
 
 CenaBuscaCandidatos = Scene.new();
 CenaBuscaCandidatos.id = 'CenaBuscaCandidatos';
@@ -39,7 +32,7 @@ CenaBuscaCandidatos.indiceCargo = 1;
 CenaBuscaCandidatos.indicePartido = 1;
 CenaBuscaCandidatos.resultado = {};
 CenaBuscaCandidatos.candidatoSelecionado = nil;
-CenaBuscaCandidatos.indiceEscolaMenu = 1;
+CenaBuscaCandidatos.indiceCandidatoMenu = 1;
 CenaBuscaCandidatos.itensMenuAvancado = nil;
 CenaBuscaCandidatos.painelConsultarCandidato = nil;
 CenaBuscaCandidatos.painelResultados = nil;
@@ -55,134 +48,20 @@ CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanela = 1;
 CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
 CenaBuscaCandidatos.frameCorrente = nil;
 
-CenaBuscaCandidatos.resultadoVisualizarEscolaComparar = {};
-CenaBuscaCandidatos.isCarregandoPesquisaVisualizarEscolaComparar = false;
-
-CenaBuscaCandidatos.filtroNacional = FiltroEstatisticasRegiao:new();
-CenaBuscaCandidatos.filtroRegional = FiltroEstatisticasRegiao:new();
-CenaBuscaCandidatos.filtroEstadual = FiltroEstatisticasRegiao:new();
-CenaBuscaCandidatos.filtroMunicipal = FiltroEstatisticasRegiao:new();
-CenaBuscaCandidatos.listaNacional = ListaEstatisticas:new();
-CenaBuscaCandidatos.listaRegional = ListaEstatisticas:new();
-CenaBuscaCandidatos.listaEstadual = ListaEstatisticas:new();
-CenaBuscaCandidatos.listaMunicipal = ListaEstatisticas:new();
-
-
-CenaBuscaCandidatos.filtroNacionalMelhores = FiltroMelhoresEscolas:new();
-CenaBuscaCandidatos.filtroRegionalMelhores = FiltroMelhoresEscolas:new();
-CenaBuscaCandidatos.filtroEstadualMelhores = FiltroMelhoresEscolas:new();  --[[código adicionado]]--
-CenaBuscaCandidatos.listaNacionalMelhores = ListaMelhoresEscolas:new();
-CenaBuscaCandidatos.listaRegionalMelhores = ListaMelhoresEscolas:new();
-CenaBuscaCandidatos.listaEstadualMelhores = ListaMelhoresEscolas:new();
-
 
 function CenaBuscaCandidatos:inicialize()
 
-  CenaBuscaCandidatos.itensMenuAvancado = {
-    {'../media/regulamentacao.png','Regulamentada',detalhesMultselect=false,detalhes={"Não","Sim","Em Tramitação"},mascara={}},
-    {'../media/dep_administrativa.png','Dep. Administrativa',detalhesMultselect=false,detalhes={"Federal","Estadual","Municipal","Privada"},mascara={}},
-    {'../media/status.png','Situação',detalhesMultselect=false,detalhes={"Em Atividade","Paralisada","Extinta","Extinta (Ano anterior)"},mascara={}},
-    {'../media/localidade.png','Localidade',detalhesMultselect=false,detalhes={"Urbana","Rural"},mascara={}},
-    {'../media/agua.png','Água',detalhesMultselect=true,detalhes={"Filtrada","Rede Pública","Poço Artesiano","Cacimba","Fonte/Rio","Inexistente"},mascara={}},
-    {'../media/energia.png', 'Energia',detalhesMultselect=true,detalhes={"Rede Pública","Gerador","Outros","Inexistente"},mascara={}},
-    {'../media/esgoto.png','Esgoto',detalhesMultselect=true,detalhes={"Rede Pública","Fossa","Inexistente"},mascara={}},
-    {'../media/lixo.png','Lixo',detalhesMultselect=true,detalhes={"Coleta periódica","Queima","Joga em outra área","Recicla","Enterra","Outros"},mascara={}},
-    {'../media/dependencias.png','Dependências',detalhesMultselect=true,detalhes={"Lab. de Informática","Lab. de Ciências","Biblioteca","Auditório","Refeitório","Pátio Coberto","Pátio Descoberto","Parque Infantil","Berçário  ","Quadra Coberta","Quadra Descoberta","Área Verde  ","Acessibilidade (","Atendimento Especial","Banheiro Dentro","Banheiro Fora","Chuveiro","Almoxarifado","Alojamento de Aluno","Sala de Diretoria","Sala de Leitura","Sala de Professores","Secretaria","Despensa  ","Cozinha","Lavanderia"},mascara={}}
-  };
-
   CenaBuscaCandidatos:addFrame(FrameConsultarCandidato,FrameConsultarCandidato.id);
   CenaBuscaCandidatos:addFrame(FrameConsultarCandidatoAvancado,FrameConsultarCandidatoAvancado.id);
-  CenaBuscaCandidatos:addFrame(FrameVisualizarPolitico,FrameVisualizarPolitico.id);
-  CenaBuscaCandidatos:addFrame(FrameVisualizarEscolaComparar,FrameVisualizarEscolaComparar.id);
-  
+  CenaBuscaCandidatos:addFrame(FrameVisualizarCandidato,FrameVisualizarCandidato.id);
+
 
   FrameConsultarCandidato:inicialize();
   FrameConsultarCandidatoAvancado:inicialize();
-  FrameVisualizarPolitico:inicialize();
-  FrameVisualizarEscolaComparar:inicialize();
- 
+  FrameVisualizarCandidato:inicialize();
 
   CenaBuscaCandidatos.resultado = CenaBuscaCandidatos.lista:getCandidatos();
 
-
-  CenaBuscaCandidatos.filtroNacional:setTipoLocal("NAC");
-  CenaBuscaCandidatos.filtroRegional:setTipoLocal("REG");
-  CenaBuscaCandidatos.filtroEstadual:setTipoLocal("EST");
-  CenaBuscaCandidatos.filtroMunicipal:setTipoLocal("MUN");
-
-
-  CenaBuscaCandidatos.filtroNacionalMelhores:setTipoLocal("NAC");
-  CenaBuscaCandidatos.filtroRegionalMelhores:setTipoLocal("REG");  --[[código adicionado]]--
-  CenaBuscaCandidatos.filtroEstadualMelhores:setTipoLocal("EST");
-
-  CenaBuscaCandidatos.colunas = {
-    {indice="enem", titulo = "Enem", isPercentual=false},
-    {indice="idebAnosIniciais", titulo = "IDEB A.I.", isPercentual=false},
-    {indice="idebAnosFinais", titulo = "IDEB A.F.", isPercentual=false},
-    {indice="regulamentadaSim", titulo = "Regulamentada(Sim)", isPercentual=true},
-    {indice="regulamentadaNao", titulo = "Regulamentada(Não)", isPercentual=true},
-    {indice="regulamentadaTramitacao", titulo = "Regulamentada(Tramitação)", isPercentual=true},
-    {indice="dependenciaAdministrativaFederal", titulo = "Dependência Adm.(Federal)", isPercentual=true},
-    {indice="dependenciaAdministrativaEstadual", titulo = "Dependência Adm.(Estadual)", isPercentual=true},
-    {indice="dependenciaAdministrativaMunicipal", titulo = "Dependência Adm.(Municipal)", isPercentual=true},
-    {indice="dependenciaAdministrativaPrivada", titulo = "Dependência Adm.(Privada)", isPercentual=true},
-    {indice="situacaoFuncionamentoAtividade", titulo = "Situação Func.(Em Atividade)", isPercentual=true},
-    {indice="situacaoFuncionamentoParalisada", titulo = "Situação Func.(Paralisada)", isPercentual=true},
-    {indice="situacaoFuncionamentoExtinta", titulo = "Situação Func.(Extinta)", isPercentual=true},
-    {indice="situacaoFuncionamentoExtintaAnoAnterior", titulo = "Situação Func.(Ext. Ano Ant.)", isPercentual=true},
-    {indice="situacaoFuncionamentoAtividadeNaoInformado", titulo = "Situação Func.(Não Informado)", isPercentual=true},
-    {indice="tipoLocalizacaoUrbana", titulo = "Tipo Loc. (Urbana)", isPercentual=true},
-    {indice="tipoLocalizacaoRural", titulo = "Tipo Loc. (Rural)", isPercentual=true},
-    {indice="aguaFiltrada", titulo = "Água(Filtrada)", isPercentual=true},
-    {indice="aguaPublica", titulo = "Água(Pública)", isPercentual=true},
-    {indice="aguaPocoArtesiano", titulo = "Água(Poço Artesiano)", isPercentual=true},
-    {indice="aguaCacimba", titulo = "Água(Cacimba)", isPercentual=true},
-    {indice="aguaRio", titulo = "Água(Rio)", isPercentual=true},
-    {indice="aguaInexistente", titulo = "Água(Inexistente)", isPercentual=true},
-    {indice="energiaPublica", titulo = "Energia(Pública)", isPercentual=true},
-    {indice="energiaGerador", titulo = "Energia(Gerador)", isPercentual=true},
-    {indice="energiaOutros", titulo = "Energia(Outros)", isPercentual=true},
-    {indice="energiaInexistente", titulo = "Energia(Inexistente)", isPercentual=true},
-    {indice="esgotoPublico", titulo = "Esgoto(Público)", isPercentual=true},
-    {indice="esgotoFossa", titulo = "Esgoto(Fossa)", isPercentual=true},
-    {indice="esgotoInexistente", titulo = "Esgoto(Inexistente)", isPercentual=true},
-    {indice="lixoColetaPeriodica", titulo = "Lixo(Coleta Periódica)", isPercentual=true},
-    {indice="lixoQueima", titulo = "Lixo(Queima)", isPercentual=true},
-    {indice="lixoJogaOutraArea", titulo = "Lixo(Joga em Outra Área)", isPercentual=true},
-    {indice="lixoRecicla", titulo = "Lixo(Recicla)", isPercentual=true},
-    {indice="lixoEnterra", titulo = "Lixo(Enterra)", isPercentual=true},
-    {indice="lixoOutros", titulo = "Lixo(Outros)", isPercentual=true},
-    {indice="laboratorioInformatica", titulo = "Laboratorio de Informática", isPercentual=true},
-    {indice="laboratorioCiencias", titulo = "Laboratorio de Ciências", isPercentual=true},
-    {indice="biblioteca", titulo = "Biblioteca", isPercentual=true},
-    {indice="auditorio", titulo = "Auditório", isPercentual=true},
-    {indice="refeitorio", titulo = "Refeitório", isPercentual=true},
-    {indice="patioCoberto", titulo = "Pátio Coberto", isPercentual=true},
-    {indice="patioDescoberto", titulo = "Pátio Descoberto", isPercentual=true},
-    {indice="parqueInfantil", titulo = "Parque Infantil", isPercentual=true},
-    {indice="bercario", titulo = "Berçario", isPercentual=true},
-    {indice="quadraCoberta", titulo = "Quadra Coberta", isPercentual=true},
-    {indice="quadraDescoberta", titulo = "Quadra Descoberta", isPercentual=true},
-    {indice="areaVerde", titulo = "Área Verde", isPercentual=true},
-    {indice="dependenciasPNE", titulo = "Dependências PNE", isPercentual=true},
-    {indice="ensinoEspecial", titulo = "Ensino Especial", isPercentual=true},
-    {indice="sanitarioDentroPredio", titulo = "Sanitário (Dentro do Prédio)", isPercentual=true},
-    {indice="sanitarioForaPredio", titulo = "Sanitário (Fora do Prédio)", isPercentual=true},
-    {indice="sanitarioEducInfant", titulo = "Sanitário (Educação Infantil)", isPercentual=true},
-    {indice="sanitarioPNE", titulo = "Sanitário (PNE)", isPercentual=true},
-    {indice="banheiroChuveiro", titulo = "Banheiro com Chuveiro", isPercentual=true},
-    {indice="almoxarifado", titulo = "Almoxarifado", isPercentual=true},
-    {indice="alojamentoAluno", titulo = "Alojamento Alunos", isPercentual=true},
-    {indice="alojamentoProfessor", titulo = "Alojamento Professores", isPercentual=true},
-    {indice="salaDiretoria", titulo = "Sala Diretoria", isPercentual=true},
-    {indice="salaLeitura", titulo = "Sala Leitura", isPercentual=true},
-    {indice="salaProfessores", titulo = "Sala Professores", isPercentual=true},
-    {indice="secretaria", titulo = "Secretaria", isPercentual=true},
-    {indice="despensa", titulo = "Despensa", isPercentual=true},
-    {indice="cozinha", titulo = "Cozinha", isPercentual=true},
-    {indice="lavanderia", titulo = "Lavanderia", isPercentual=true},
-    {indice="atendimentoEspecial", titulo = "Atendimento Especial", isPercentual=true}
-  };
 
 end
 
@@ -293,27 +172,29 @@ function CenaBuscaCandidatos:getItensResultado(itens)
       CenaBuscaCandidatos.isCarregandoDetalhes = true;
 
       FrameVisualizarCandidato:inicialize();
-      
+
       print("FRAME VIZUALIZAR CANDIDATO!%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-      
+
       local APP = coroutine.create (
         function ()
+          print("Criou corrotina!!!!!!!");
 
           local f_callback = function(candidatoModificado)
             CenaBuscaCandidatos.candidatoSelecionado = candidatoModificado;
             FrameVisualizarCandidato:inicialize();
             CenaBuscaCandidatos.isCarregandoDetalhes = false;
+            print("F_CALLBACK CHAMADA");
 
             FrameVisualizarCandidato:inicialize();
-            
+
             print("FRAME VIZUALIZAR CANDIDATO!************************************")
-            
+
             Display.show();
           end
 
           carregaDetalhesCandidato(f_callback,CenaBuscaCandidatos.candidatoSelecionado);
           print("CHAMOU CARREGA DETALHES CANDIDATO!!")
-          
+
         end
       )
 
@@ -325,173 +206,8 @@ function CenaBuscaCandidatos:getItensResultado(itens)
   end
 end
 
-function CenaBuscaCandidatos:updateFiltro(frame)
-  local indiceRegulamentacao = 1;
-  local indiceDepAdministrativa = 2;
-  local indiceStatus = 3;
-  local indiceLocalidade = 4;
-  local indiceAgua = 5;
-  local indiceEnergia = 6;
-  local indiceEsgoto = 7;
-  local indiceLixo = 8;
-  local indiceDependencias = 9;
 
-  CenaBuscaCandidatos.filtro:limparCaracteristicas();
-
-  if(frame.id == FrameConsultarCandidatoAvancado.id)then
-
-    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceRegulamentacao].mascara) do
-      if(opcaoSelecionada)then
-        CenaBuscaCandidatos.filtro:setRegulamentada(indice-1);
-        break;
-      end
-    end
-
-    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceDepAdministrativa].mascara) do
-      if(opcaoSelecionada)then
-        CenaBuscaCandidatos.filtro:setDependenciasAdministrativas(indice);
-        break;
-      end
-    end
-
-    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceStatus].mascara) do
-      if(opcaoSelecionada)then
-        CenaBuscaCandidatos.filtro:setSituacaoFuncionamento(indice);
-        break;
-      end
-    end
-
-    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceLocalidade].mascara) do
-      if(opcaoSelecionada)then
-        CenaBuscaCandidatos.filtro:setLocalidade(indice);
-        break;
-      end
-    end
-
-    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceAgua].mascara) do
-      if(opcaoSelecionada)then
-        if(indice == 1)then
-          CenaBuscaCandidatos.filtro:setAguaFiltrada("true");
-        elseif(indice == 2)then
-          CenaBuscaCandidatos.filtro:setAguaPublica("true");
-        elseif(indice == 3)then
-          CenaBuscaCandidatos.filtro:setAguaPocoArtesiano("true");
-        elseif(indice == 4)then
-          CenaBuscaCandidatos.filtro:setAguaCacimba("true");
-        elseif(indice == 5)then
-          CenaBuscaCandidatos.filtro:setAguaRio("true");
-        elseif(indice == 6)then
-          CenaBuscaCandidatos.filtro:setAguaInexistente("true");
-        end
-      end
-    end
-
-    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceEnergia].mascara) do
-      if(opcaoSelecionada)then
-        if(indice == 1)then
-          CenaBuscaCandidatos.filtro:setEnergiaPublica("true");
-        elseif(indice == 2)then
-          CenaBuscaCandidatos.filtro:setEnergiaGerador("true");
-        elseif(indice == 3)then
-          CenaBuscaCandidatos.filtro:setEnergiaOutros("true");
-        elseif(indice == 4)then
-          CenaBuscaCandidatos.filtro:setEnergiaInexistente("true");
-        end
-      end
-    end
-
-    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceEsgoto].mascara) do
-      if(opcaoSelecionada)then
-        if(indice == 1)then
-          CenaBuscaCandidatos.filtro:setEsgotoPublico("true");
-        elseif(indice == 2)then
-          CenaBuscaCandidatos.filtro:setEsgotoFossa("true");
-        elseif(indice == 3)then
-          CenaBuscaCandidatos.filtro:setEsgotoInexistente("true");
-        end
-      end
-    end
-
-    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceLixo].mascara) do
-      if(opcaoSelecionada)then
-        if(indice == 1)then
-          CenaBuscaCandidatos.filtro:setLixoColetaPeriodica("true");
-        elseif(indice == 2)then
-          CenaBuscaCandidatos.filtro:setLixoQueima("true");
-        elseif(indice == 3)then
-          CenaBuscaCandidatos.filtro:setLixoJogaOutraArea("true");
-        elseif(indice == 4)then
-          CenaBuscaCandidatos.filtro:setLixoRecicla("true");
-        elseif(indice == 5)then
-          CenaBuscaCandidatos.filtro:setLixoEnterra("true");
-        elseif(indice == 6)then
-          CenaBuscaCandidatos.filtro:setLixoOutros("true");
-        end
-      end
-    end
-
-    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceDependencias].mascara) do
-      if(opcaoSelecionada)then
-        if(indice == 1)then
-          CenaBuscaCandidatos.filtro:setLaboratorioInformatica("true");
-        elseif(indice == 2)then
-          CenaBuscaCandidatos.filtro:setLaboratorioCiencias("true");
-        elseif(indice == 3)then
-          CenaBuscaCandidatos.filtro:setBiblioteca("true");
-        elseif(indice == 4)then
-          CenaBuscaCandidatos.filtro:setAuditorio("true");
-        elseif(indice == 5)then
-          CenaBuscaCandidatos.filtro:setRefeitorio("true");
-        elseif(indice == 6)then
-          CenaBuscaCandidatos.filtro:setPatioCoberto("true");
-        elseif(indice == 7)then
-          CenaBuscaCandidatos.filtro:setPatioDescoberto("true");
-        elseif(indice == 8)then
-          CenaBuscaCandidatos.filtro:setParqueInfantil("true");
-        elseif(indice == 9)then
-          CenaBuscaCandidatos.filtro:setBercario("true");
-        elseif(indice == 10)then
-          CenaBuscaCandidatos.filtro:setQuadraCoberta("true");
-        elseif(indice == 11)then
-          CenaBuscaCandidatos.filtro:setQuadraDescoberta("true");
-        elseif(indice == 12)then
-          CenaBuscaCandidatos.filtro:setAreaVerde("true");
-        elseif(indice == 13)then
-          CenaBuscaCandidatos.filtro:setDependenciasPNE("true");
-        elseif(indice == 14)then
-        --            CenaBuscaCandidatos.filtro:setAtendimentoEspecial("true");
-        elseif(indice == 15)then
-          CenaBuscaCandidatos.filtro:setSanitarioDentroPredio("true");
-        elseif(indice == 16)then
-          CenaBuscaCandidatos.filtro:setSanitarioForaPredio("true");
-        elseif(indice == 17)then
-          CenaBuscaCandidatos.filtro:setBanheiroChuveiro("true");
-        elseif(indice == 18)then
-          CenaBuscaCandidatos.filtro:setAlmoxarifado("true");
-        elseif(indice == 19)then
-          CenaBuscaCandidatos.filtro:setAlojamentoAluno("true");
-        elseif(indice == 20)then
-          CenaBuscaCandidatos.filtro:setSalaDiretoria("true");
-        elseif(indice == 21)then
-          CenaBuscaCandidatos.filtro:setSalaLeitura("true");
-        elseif(indice == 22)then
-          CenaBuscaCandidatos.filtro:setSalaProfessores("true");
-        elseif(indice == 23)then
-          CenaBuscaCandidatos.filtro:setSecretaria("true");
-        elseif(indice == 24)then
-          CenaBuscaCandidatos.filtro:setDespensa("true");
-        elseif(indice == 25)then
-          CenaBuscaCandidatos.filtro:setCozinha("true");
-        elseif(indice == 26)then
-          CenaBuscaCandidatos.filtro:setLavanderia("true");
-        end
-      end
-    end
-  end
-
-end
-
---Função filtro para pesquisar escolas por nome, estado, cidade, nota ENEM, ou IDEB
+--Função filtro para pesquisar candidatos
 function CenaBuscaCandidatos:pesquisarCandidatos(frame)
 
   CenaBuscaCandidatos.isCarregandoPesquisa = true;
@@ -503,7 +219,6 @@ function CenaBuscaCandidatos:pesquisarCandidatos(frame)
 
       function ()
 
-        --CenaBuscaCandidatos:updateFiltro(frame);
 
         if(CenaBuscaCandidatos.filtro.nomeParlamentar == "")then
           CenaBuscaCandidatos.filtro.nomeParlamentarAlterado = false;
@@ -525,21 +240,6 @@ function CenaBuscaCandidatos:pesquisarCandidatos(frame)
           CenaBuscaCandidatos.filtro.partidoAlterado = false;
         end
 
---        if(CenaBuscaCandidatos.filtro.idebAnosIniciaisMin == " - ")then
---          CenaBuscaCandidatos.filtro.idebAnosIniciaisMinAlterado = false;
---        end
---
---        if(CenaBuscaCandidatos.filtro.idebAnosIniciaisMax == " - ")then
---          CenaBuscaCandidatos.filtro.idebAnosIniciaisMaxAlterado = false;
---        end
---
---        if(CenaBuscaCandidatos.filtro.idebAnosFinaisMin == " - ")then
---          CenaBuscaCandidatos.filtro.idebAnosFinaisMinAlterado = false;
---        end
---
---        if(CenaBuscaCandidatos.filtro.idebAnosFinaisMax == " - ")then
---          CenaBuscaCandidatos.filtro.idebAnosFinaisMaxAlterado = false;
---        end
 
         CenaBuscaCandidatos.lista:pesquisarCandidatos(CenaBuscaCandidatos.filtro);
         CenaBuscaCandidatos.isCarregandoPesquisa = false;
@@ -574,138 +274,22 @@ function CenaBuscaCandidatos:clear()
   CenaBuscaCandidatos.regiaoSelecionada = " - ";
   CenaBuscaCandidatos.estadoSelecionado = " - ";
   CenaBuscaCandidatos.cidadeSelecionada = " - ";
-  CenaBuscaCandidatos.enemSelecionado = " - ";
+  CenaBuscaCandidatos.cargoSelecionado = " - ";
+  CenaBuscaCandidatos.partidoSelecionado = " - ";
   CenaBuscaCandidatos.indiceRegiao = 1;
   CenaBuscaCandidatos.indiceEstado = 1;
   CenaBuscaCandidatos.indiceCidade = 1;
-  CenaBuscaCandidatos.indiceEnem = 1;
-  CenaBuscaCandidatos.indiceIdebAnosIniciaisMin = 1;
-  CenaBuscaCandidatos.indiceIdebAnosIniciaisMax = 1;
-  CenaBuscaCandidatos.indiceIdebAnosFinaisMin = 1;
-  CenaBuscaCandidatos.indiceIdebAnosFinaisMax = 1;
+  CenaBuscaCandidatos.indiceCargo = 1;
+  CenaBuscaCandidatos.indicePartido = 1;
+
   CenaBuscaCandidatos.resultado = {};
   CenaBuscaCandidatos.candidatoSelecionado = nil;
-  CenaBuscaCandidatos.indiceEscolaMenu = 1;
+  CenaBuscaCandidatos.indiceCandidatoMenu = 1;
 end
 
---Carrega itens para a busca avançada
-function CenaBuscaCandidatos:getItensMenuAvancado(frame)
-
-  local itens = {};
-
-  for i,v in pairs(CenaBuscaCandidatos.itensMenuAvancado) do
-    local src = v[1];
-    local nome = v[2];
-
-    local image = TImage.new();
-    image:setSrcArquivoExterno(src);
-
-    local label = TLabel.new();
-    label:setTexto(nome);
-    label:setFonte(CenaBuscaCandidatos.font_label);
-
-    local icone = TIcon.new();
-    icone:setTImage(image);
-    icone:setTLabel(label);
-    icone:setOrientacao(TIcon.TITULO_RIGHT);
-
-    icone.handler = function (self,evt)
-      if(BibliotecaAuxiliarEvento.isEventoControle(evt)) then
-
-        if(BibliotecaAuxiliarEvento.isBotaoCima(evt) and CenaBuscaCandidatos.indiceItemMenuAvancado > 1)then
-          CenaBuscaCandidatos.indiceItemMenuAvancado = CenaBuscaCandidatos.indiceItemMenuAvancado - 1;
-          CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhado = 1;
-          CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
-          frame:inicialize();
-        elseif(BibliotecaAuxiliarEvento.isBotaoBaixo(evt) and CenaBuscaCandidatos.indiceItemMenuAvancado < #CenaBuscaCandidatos.itensMenuAvancado)then
-          CenaBuscaCandidatos.indiceItemMenuAvancado = CenaBuscaCandidatos.indiceItemMenuAvancado + 1;
-          CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhado = 1;
-          CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
-          frame:inicialize();
-        elseif(BibliotecaAuxiliarEvento.isBotaoDireita(evt)) then
-          CenaBuscaCandidatos.indexFocoVisible = 3;
-          CenaBuscaCandidatos.indexFoco = 3;
-          CenaBuscaCandidatos.panelFoco = "painelConsultarCandidatoAvancado";
-          frame:inicialize();
-        end
-      end
-    end
-
-    table.insert(itens,icone);
-
-  end
-
-  return itens;
-end
-
---Detalha os itens da busca avançada
-function CenaBuscaCandidatos:getItensMenuAvancadoDetalhes(frame,indiceItemSelecionado,menu)
-
-  local itens = {};
 
 
-
-  for i,v in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].detalhes) do
-    local nome = v;
-
-    if(CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i] == nil)then
-      CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i] = false;
-    end
-
-    local image = TImage.new();
-    if(CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i])then
-      image:setSrcArquivoExterno("../media/check_habilitado.png");
-    else
-      image:setSrcArquivoExterno("../media/check_desabilitado.png");
-    end
-
-    local label = TLabel.new();
-    label:setTexto(nome);
-    label:setFonte(CenaBuscaCandidatos.font_label);
-
-    local icone = TIcon.new();
-    icone:setTImage(image);
-    icone:setTLabel(label);
-    icone:setOrientacao(TIcon.TITULO_RIGHT);
-
-    icone.action = function (self,evt)
-      CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i] = not CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i];
-
-      if((not CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].detalhesMultselect) and CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i])then
-        for indiceItem,valorItem in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].detalhes) do
-          if(indiceItem ~=i) then
-            CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[indiceItem] = false;
-          end
-        end
-      end
-
-      frame:inicialize();
-    end
-
-    icone.handler = function (self,evt)
-      CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhado = menu:getOpcaoSelecionada();
-      CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanela = menu:getOpcaoSelecionadaJanela();
-      CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanelaInicio = menu:getInicioJanela();
-
-      if(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoEsquerda(evt)) then
-        CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhado = 1;
-        CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanela = 1;
-        CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
-        CenaBuscaCandidatos.indexFocoVisible = 1;
-        CenaBuscaCandidatos.indexFoco = 1;
-        CenaBuscaCandidatos.panelFoco = "painelConsultarCandidatoAvancado";
-        frame:inicialize();
-      end
-    end
-
-    table.insert(itens,icone);
-
-  end
-
-  return itens;
-end
-
---Constrói o painel no qual os dados são inseridos para busca de escolas
+--Constrói o painel no qual os dados são inseridos para busca de candidatos
 function CenaBuscaCandidatos:buildPainelConsultarCandidato(frame)
   -- Incluir componentes gráficos
   local panel= TPanel.new();
@@ -713,7 +297,7 @@ function CenaBuscaCandidatos:buildPainelConsultarCandidato(frame)
   panel:setAltura(385);
   panel:setPx(645);
   panel:setPy(5);
-  panel:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));--{r=200,g=255,b=255,alpha=255}));
+  panel:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
 
 
 
@@ -796,8 +380,6 @@ function CenaBuscaCandidatos:buildPainelConsultarCandidato(frame)
   CenaBuscaCandidatos.regiaoSelecionada = tchoicerRegiao:getItens()[tchoicerRegiao:getOpcaoSelecionada(CenaBuscaCandidatos.indiceRegiao)]:getTexto();
   CenaBuscaCandidatos.filtro:setRegiao(CenaBuscaCandidatos.regiaoSelecionada);
 
-  CenaBuscaCandidatos.filtroRegionalMelhores:setRegiaoGeografica(CenaBuscaCandidatos.regiaoSelecionada); --[[código adicionado]]--
-
   panel:addComponent(labelChoicerRegiao,labelChoicerRegiao.indice);
   panel:addComponent(tchoicerRegiao,tchoicerRegiao.indice);
 
@@ -831,7 +413,6 @@ function CenaBuscaCandidatos:buildPainelConsultarCandidato(frame)
   CenaBuscaCandidatos.estadoSelecionado = tchoicerEstado:getItens()[tchoicerEstado:getOpcaoSelecionada(CenaBuscaCandidatos.indiceEstado)]:getTexto();
   CenaBuscaCandidatos.filtro:setEstado(CenaBuscaCandidatos.estadoSelecionado);
 
-  CenaBuscaCandidatos.filtroEstadualMelhores:setEstado(CenaBuscaCandidatos.estadoSelecionado); --[[código adicionado]]--
 
   panel:addComponent(labelChoicerEstado,labelChoicerEstado.indice);
   panel:addComponent(tchoicerEstado,tchoicerEstado.indice);
@@ -1071,8 +652,6 @@ function CenaBuscaCandidatos:buildPainelConsultarCandidato(frame)
       CenaBuscaCandidatos.panelFoco = "painelConsultarCandidato";
       frame.inicialize();
 
-   
-
     end
   end
 
@@ -1163,7 +742,7 @@ function CenaBuscaCandidatos:buildPainelResultados(frame)
   return panelResultados;
 end
 
---Constrói o painel no qual os dados são inseridos para busca avançada de escolas
+--Constrói o painel no qual os dados são inseridos para busca avançada de candidatos
 function CenaBuscaCandidatos:buildPainelConsultarCandidatoAvancado(frame)
   -- Incluir componentes gráficos
   local panel= TPanel.new();
@@ -1171,229 +750,13 @@ function CenaBuscaCandidatos:buildPainelConsultarCandidatoAvancado(frame)
   panel:setAltura(385);
   panel:setPx(5);
   panel:setPy(5);
-  panel:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));--{r=200,g=255,b=255,alpha=255}));
+  panel:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
 
-  local menuOpcoes = TMenu.new();
-  menuOpcoes:addAllItens(CenaBuscaCandidatos:getItensMenuAvancado(frame));
-  menuOpcoes:setOpcaoSelecionada(CenaBuscaCandidatos.indiceItemMenuAvancado);
-  menuOpcoes:setOpcaoSelecionadaJanela(CenaBuscaCandidatos.indiceItemMenuAvancado);
-  menuOpcoes:setOrientacao(TMenu.VERTICAL);
-  menuOpcoes:setTamanhoJanela(9);
-  menuOpcoes:setIsItensCentralizados(false);
-  menuOpcoes:update();
 
-  menuOpcoes:setPx(5)--(FramePrincipal:getLargura() - menu:getLargura())/2);
-  menuOpcoes:setPy(5)--(FramePrincipal:getAltura() - menu:getAltura())/2);
-
-  panel:addComponent(menuOpcoes,1)
-
-  local imageSeta = TImage.new();
-  imageSeta:setSrcArquivoExterno("../media/seta_right.png");
-  imageSeta:update();
-  imageSeta:setPx(menuOpcoes:getLargura() + 20)--(FramePrincipal:getLargura() - menu:getLargura())/2);
-  imageSeta:setPy(19 + (38 * (CenaBuscaCandidatos.indiceItemMenuAvancado-1)) + imageSeta:getAltura()/2 + 2);
-
-  panel:addComponent(imageSeta,2)
-
-  local menuDetalhes = TMenu.new();
-  menuDetalhes:setOpcaoSelecionada(CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhado);
-  menuDetalhes:setOpcaoSelecionadaJanela(CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanela);
-  menuDetalhes:setInicioJanela(CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanelaInicio);
-  local itens = CenaBuscaCandidatos:getItensMenuAvancadoDetalhes(frame,menuOpcoes:getOpcaoSelecionada(),menuDetalhes);
-  menuDetalhes:addAllItens(itens);
-  menuDetalhes:setOrientacao(TMenu.VERTICAL);
-  menuDetalhes:setTamanhoJanela(math.min(#itens,9));
-  menuDetalhes:setIsItensCentralizados(false);
-  menuDetalhes:update();
-
-  menuDetalhes:setPx(imageSeta:getPx() + imageSeta:getLargura() + 20)--(FramePrincipal:getLargura() - menu:getLargura())/2);
-  menuDetalhes:setPy(5)--(FramePrincipal:getAltura() - menu:getAltura())/2);
-
-  panel:addComponent(menuDetalhes,3)
 
   return panel;
 end
 
---[[Método responsável por comparar os dados estatísticos gerais e das melhores escolas com os dados da escola em questão]]--
-function CenaBuscaCandidatos:pesquisarVisualizarEscolaComparar()
-
-  CenaBuscaCandidatos.isCarregandoPesquisaVisualizarEscolaComparar = true;
-
-  FrameVisualizarEscolaComparar:inicialize();
-  local APP = coroutine.create (
-
-      function ()
-
-        CenaBuscaCandidatos.listaNacional:buscarEstatisticas(CenaBuscaCandidatos.filtroNacional)
-
-        if(CenaBuscaCandidatos.filtroRegional.regiaoGeografica ~= " - " and CenaBuscaCandidatos.filtroRegional.regiaoGeograficaAlterado)then
-          CenaBuscaCandidatos.listaRegional:buscarEstatisticas(CenaBuscaCandidatos.filtroRegional)
-        end
-
-        if(CenaBuscaCandidatos.filtroEstadual.estado ~= " - " and CenaBuscaCandidatos.filtroEstadual.estadoAlterado)then
-          CenaBuscaCandidatos.listaEstadual:buscarEstatisticas(CenaBuscaCandidatos.filtroEstadual)
-        end
-
-        if(CenaBuscaCandidatos.filtroMunicipal.cidade ~= " - " and CenaBuscaCandidatos.filtroMunicipal.cidadeAlterado)then
-          CenaBuscaCandidatos.listaMunicipal:buscarEstatisticas(CenaBuscaCandidatos.filtroMunicipal)
-        end
-
-
-        --[[código adicionado]]--
-        CenaBuscaCandidatos.listaNacionalMelhores:buscarMelhoresEscolas(CenaBuscaCandidatos.filtroNacionalMelhores)
-
-        if(CenaBuscaCandidatos.filtroRegionalMelhores.regiaoGeografica ~= " - " and CenaBuscaCandidatos.filtroRegionalMelhores.regiaoGeograficaAlterado)then
-          CenaBuscaCandidatos.listaRegionalMelhores:buscarMelhoresEscolas(CenaBuscaCandidatos.filtroRegionalMelhores)
-        end
-
-        if(CenaBuscaCandidatos.filtroEstadualMelhores.estado ~= " - " and CenaBuscaCandidatos.filtroEstadualMelhores.estadoAlterado)then
-          CenaBuscaCandidatos.listaEstadualMelhores:buscarMelhoresEscolas(CenaBuscaCandidatos.filtroEstadualMelhores)
-        end
-
-
-
-        --*****************************************************************************************************************
-
-        CenaBuscaCandidatos.isCarregandoPesquisaVisualizarEscolaComparar = false;
-
-        FrameVisualizarEscolaComparar:inicialize();
-        Display.show();
-      end
-  )
-
-  coroutine.resume(APP)
-end
-
---Faz a comparação de dados estatísticos da escola selecionada em nível municipal, estadual, regional e nacional
-function CenaBuscaCandidatos:getItensResultadoDetalhesComparar(itens)
-
-
-  if(CenaBuscaCandidatos.listaNacional.estatisticas[1] ~=nil)then
-
-    local estatisticasEscola = CenaBuscaCandidatos.candidatoSelecionado:toEstatistica();
-
-    for i,v in pairs(CenaBuscaCandidatos.colunas) do
-      local estatistica = v.titulo;
-      local escola = " - ";
-      local nacional = CenaBuscaCandidatos:getEstatistica(CenaBuscaCandidatos.listaNacional.estatisticas[1][v.indice], v.isPercentual);
-      local regional = " - ";
-      local estadual = " - ";
-      local municipal = " - ";
-
-      if(estatisticasEscola[v.indice] ~= nil)then
-        escola = estatisticasEscola[v.indice];
-      end
-
-      if(CenaBuscaCandidatos.listaRegional.estatisticas[1] ~= nil)then
-        regional = CenaBuscaCandidatos:getEstatistica(CenaBuscaCandidatos.listaRegional.estatisticas[1][v.indice], v.isPercentual);
-      end
-
-      if(CenaBuscaCandidatos.listaEstadual.estatisticas[1] ~= nil)then
-        estadual = CenaBuscaCandidatos:getEstatistica(CenaBuscaCandidatos.listaEstadual.estatisticas[1][v.indice], v.isPercentual);
-      end
-
-      if(CenaBuscaCandidatos.listaMunicipal.estatisticas[1] ~= nil)then
-        municipal = CenaBuscaCandidatos:getEstatistica(CenaBuscaCandidatos.listaMunicipal.estatisticas[1][v.indice], v.isPercentual);
-      end
-
-
-      local line = TConteiner.new();
-      line:setLargura(1270);
-      line:setAltura(40);
-
-      local sizeFields = 150;
-      local sizeEstatistica = 420;
-
-      local fieldEstatistica = createField(estatistica,5,5,sizeEstatistica,CenaBuscaCandidatos.font_data,CenaBuscaCandidatos.cor_line,false);
-      line:addComponent(fieldEstatistica);
-
-      local fieldEscola = createField(escola,fieldEstatistica:getPx() + fieldEstatistica:getLargura() + 10,5,sizeFields,CenaBuscaCandidatos.font_data,CenaBuscaCandidatos.cor_line,true);
-      line:addComponent(fieldEscola);
-
-      local fieldNacional = createField(nacional,fieldEscola:getPx() + fieldEscola:getLargura() + 10,5,sizeFields,CenaBuscaCandidatos.font_data,CenaBuscaCandidatos.cor_line,true);
-      line:addComponent(fieldNacional);
-
-      local fieldRegional = createField(regional,fieldNacional:getPx() + fieldNacional:getLargura() + 10,5,sizeFields,CenaBuscaCandidatos.font_data,CenaBuscaCandidatos.cor_line,true);
-      line:addComponent(fieldRegional);
-
-      local fieldEstadual = createField(estadual,fieldRegional:getPx() + fieldRegional:getLargura() + 10,5,sizeFields,CenaBuscaCandidatos.font_data,CenaBuscaCandidatos.cor_line,true);
-      line:addComponent(fieldEstadual);
-
-      local fieldMunicipal = createField(municipal,fieldEstadual:getPx() + fieldEstadual:getLargura() + 10,5,sizeFields,CenaBuscaCandidatos.font_data,CenaBuscaCandidatos.cor_line,true);
-      line:addComponent(fieldMunicipal);
-
-      table.insert(itens,line);
-    end
-  end
-end
-
---Faz a comparação dos dados estatísticos da escola selecionada com as melhores e piores escolas em nível estadual, regional e nacional
-function CenaBuscaCandidatos:getItensResultadoDetalhesCompararMelhoresPiores(itens)
-
-
-  if(CenaBuscaCandidatos.listaNacionalMelhores.melhoresEscolas[1] ~=nil)then
-
-    local estatisticasEscola = CenaBuscaCandidatos.candidatoSelecionado:toEstatistica();
-    for i,v in pairs(CenaBuscaCandidatos.colunas) do
-      local estatistica = v.titulo;
-      local escola = " - ";
-      local nacional = CenaBuscaCandidatos:getEstatistica(CenaBuscaCandidatos.listaNacionalMelhores.melhoresEscolas[1][v.indice], v.isPercentual);
-      local regional = " - ";
-      local estadual = " - ";
-      local municipal = " - ";
-
-      if(estatisticasEscola[v.indice] ~= nil)then
-        escola = estatisticasEscola[v.indice];
-      end
-
-      if(CenaBuscaCandidatos.listaRegionalMelhores.melhoresEscolas[1] ~= nil)then
-        regional = CenaBuscaCandidatos:getEstatistica(CenaBuscaCandidatos.listaRegionalMelhores.melhoresEscolas[1][v.indice], v.isPercentual);
-      end
-
-      if(CenaBuscaCandidatos.listaEstadualMelhores.melhoresEscolas[1] ~= nil)then
-        estadual = CenaBuscaCandidatos:getEstatistica(CenaBuscaCandidatos.listaEstadualMelhores.melhoresEscolas[1][v.indice], v.isPercentual);
-      end
-
-
-      local line = TConteiner.new();
-      line:setLargura(1270);
-      line:setAltura(40);
-
-      local sizeFields = 184;--85;
-      local sizeEstatistica = 450;--350;
-
-      local fieldEstatistica = createField(estatistica,5,5,sizeEstatistica,CenaBuscaCandidatos.font_data,CenaBuscaCandidatos.cor_line,false);
-      line:addComponent(fieldEstatistica);
-
-      local fieldEscola = createField(escola,fieldEstatistica:getPx() + fieldEstatistica:getLargura() + 10,5,sizeFields + 5,CenaBuscaCandidatos.font_data,CenaBuscaCandidatos.cor_line,true);
-      line:addComponent(fieldEscola);
-
-      local fieldNacionalMelhores = createField(nacional,fieldEscola:getPx() + fieldEscola:getLargura() + 10,5,sizeFields,CenaBuscaCandidatos.font_data,CenaBuscaCandidatos.cor_line,true);
-      line:addComponent(fieldNacionalMelhores);
-
-
-
-      local fieldRegionalMelhores = createField(regional,fieldNacionalMelhores:getPx() + fieldNacionalMelhores:getLargura() + 10,5,sizeFields,CenaBuscaCandidatos.font_data,CenaBuscaCandidatos.cor_line,true);
-      line:addComponent(fieldRegionalMelhores);
-
-
-
-      local fieldEstadualMelhroes = createField(estadual,fieldRegionalMelhores:getPx() + fieldRegionalMelhores:getLargura() + 10,5,sizeFields,CenaBuscaCandidatos.font_data,CenaBuscaCandidatos.cor_line,true);
-      line:addComponent(fieldEstadualMelhroes);
-
-
-
-
-      table.insert(itens,line);
-    end
-  end
-
-
-
-
-
-
-end
 
 --Formata o dado estatístico em duas casas decimais após a vírgula
 function CenaBuscaCandidatos:getEstatistica(estatistica, isPercentual)
@@ -1404,6 +767,5 @@ function CenaBuscaCandidatos:getEstatistica(estatistica, isPercentual)
   end
   return estatistica;
 end
-
 
 

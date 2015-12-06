@@ -5,9 +5,9 @@ BibliotecaAuxiliarScript.execute('framework.src.gui.TLabel');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TPanel');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TField');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TChoicer');
-BibliotecaAuxiliarScript.execute('data.ListaEscolas');
-BibliotecaAuxiliarScript.execute('data.Escola');
-BibliotecaAuxiliarScript.execute('data.FiltroEscola');
+BibliotecaAuxiliarScript.execute('data.ListaDeputados');
+BibliotecaAuxiliarScript.execute('data.Politico');
+BibliotecaAuxiliarScript.execute('data.FiltroPolitico');
 
 FrameConsultarPoliticoAvancado = TFrame.new();
 FrameConsultarPoliticoAvancado.id = 'FrameConsultarPoliticoAvancado';

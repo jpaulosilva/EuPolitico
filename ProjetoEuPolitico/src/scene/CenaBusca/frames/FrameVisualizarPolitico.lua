@@ -3,9 +3,9 @@ BibliotecaAuxiliarScript.execute('framework.src.gui.TFrame');
 BibliotecaAuxiliarScript.execute('framework.src.util.gui.Cor');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TLabel');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TPanel');
-BibliotecaAuxiliarScript.execute('data.ListaEscolas');
-BibliotecaAuxiliarScript.execute('data.Escola');
-BibliotecaAuxiliarScript.execute('data.FiltroEscola');
+BibliotecaAuxiliarScript.execute('data.ListaDeputados');
+BibliotecaAuxiliarScript.execute('data.Politico');
+BibliotecaAuxiliarScript.execute('data.FiltroPolitico');
 
 
 FrameVisualizarPolitico = TFrame.new();
@@ -36,7 +36,7 @@ function FrameVisualizarPolitico:inicialize()
   FrameVisualizarPolitico:setPy(0);
   FrameVisualizarPolitico:setCorFundo(CenaBusca.cor);
 
-  FrameVisualizarEscolaComparar:setComponents({});
+--  FrameVisualizarEscolaComparar:setComponents({});
 
   if (CenaBusca.politicoSelecionado ~= nil and not CenaBusca.isCarregandoDetalhes) then
 

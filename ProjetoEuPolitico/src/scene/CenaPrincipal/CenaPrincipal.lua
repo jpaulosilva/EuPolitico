@@ -3,7 +3,6 @@ BibliotecaAuxiliarScript.execute('scene.CenaPrincipal.frames.FrameInteracao');
 BibliotecaAuxiliarScript.execute('scene.CenaPrincipal.frames.FramePrincipal');
 BibliotecaAuxiliarScript.execute('scene.CenaPrincipal.frames.FrameAjuda');
 BibliotecaAuxiliarScript.execute('scene.CenaPrincipal.frames.FrameQuemSomos');
-BibliotecaAuxiliarScript.execute('scene.CenaPrincipal.frames.FrameCEP');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TIcon');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TImage');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TLabel');
@@ -18,13 +17,12 @@ function CenaPrincipal:inicialize()
   CenaPrincipal:addFrame(FramePrincipal,FramePrincipal.id);
   CenaPrincipal:addFrame(FrameAjuda,FrameAjuda.id);
   CenaPrincipal:addFrame(FrameQuemSomos,FrameQuemSomos.id);
-  CenaPrincipal:addFrame(FrameCEP,FrameCEP.id);
+
 
   FrameInteracao:inicialize();
   FramePrincipal:inicialize();
   FrameAjuda:inicialize();
   FrameQuemSomos:inicialize();
-  FrameCEP:inicialize();
 
 end
 

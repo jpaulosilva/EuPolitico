@@ -5,9 +5,9 @@ BibliotecaAuxiliarScript.execute('framework.src.gui.TLabel');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TPanel');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TField');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TChoicer');
-BibliotecaAuxiliarScript.execute('data.ListaEscolas');
-BibliotecaAuxiliarScript.execute('data.Escola');
-BibliotecaAuxiliarScript.execute('data.FiltroEscola');
+BibliotecaAuxiliarScript.execute('data.ListaCandidatos');
+BibliotecaAuxiliarScript.execute('data.Candidato');
+BibliotecaAuxiliarScript.execute('data.FiltroCandidato');
 
 FrameConsultarCandidatoAvancado = TFrame.new();
 FrameConsultarCandidatoAvancado.id = 'FrameConsultarCandidatoAvancado';
@@ -91,8 +91,8 @@ function FrameConsultarCandidatoAvancado:action(evt)
       CenaBuscaCandidatos.panelFoco = "painelConsultarCandidato";
       CenaBuscaCandidatos.labelAcao = "BUSCAR"
       CenaBuscaCandidatos.resultado = {};
-      CenaBuscaCandidatos.escolaSelecionada = nil;
-      CenaBuscaCandidatos.indiceEscolaMenu = 1;
+      CenaBuscaCandidatos.candidatoSelecionada = nil;
+      CenaBuscaCandidatos.indiceCandidatoMenu = 1;
       FrameConsultarCandidatoAvancado.inicialize();
     end
   elseif(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoAzul(evt)) then

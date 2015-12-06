@@ -4,15 +4,15 @@ BibliotecaAuxiliarScript.execute('framework.src.gui.TIcon');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TImage');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TLabel');
 BibliotecaAuxiliarScript.execute('data.Localizacoes');
-BibliotecaAuxiliarScript.execute('data.ListaEstatisticas');
-BibliotecaAuxiliarScript.execute('data.Estatistica');
-BibliotecaAuxiliarScript.execute('data.FiltroEstatisticasRegiao');
+--BibliotecaAuxiliarScript.execute('data.ListaEstatisticas');
+--BibliotecaAuxiliarScript.execute('data.Estatistica');
+--BibliotecaAuxiliarScript.execute('data.FiltroEstatisticasRegiao');
 BibliotecaAuxiliarScript.execute('utils.Utils');
 
 
-BibliotecaAuxiliarScript.execute('data.ListaMelhoresEscolas');
-BibliotecaAuxiliarScript.execute('data.MelhoresEscolas');       --[[código adicionado]]--
-BibliotecaAuxiliarScript.execute('data.FiltroMelhoresEscolas');
+--BibliotecaAuxiliarScript.execute('data.ListaMelhoresEscolas');
+--BibliotecaAuxiliarScript.execute('data.MelhoresEscolas');       --[[código adicionado]]--
+--BibliotecaAuxiliarScript.execute('data.FiltroMelhoresEscolas');
 
 
 CenaEstatisticas = Scene.new();
@@ -31,22 +31,22 @@ CenaEstatisticas.indiceRegiao = 1;
 CenaEstatisticas.indiceEstado = 1;
 CenaEstatisticas.indiceCidade = 1;
 CenaEstatisticas.indiceMenu = 1;
-CenaEstatisticas.filtroNacional = FiltroEstatisticasRegiao:new();
-CenaEstatisticas.filtroRegional = FiltroEstatisticasRegiao:new();
-CenaEstatisticas.filtroEstadual = FiltroEstatisticasRegiao:new();
-CenaEstatisticas.filtroMunicipal = FiltroEstatisticasRegiao:new();
-CenaEstatisticas.listaNacional = ListaEstatisticas:new();
-CenaEstatisticas.listaRegional = ListaEstatisticas:new();
-CenaEstatisticas.listaEstadual = ListaEstatisticas:new();
-CenaEstatisticas.listaMunicipal = ListaEstatisticas:new();
-
-
-CenaEstatisticas.filtroNacionalMelhores = FiltroMelhoresEscolas:new();
-CenaEstatisticas.filtroRegionalMelhores = FiltroMelhoresEscolas:new();
-CenaEstatisticas.filtroEstadualMelhores = FiltroMelhoresEscolas:new();  --[[código adicionado]]--
-CenaEstatisticas.listaNacionalMelhores = ListaMelhoresEscolas:new();
-CenaEstatisticas.listaRegionalMelhores = ListaMelhoresEscolas:new();
-CenaEstatisticas.listaEstadualMelhores = ListaMelhoresEscolas:new();
+--CenaEstatisticas.filtroNacional = FiltroEstatisticasRegiao:new();
+--CenaEstatisticas.filtroRegional = FiltroEstatisticasRegiao:new();
+--CenaEstatisticas.filtroEstadual = FiltroEstatisticasRegiao:new();
+--CenaEstatisticas.filtroMunicipal = FiltroEstatisticasRegiao:new();
+--CenaEstatisticas.listaNacional = ListaEstatisticas:new();
+--CenaEstatisticas.listaRegional = ListaEstatisticas:new();
+--CenaEstatisticas.listaEstadual = ListaEstatisticas:new();
+--CenaEstatisticas.listaMunicipal = ListaEstatisticas:new();
+--
+--
+--CenaEstatisticas.filtroNacionalMelhores = FiltroMelhoresEscolas:new();
+--CenaEstatisticas.filtroRegionalMelhores = FiltroMelhoresEscolas:new();
+--CenaEstatisticas.filtroEstadualMelhores = FiltroMelhoresEscolas:new();  --[[código adicionado]]--
+--CenaEstatisticas.listaNacionalMelhores = ListaMelhoresEscolas:new();
+--CenaEstatisticas.listaRegionalMelhores = ListaMelhoresEscolas:new();
+--CenaEstatisticas.listaEstadualMelhores = ListaMelhoresEscolas:new();
 
 CenaEstatisticas.painelConsulta = nil;
 CenaEstatisticas.painelResultados = nil;
@@ -58,86 +58,86 @@ function CenaEstatisticas:inicialize()
   CenaEstatisticas:addFrame(FrameEstatisticas,FrameEstatisticas.id);
   FrameEstatisticas:inicialize();
 
-  CenaEstatisticas.filtroNacional:setTipoLocal("NAC");
-  CenaEstatisticas.filtroRegional:setTipoLocal("REG");
-  CenaEstatisticas.filtroEstadual:setTipoLocal("EST");
-  CenaEstatisticas.filtroMunicipal:setTipoLocal("MUN");
-  
-  
-  CenaEstatisticas.filtroNacionalMelhores:setTipoLocal("NAC");
-  CenaEstatisticas.filtroRegionalMelhores:setTipoLocal("REG");  --[[código adicionado]]--
-  CenaEstatisticas.filtroEstadualMelhores:setTipoLocal("EST");
+--  CenaEstatisticas.filtroNacional:setTipoLocal("NAC");
+--  CenaEstatisticas.filtroRegional:setTipoLocal("REG");
+--  CenaEstatisticas.filtroEstadual:setTipoLocal("EST");
+--  CenaEstatisticas.filtroMunicipal:setTipoLocal("MUN");
+--  
+--  
+--  CenaEstatisticas.filtroNacionalMelhores:setTipoLocal("NAC");
+--  CenaEstatisticas.filtroRegionalMelhores:setTipoLocal("REG");  --[[código adicionado]]--
+--  CenaEstatisticas.filtroEstadualMelhores:setTipoLocal("EST");
   
 
-  CenaEstatisticas.colunas = {
-    {indice="enem", titulo = "Enem", isPercentual=false},
-    {indice="idebAnosIniciais", titulo = "IDEB A.I.", isPercentual=false},
-    {indice="idebAnosFinais", titulo = "IDEB A.F.", isPercentual=false},
-    {indice="regulamentadaSim", titulo = "Regulamentada(Sim)", isPercentual=true},
-    {indice="regulamentadaNao", titulo = "Regulamentada(Não)", isPercentual=true},
-    {indice="regulamentadaTramitacao", titulo = "Regulamentada(Tramitação)", isPercentual=true},
-    {indice="dependenciaAdministrativaFederal", titulo = "Dependência Adm.(Federal)", isPercentual=true},
-    {indice="dependenciaAdministrativaEstadual", titulo = "Dependência Adm.(Estadual)", isPercentual=true},
-    {indice="dependenciaAdministrativaMunicipal", titulo = "Dependência Adm.(Municipal)", isPercentual=true},
-    {indice="dependenciaAdministrativaPrivada", titulo = "Dependência Adm.(Privada)", isPercentual=true},
-    {indice="situacaoFuncionamentoAtividade", titulo = "Situação Func.(Em Atividade)", isPercentual=true},
-    {indice="situacaoFuncionamentoParalisada", titulo = "Situação Func.(Paralisada)", isPercentual=true},
-    {indice="situacaoFuncionamentoExtinta", titulo = "Situação Func.(Extinta)", isPercentual=true},
-    {indice="situacaoFuncionamentoExtintaAnoAnterior", titulo = "Situação Func.(Ext. Ano Ant.)", isPercentual=true},
-    {indice="situacaoFuncionamentoAtividadeNaoInformado", titulo = "Situação Func.(Não Informado)", isPercentual=true},
-    {indice="tipoLocalizacaoUrbana", titulo = "Tipo Loc. (Urbana)", isPercentual=true},
-    {indice="tipoLocalizacaoRural", titulo = "Tipo Loc. (Rural)", isPercentual=true},
-    {indice="aguaFiltrada", titulo = "Água(Filtrada)", isPercentual=true},
-    {indice="aguaPublica", titulo = "Água(Pública)", isPercentual=true},
-    {indice="aguaPocoArtesiano", titulo = "Água(Poço Artesiano)", isPercentual=true},
-    {indice="aguaCacimba", titulo = "Água(Cacimba)", isPercentual=true},
-    {indice="aguaRio", titulo = "Água(Rio)", isPercentual=true},
-    {indice="aguaInexistente", titulo = "Água(Inexistente)", isPercentual=true},
-    {indice="energiaPublica", titulo = "Energia(Pública)", isPercentual=true},
-    {indice="energiaGerador", titulo = "Energia(Gerador)", isPercentual=true},
-    {indice="energiaOutros", titulo = "Energia(Outros)", isPercentual=true},
-    {indice="energiaInexistente", titulo = "Energia(Inexistente)", isPercentual=true},
-    {indice="esgotoPublico", titulo = "Esgoto(Público)", isPercentual=true},
-    {indice="esgotoFossa", titulo = "Esgoto(Fossa)", isPercentual=true},
-    {indice="esgotoInexistente", titulo = "Esgoto(Inexistente)", isPercentual=true},
-    {indice="lixoColetaPeriodica", titulo = "Lixo(Coleta Periódica)", isPercentual=true},
-    {indice="lixoQueima", titulo = "Lixo(Queima)", isPercentual=true},
-    {indice="lixoJogaOutraArea", titulo = "Lixo(Joga em Outra Área)", isPercentual=true},
-    {indice="lixoRecicla", titulo = "Lixo(Recicla)", isPercentual=true},
-    {indice="lixoEnterra", titulo = "Lixo(Enterra)", isPercentual=true},
-    {indice="lixoOutros", titulo = "Lixo(Outros)", isPercentual=true},
-    {indice="laboratorioInformatica", titulo = "Laboratorio de Informática", isPercentual=true},
-    {indice="laboratorioCiencias", titulo = "Laboratorio de Ciências", isPercentual=true},
-    {indice="biblioteca", titulo = "Biblioteca", isPercentual=true},
-    {indice="auditorio", titulo = "Auditório", isPercentual=true},
-    {indice="refeitorio", titulo = "Refeitório", isPercentual=true},
-    {indice="patioCoberto", titulo = "Pátio Coberto", isPercentual=true},
-    {indice="patioDescoberto", titulo = "Pátio Descoberto", isPercentual=true},
-    {indice="parqueInfantil", titulo = "Parque Infantil", isPercentual=true},
-    {indice="bercario", titulo = "Berçario", isPercentual=true},
-    {indice="quadraCoberta", titulo = "Quadra Coberta", isPercentual=true},
-    {indice="quadraDescoberta", titulo = "Quadra Descoberta", isPercentual=true},
-    {indice="areaVerde", titulo = "Área Verde", isPercentual=true},
-    {indice="dependenciasPNE", titulo = "Dependências PNE", isPercentual=true},
-    {indice="ensinoEspecial", titulo = "Ensino Especial", isPercentual=true},
-    {indice="sanitarioDentroPredio", titulo = "Sanitário (Dentro do Prédio)", isPercentual=true},
-    {indice="sanitarioForaPredio", titulo = "Sanitário (Fora do Prédio)", isPercentual=true},
-    {indice="sanitarioEducInfant", titulo = "Sanitário (Educação Infantil)", isPercentual=true},
-    {indice="sanitarioPNE", titulo = "Sanitário (PNE)", isPercentual=true},
-    {indice="banheiroChuveiro", titulo = "Banheiro com Chuveiro", isPercentual=true},
-    {indice="almoxarifado", titulo = "Almoxarifado", isPercentual=true},
-    {indice="alojamentoAluno", titulo = "Alojamento Alunos", isPercentual=true},
-    {indice="alojamentoProfessor", titulo = "Alojamento Professores", isPercentual=true},
-    {indice="salaDiretoria", titulo = "Sala Diretoria", isPercentual=true},
-    {indice="salaLeitura", titulo = "Sala Leitura", isPercentual=true},
-    {indice="salaProfessores", titulo = "Sala Professores", isPercentual=true},
-    {indice="secretaria", titulo = "Secretaria", isPercentual=true},
-    {indice="despensa", titulo = "Despensa", isPercentual=true},
-    {indice="cozinha", titulo = "Cozinha", isPercentual=true},
-    {indice="lavanderia", titulo = "Lavanderia", isPercentual=true},
-    {indice="atendimentoEspecial", titulo = "Atendimento Especial", isPercentual=true}
-  };
-
+--  CenaEstatisticas.colunas = {
+--    {indice="enem", titulo = "Enem", isPercentual=false},
+--    {indice="idebAnosIniciais", titulo = "IDEB A.I.", isPercentual=false},
+--    {indice="idebAnosFinais", titulo = "IDEB A.F.", isPercentual=false},
+--    {indice="regulamentadaSim", titulo = "Regulamentada(Sim)", isPercentual=true},
+--    {indice="regulamentadaNao", titulo = "Regulamentada(Não)", isPercentual=true},
+--    {indice="regulamentadaTramitacao", titulo = "Regulamentada(Tramitação)", isPercentual=true},
+--    {indice="dependenciaAdministrativaFederal", titulo = "Dependência Adm.(Federal)", isPercentual=true},
+--    {indice="dependenciaAdministrativaEstadual", titulo = "Dependência Adm.(Estadual)", isPercentual=true},
+--    {indice="dependenciaAdministrativaMunicipal", titulo = "Dependência Adm.(Municipal)", isPercentual=true},
+--    {indice="dependenciaAdministrativaPrivada", titulo = "Dependência Adm.(Privada)", isPercentual=true},
+--    {indice="situacaoFuncionamentoAtividade", titulo = "Situação Func.(Em Atividade)", isPercentual=true},
+--    {indice="situacaoFuncionamentoParalisada", titulo = "Situação Func.(Paralisada)", isPercentual=true},
+--    {indice="situacaoFuncionamentoExtinta", titulo = "Situação Func.(Extinta)", isPercentual=true},
+--    {indice="situacaoFuncionamentoExtintaAnoAnterior", titulo = "Situação Func.(Ext. Ano Ant.)", isPercentual=true},
+--    {indice="situacaoFuncionamentoAtividadeNaoInformado", titulo = "Situação Func.(Não Informado)", isPercentual=true},
+--    {indice="tipoLocalizacaoUrbana", titulo = "Tipo Loc. (Urbana)", isPercentual=true},
+--    {indice="tipoLocalizacaoRural", titulo = "Tipo Loc. (Rural)", isPercentual=true},
+--    {indice="aguaFiltrada", titulo = "Água(Filtrada)", isPercentual=true},
+--    {indice="aguaPublica", titulo = "Água(Pública)", isPercentual=true},
+--    {indice="aguaPocoArtesiano", titulo = "Água(Poço Artesiano)", isPercentual=true},
+--    {indice="aguaCacimba", titulo = "Água(Cacimba)", isPercentual=true},
+--    {indice="aguaRio", titulo = "Água(Rio)", isPercentual=true},
+--    {indice="aguaInexistente", titulo = "Água(Inexistente)", isPercentual=true},
+--    {indice="energiaPublica", titulo = "Energia(Pública)", isPercentual=true},
+--    {indice="energiaGerador", titulo = "Energia(Gerador)", isPercentual=true},
+--    {indice="energiaOutros", titulo = "Energia(Outros)", isPercentual=true},
+--    {indice="energiaInexistente", titulo = "Energia(Inexistente)", isPercentual=true},
+--    {indice="esgotoPublico", titulo = "Esgoto(Público)", isPercentual=true},
+--    {indice="esgotoFossa", titulo = "Esgoto(Fossa)", isPercentual=true},
+--    {indice="esgotoInexistente", titulo = "Esgoto(Inexistente)", isPercentual=true},
+--    {indice="lixoColetaPeriodica", titulo = "Lixo(Coleta Periódica)", isPercentual=true},
+--    {indice="lixoQueima", titulo = "Lixo(Queima)", isPercentual=true},
+--    {indice="lixoJogaOutraArea", titulo = "Lixo(Joga em Outra Área)", isPercentual=true},
+--    {indice="lixoRecicla", titulo = "Lixo(Recicla)", isPercentual=true},
+--    {indice="lixoEnterra", titulo = "Lixo(Enterra)", isPercentual=true},
+--    {indice="lixoOutros", titulo = "Lixo(Outros)", isPercentual=true},
+--    {indice="laboratorioInformatica", titulo = "Laboratorio de Informática", isPercentual=true},
+--    {indice="laboratorioCiencias", titulo = "Laboratorio de Ciências", isPercentual=true},
+--    {indice="biblioteca", titulo = "Biblioteca", isPercentual=true},
+--    {indice="auditorio", titulo = "Auditório", isPercentual=true},
+--    {indice="refeitorio", titulo = "Refeitório", isPercentual=true},
+--    {indice="patioCoberto", titulo = "Pátio Coberto", isPercentual=true},
+--    {indice="patioDescoberto", titulo = "Pátio Descoberto", isPercentual=true},
+--    {indice="parqueInfantil", titulo = "Parque Infantil", isPercentual=true},
+--    {indice="bercario", titulo = "Berçario", isPercentual=true},
+--    {indice="quadraCoberta", titulo = "Quadra Coberta", isPercentual=true},
+--    {indice="quadraDescoberta", titulo = "Quadra Descoberta", isPercentual=true},
+--    {indice="areaVerde", titulo = "Área Verde", isPercentual=true},
+--    {indice="dependenciasPNE", titulo = "Dependências PNE", isPercentual=true},
+--    {indice="ensinoEspecial", titulo = "Ensino Especial", isPercentual=true},
+--    {indice="sanitarioDentroPredio", titulo = "Sanitário (Dentro do Prédio)", isPercentual=true},
+--    {indice="sanitarioForaPredio", titulo = "Sanitário (Fora do Prédio)", isPercentual=true},
+--    {indice="sanitarioEducInfant", titulo = "Sanitário (Educação Infantil)", isPercentual=true},
+--    {indice="sanitarioPNE", titulo = "Sanitário (PNE)", isPercentual=true},
+--    {indice="banheiroChuveiro", titulo = "Banheiro com Chuveiro", isPercentual=true},
+--    {indice="almoxarifado", titulo = "Almoxarifado", isPercentual=true},
+--    {indice="alojamentoAluno", titulo = "Alojamento Alunos", isPercentual=true},
+--    {indice="alojamentoProfessor", titulo = "Alojamento Professores", isPercentual=true},
+--    {indice="salaDiretoria", titulo = "Sala Diretoria", isPercentual=true},
+--    {indice="salaLeitura", titulo = "Sala Leitura", isPercentual=true},
+--    {indice="salaProfessores", titulo = "Sala Professores", isPercentual=true},
+--    {indice="secretaria", titulo = "Secretaria", isPercentual=true},
+--    {indice="despensa", titulo = "Despensa", isPercentual=true},
+--    {indice="cozinha", titulo = "Cozinha", isPercentual=true},
+--    {indice="lavanderia", titulo = "Lavanderia", isPercentual=true},
+--    {indice="atendimentoEspecial", titulo = "Atendimento Especial", isPercentual=true}
+--  };
+--
 
 
 
@@ -188,110 +188,61 @@ end
 
 
 --Função para pesquisar estatísticas
-function CenaEstatisticas:pesquisar()
-
-  CenaEstatisticas.isCarregandoPesquisa = true;
-  FrameEstatisticas:inicialize();
-  local APP = coroutine.create (
-
-      function ()
-
-        CenaEstatisticas.listaNacional:buscarEstatisticas(CenaEstatisticas.filtroNacional)
-
-        if(CenaEstatisticas.filtroRegional.regiaoGeografica ~= " - " and CenaEstatisticas.filtroRegional.regiaoGeograficaAlterado)then
-          CenaEstatisticas.listaRegional:buscarEstatisticas(CenaEstatisticas.filtroRegional)
-        end
-
-        if(CenaEstatisticas.filtroEstadual.estado ~= " - " and CenaEstatisticas.filtroEstadual.estadoAlterado)then
-          CenaEstatisticas.listaEstadual:buscarEstatisticas(CenaEstatisticas.filtroEstadual)
-        end
-
-        if(CenaEstatisticas.filtroMunicipal.cidade ~= " - " and CenaEstatisticas.filtroMunicipal.cidadeAlterado)then
-          CenaEstatisticas.listaMunicipal:buscarEstatisticas(CenaEstatisticas.filtroMunicipal)
-        end
-        
-        
-        
-           --[[código adicionado]]--
-        CenaEstatisticas.listaNacionalMelhores:buscarMelhoresEscolas(CenaEstatisticas.filtroNacionalMelhores)
- 
-        if(CenaEstatisticas.filtroRegionalMelhores.regiaoGeografica ~= " - " and CenaEstatisticas.filtroRegionalMelhores.regiaoGeograficaAlterado)then
-          CenaEstatisticas.listaRegionalMelhores:buscarMelhoresEscolas(CenaEstatisticas.filtroRegionalMelhores)
-        end
-
-        if(CenaEstatisticas.filtroEstadualMelhores.estado ~= " - " and CenaEstatisticas.filtroEstadualMelhores.estadoAlterado)then
-          CenaEstatisticas.listaEstadualMelhores:buscarMelhoresEscolas(CenaEstatisticas.filtroEstadualMelhores)
-        end
-
-        
-        
-        --*****************************************************************************************************************
-
-
-        CenaEstatisticas.isCarregandoPesquisa = false;
-
-        CenaEstatisticas.panelFoco = "painelResultados";
-
-        FrameEstatisticas:inicialize();
-        Display.show();
-      end
-  )
-
-  coroutine.resume(APP)
-end
+--function CenaEstatisticas:pesquisar()
+--
+--  CenaEstatisticas.isCarregandoPesquisa = true;
+--  FrameEstatisticas:inicialize();
+--  local APP = coroutine.create (
+--
+--      function ()
+--
+--        CenaEstatisticas.listaNacional:buscarEstatisticas(CenaEstatisticas.filtroNacional)
+--
+--        if(CenaEstatisticas.filtroRegional.regiaoGeografica ~= " - " and CenaEstatisticas.filtroRegional.regiaoGeograficaAlterado)then
+--          CenaEstatisticas.listaRegional:buscarEstatisticas(CenaEstatisticas.filtroRegional)
+--        end
+--
+--        if(CenaEstatisticas.filtroEstadual.estado ~= " - " and CenaEstatisticas.filtroEstadual.estadoAlterado)then
+--          CenaEstatisticas.listaEstadual:buscarEstatisticas(CenaEstatisticas.filtroEstadual)
+--        end
+--
+--        if(CenaEstatisticas.filtroMunicipal.cidade ~= " - " and CenaEstatisticas.filtroMunicipal.cidadeAlterado)then
+--          CenaEstatisticas.listaMunicipal:buscarEstatisticas(CenaEstatisticas.filtroMunicipal)
+--        end
+--        
+--        
+--        
+--           --[[código adicionado]]--
+--        CenaEstatisticas.listaNacionalMelhores:buscarMelhoresEscolas(CenaEstatisticas.filtroNacionalMelhores)
+-- 
+--        if(CenaEstatisticas.filtroRegionalMelhores.regiaoGeografica ~= " - " and CenaEstatisticas.filtroRegionalMelhores.regiaoGeograficaAlterado)then
+--          CenaEstatisticas.listaRegionalMelhores:buscarMelhoresEscolas(CenaEstatisticas.filtroRegionalMelhores)
+--        end
+--
+--        if(CenaEstatisticas.filtroEstadualMelhores.estado ~= " - " and CenaEstatisticas.filtroEstadualMelhores.estadoAlterado)then
+--          CenaEstatisticas.listaEstadualMelhores:buscarMelhoresEscolas(CenaEstatisticas.filtroEstadualMelhores)
+--        end
+--
+--        
+--        
+--        --*****************************************************************************************************************
+--
+--
+--        CenaEstatisticas.isCarregandoPesquisa = false;
+--
+--        CenaEstatisticas.panelFoco = "painelResultados";
+--
+--        FrameEstatisticas:inicialize();
+--        Display.show();
+--      end
+--  )
+--
+--  coroutine.resume(APP)
+--end
 
 --Coloca os resultados da busca na tabela de resultados
-function CenaEstatisticas:getItensResultado(itens)
-
-  if(CenaEstatisticas.listaNacional.estatisticas[1] ~=nil)then
-    for i,v in pairs(CenaEstatisticas.colunas) do
-      local estatistica = v.titulo;
-      local nacional = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaNacional.estatisticas[1][v.indice], v.isPercentual);
-      local regional = " - ";
-      local estadual = " - ";
-      local municipal = " - ";
-
-      if(CenaEstatisticas.listaRegional.estatisticas[1] ~= nil)then
-        regional = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaRegional.estatisticas[1][v.indice], v.isPercentual);
-      end
-
-      if(CenaEstatisticas.listaEstadual.estatisticas[1] ~= nil)then
-        estadual = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaEstadual.estatisticas[1][v.indice], v.isPercentual);
-      end
-
-      if(CenaEstatisticas.listaMunicipal.estatisticas[1] ~= nil)then
-        municipal = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaMunicipal.estatisticas[1][v.indice], v.isPercentual);
-      end
-
-      local line = TConteiner.new();
-      line:setLargura(1270);
-      line:setAltura(40);
-
-      local sizeFields = 160;
-      local sizeEstatistica = 520;
-
-      local fieldEstatistica = createField(estatistica,5,5,sizeEstatistica,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,false);
-      line:addComponent(fieldEstatistica);
-
-      local fieldNacional = createField(nacional,fieldEstatistica:getPx() + fieldEstatistica:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
-      line:addComponent(fieldNacional);
-
-      local fieldRegional = createField(regional,fieldNacional:getPx() + fieldNacional:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
-      line:addComponent(fieldRegional);
-
-      local fieldEstadual = createField(estadual,fieldRegional:getPx() + fieldRegional:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
-      line:addComponent(fieldEstadual);
-
-      local fieldMunicipal = createField(municipal,fieldEstadual:getPx() + fieldEstadual:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
-      line:addComponent(fieldMunicipal);
-
-      table.insert(itens,line);
-    end
-  end
-end
-
-function CenaEstatisticas:getItensResultadoMelhoresPiores(itens)
-
+--function CenaEstatisticas:getItensResultado(itens)
+--
 --  if(CenaEstatisticas.listaNacional.estatisticas[1] ~=nil)then
 --    for i,v in pairs(CenaEstatisticas.colunas) do
 --      local estatistica = v.titulo;
@@ -316,8 +267,58 @@ function CenaEstatisticas:getItensResultadoMelhoresPiores(itens)
 --      line:setLargura(1270);
 --      line:setAltura(40);
 --
---      local sizeFields = 95;
---      local sizeEstatistica = 350;
+--      local sizeFields = 160;
+--      local sizeEstatistica = 520;
+--
+--      local fieldEstatistica = createField(estatistica,5,5,sizeEstatistica,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,false);
+--      line:addComponent(fieldEstatistica);
+--
+--      local fieldNacional = createField(nacional,fieldEstatistica:getPx() + fieldEstatistica:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
+--      line:addComponent(fieldNacional);
+--
+--      local fieldRegional = createField(regional,fieldNacional:getPx() + fieldNacional:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
+--      line:addComponent(fieldRegional);
+--
+--      local fieldEstadual = createField(estadual,fieldRegional:getPx() + fieldRegional:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
+--      line:addComponent(fieldEstadual);
+--
+--      local fieldMunicipal = createField(municipal,fieldEstadual:getPx() + fieldEstadual:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
+--      line:addComponent(fieldMunicipal);
+--
+--      table.insert(itens,line);
+--    end
+--  end
+--end
+
+--function CenaEstatisticas:getItensResultadoMelhoresPiores(itens)
+
+
+--if(CenaEstatisticas.listaNacionalMelhores.melhoresEscolas[1] ~=nil)then
+--    for i,v in pairs(CenaEstatisticas.colunas) do
+--      local estatistica = v.titulo;
+--      local nacional = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaNacionalMelhores.melhoresEscolas[1][v.indice], v.isPercentual);
+--      local regional = " - ";
+--      local estadual = " - ";
+--      local municipal = " - ";
+--
+--      if(CenaEstatisticas.listaRegionalMelhores.melhoresEscolas[1] ~= nil)then
+--        regional = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaRegionalMelhores.melhoresEscolas[1][v.indice], v.isPercentual);
+--      end
+--
+--      if(CenaEstatisticas.listaEstadualMelhores.melhoresEscolas[1] ~= nil)then
+--        estadual = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaEstadualMelhores.melhoresEscolas[1][v.indice], v.isPercentual);
+--      end
+--
+----      if(CenaEstatisticas.listaMunicipal.estatisticas[1] ~= nil)then
+----        municipal = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaMunicipal.estatisticas[1][v.indice], v.isPercentual);
+----      end
+--
+--      local line = TConteiner.new();
+--      line:setLargura(1270);
+--      line:setAltura(40);
+--
+--      local sizeFields = 204;--95;
+--      local sizeEstatistica = 520;--350;
 --
 --      local fieldEstatistica = createField(estatistica,5,5,sizeEstatistica,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,false);
 --      line:addComponent(fieldEstatistica);
@@ -325,94 +326,34 @@ function CenaEstatisticas:getItensResultadoMelhoresPiores(itens)
 --      local fieldNacionalMelhores = createField(nacional,fieldEstatistica:getPx() + fieldEstatistica:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
 --      line:addComponent(fieldNacionalMelhores);
 --
---      local fieldNacionalPiores = createField(nacional,fieldNacionalMelhores:getPx() + fieldNacionalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
---      line:addComponent(fieldNacionalPiores);
+----      local fieldNacionalPiores = createField(" - ",fieldNacionalMelhores:getPx() + fieldNacionalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
+----      line:addComponent(fieldNacionalPiores);
 --
---      local fieldRegionalMelhores = createField(regional,fieldNacionalPiores:getPx() + fieldNacionalPiores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
+--      local fieldRegionalMelhores = createField(regional,fieldNacionalMelhores:getPx() + fieldNacionalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
 --      line:addComponent(fieldRegionalMelhores);
 --
---      local fieldRegionalPiores = createField(regional,fieldRegionalMelhores:getPx() + fieldRegionalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
---      line:addComponent(fieldRegionalPiores);
+----      local fieldRegionalPiores = createField(" - ",fieldRegionalMelhores:getPx() + fieldRegionalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
+----      line:addComponent(fieldRegionalPiores);
 --
---      local fieldEstadualMelhroes = createField(estadual,fieldRegionalPiores:getPx() + fieldRegionalPiores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
---      line:addComponent(fieldEstadualMelhroes);
+--      local fieldEstadualMelhores = createField(estadual,fieldRegionalMelhores:getPx() + fieldRegionalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
+--      line:addComponent(fieldEstadualMelhores);
 --
---      local fieldEstadualPiores = createField(estadual,fieldEstadualMelhroes:getPx() + fieldEstadualMelhroes:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
---      line:addComponent(fieldEstadualPiores);
+----      local fieldEstadualPiores = createField(" - ",fieldEstadualMelhores:getPx() + fieldEstadualMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
+----      line:addComponent(fieldEstadualPiores);
 --
---      local fieldMunicipalMelhores = createField(municipal,fieldEstadualPiores:getPx() + fieldEstadualPiores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
---      line:addComponent(fieldMunicipalMelhores);
---
---      local fieldMunicipalPiores = createField(municipal,fieldMunicipalMelhores:getPx() + fieldMunicipalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
---      line:addComponent(fieldMunicipalPiores);
+----      local fieldMunicipalMelhores = createField(" - ",fieldEstadualMelhores:getPx() + fieldEstadualMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
+----      line:addComponent(fieldMunicipalMelhores);
+----
+----      local fieldMunicipalPiores = createField(municipal,fieldMunicipalMelhores:getPx() + fieldMunicipalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
+----      line:addComponent(fieldMunicipalPiores);
 --
 --
 --      table.insert(itens,line);
 --    end
 --  end
-
-
-if(CenaEstatisticas.listaNacionalMelhores.melhoresEscolas[1] ~=nil)then
-    for i,v in pairs(CenaEstatisticas.colunas) do
-      local estatistica = v.titulo;
-      local nacional = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaNacionalMelhores.melhoresEscolas[1][v.indice], v.isPercentual);
-      local regional = " - ";
-      local estadual = " - ";
-      local municipal = " - ";
-
-      if(CenaEstatisticas.listaRegionalMelhores.melhoresEscolas[1] ~= nil)then
-        regional = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaRegionalMelhores.melhoresEscolas[1][v.indice], v.isPercentual);
-      end
-
-      if(CenaEstatisticas.listaEstadualMelhores.melhoresEscolas[1] ~= nil)then
-        estadual = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaEstadualMelhores.melhoresEscolas[1][v.indice], v.isPercentual);
-      end
-
---      if(CenaEstatisticas.listaMunicipal.estatisticas[1] ~= nil)then
---        municipal = CenaEstatisticas:getEstatistica(CenaEstatisticas.listaMunicipal.estatisticas[1][v.indice], v.isPercentual);
---      end
-
-      local line = TConteiner.new();
-      line:setLargura(1270);
-      line:setAltura(40);
-
-      local sizeFields = 204;--95;
-      local sizeEstatistica = 520;--350;
-
-      local fieldEstatistica = createField(estatistica,5,5,sizeEstatistica,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,false);
-      line:addComponent(fieldEstatistica);
-
-      local fieldNacionalMelhores = createField(nacional,fieldEstatistica:getPx() + fieldEstatistica:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
-      line:addComponent(fieldNacionalMelhores);
-
---      local fieldNacionalPiores = createField(" - ",fieldNacionalMelhores:getPx() + fieldNacionalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
---      line:addComponent(fieldNacionalPiores);
-
-      local fieldRegionalMelhores = createField(regional,fieldNacionalMelhores:getPx() + fieldNacionalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
-      line:addComponent(fieldRegionalMelhores);
-
---      local fieldRegionalPiores = createField(" - ",fieldRegionalMelhores:getPx() + fieldRegionalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
---      line:addComponent(fieldRegionalPiores);
-
-      local fieldEstadualMelhores = createField(estadual,fieldRegionalMelhores:getPx() + fieldRegionalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
-      line:addComponent(fieldEstadualMelhores);
-
---      local fieldEstadualPiores = createField(" - ",fieldEstadualMelhores:getPx() + fieldEstadualMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
---      line:addComponent(fieldEstadualPiores);
-
---      local fieldMunicipalMelhores = createField(" - ",fieldEstadualMelhores:getPx() + fieldEstadualMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
---      line:addComponent(fieldMunicipalMelhores);
 --
---      local fieldMunicipalPiores = createField(municipal,fieldMunicipalMelhores:getPx() + fieldMunicipalMelhores:getLargura() + 10,5,sizeFields,CenaEstatisticas.font_data,CenaEstatisticas.cor_line,true);
---      line:addComponent(fieldMunicipalPiores);
-
-
-      table.insert(itens,line);
-    end
-  end
-
-
-end
+--
+--end
 
 function CenaEstatisticas:getEstatistica(estatistica, isPercentual)
   if(estatistica ~= nil and isPercentual)then
@@ -450,9 +391,9 @@ function CenaEstatisticas:buildPainelConsulta ()
   tchoicerRegiao:setIsFoco(true);
   tchoicerRegiao:update();
   CenaEstatisticas.regiaoSelecionada = tchoicerRegiao:getItens()[tchoicerRegiao:getOpcaoSelecionada(CenaEstatisticas.indiceRegiao)]:getTexto();
-  CenaEstatisticas.filtroRegional:setRegiaoGeografica(CenaEstatisticas.regiaoSelecionada);
+--  CenaEstatisticas.filtroRegional:setRegiaoGeografica(CenaEstatisticas.regiaoSelecionada);
   
-  CenaEstatisticas.filtroRegionalMelhores:setRegiaoGeografica(CenaEstatisticas.regiaoSelecionada); --[[código adicionado]]--
+--  CenaEstatisticas.filtroRegionalMelhores:setRegiaoGeografica(CenaEstatisticas.regiaoSelecionada); --[[código adicionado]]--
 
   local iconeRegiao = TIcon.new();
   iconeRegiao:setTImage(tchoicerRegiao);
@@ -468,9 +409,9 @@ function CenaEstatisticas:buildPainelConsulta ()
         CenaEstatisticas.indiceEstado = 1;
         CenaEstatisticas.indiceCidade = 1;
         CenaEstatisticas.regiaoSelecionada = tchoicerRegiao:getItens()[CenaEstatisticas.indiceRegiao]:getTexto();
-        CenaEstatisticas.filtroRegional:setRegiaoGeografica(CenaEstatisticas.regiaoSelecionada);
+--        CenaEstatisticas.filtroRegional:setRegiaoGeografica(CenaEstatisticas.regiaoSelecionada);
         
-        CenaEstatisticas.filtroRegionalMelhores:setRegiaoGeografica(CenaEstatisticas.regiaoSelecionada); --[[código adicionado]]--
+--        CenaEstatisticas.filtroRegionalMelhores:setRegiaoGeografica(CenaEstatisticas.regiaoSelecionada); --[[código adicionado]]--
 
         FrameEstatisticas:inicialize();
       end
@@ -496,9 +437,9 @@ function CenaEstatisticas:buildPainelConsulta ()
   tchoicerEstado:setIsFoco(true);
   tchoicerEstado:update();
   CenaEstatisticas.cidadeSelecionado = tchoicerEstado:getItens()[tchoicerEstado:getOpcaoSelecionada(CenaEstatisticas.indiceEstado)]:getTexto();
-  CenaEstatisticas.filtroEstadual:setEstado(CenaEstatisticas.cidadeSelecionado);
-  
-  CenaEstatisticas.filtroEstadualMelhores:setEstado(CenaEstatisticas.cidadeSelecionado); --[[código adicionado]]--
+--  CenaEstatisticas.filtroEstadual:setEstado(CenaEstatisticas.cidadeSelecionado);
+--  
+--  CenaEstatisticas.filtroEstadualMelhores:setEstado(CenaEstatisticas.cidadeSelecionado); --[[código adicionado]]--
 
   local iconeEstado = TIcon.new();
   iconeEstado:setTImage(tchoicerEstado);
@@ -513,9 +454,9 @@ function CenaEstatisticas:buildPainelConsulta ()
         CenaEstatisticas.indiceCidade = 1;
         CenaEstatisticas.indiceMenu = 2;
         CenaEstatisticas.estadoSelecionado = tchoicerEstado:getItens()[CenaEstatisticas.indiceEstado]:getTexto();
-        CenaEstatisticas.filtroEstadual:setEstado(CenaEstatisticas.estadoSelecionado);
-        
-        CenaEstatisticas.filtroEstadualMelhores:setEstado(CenaEstatisticas.estadoSelecionado); --[[código adicionado]]--
+--        CenaEstatisticas.filtroEstadual:setEstado(CenaEstatisticas.estadoSelecionado);
+--        
+--        CenaEstatisticas.filtroEstadualMelhores:setEstado(CenaEstatisticas.estadoSelecionado); --[[código adicionado]]--
 
         FrameEstatisticas:inicialize();
       end
@@ -541,11 +482,11 @@ function CenaEstatisticas:buildPainelConsulta ()
   tchoicerCidade:setIsFoco(true);
   tchoicerCidade:update();
   CenaEstatisticas.cidadeSelecionada = tchoicerCidade:getItens()[CenaEstatisticas.indiceCidade]:getTexto();
-  if(CenaEstatisticas.indiceCidade > 1)then
-    CenaEstatisticas.filtroMunicipal:setCidade(Localizacoes.regioes[CenaEstatisticas.regiaoSelecionada]:getEstados()[CenaEstatisticas.cidadeSelecionado]:getCidades()[CenaEstatisticas.cidadeSelecionada]:getCodigo());
-  else
-    CenaEstatisticas.filtroMunicipal.cidadeAlterado = false;
-  end
+--  if(CenaEstatisticas.indiceCidade > 1)then
+--    CenaEstatisticas.filtroMunicipal:setCidade(Localizacoes.regioes[CenaEstatisticas.regiaoSelecionada]:getEstados()[CenaEstatisticas.cidadeSelecionado]:getCidades()[CenaEstatisticas.cidadeSelecionada]:getCodigo());
+--  else
+--    CenaEstatisticas.filtroMunicipal.cidadeAlterado = false;
+--  end
 
   local iconeCidade = TIcon.new();
   iconeCidade:setTImage(tchoicerCidade);
@@ -559,7 +500,7 @@ function CenaEstatisticas:buildPainelConsulta ()
         CenaEstatisticas.indiceCidade = tchoicerCidade:getOpcaoSelecionada(CenaEstatisticas.indiceCidade);
         CenaEstatisticas.indiceMenu = 3;
         CenaEstatisticas.cidadeSelecionada = tchoicerCidade:getItens()[CenaEstatisticas.indiceCidade]:getTexto();
-        CenaEstatisticas.filtroMunicipal:setCidade(CenaEstatisticas.cidadeSelecionada);
+--        CenaEstatisticas.filtroMunicipal:setCidade(CenaEstatisticas.cidadeSelecionada);
 
         FrameEstatisticas:inicialize();
       end
@@ -583,100 +524,7 @@ function CenaEstatisticas:buildPainelConsulta ()
 
   panel:addComponent(menu,1);
 
-  -----------------------------------------
-  -- Adicionar Legendas:
 
-  --  local px = 5;
-  --  local py = 5 + menu:getAltura() + 30;
-  --
-  --  local imageSetaUp= TImage.new();
-  --  imageSetaUp:setSrcArquivoExterno("../media/seta_up.png");
-  --  imageSetaUp:update();
-  --
-  --  local imageSetaLeft= TImage.new();
-  --  imageSetaLeft:setSrcArquivoExterno("../media/seta_left.png");
-  --  imageSetaLeft:update();
-  --
-  --  local imageSetaRight= TImage.new();
-  --  imageSetaRight:setSrcArquivoExterno("../media/seta_right.png");
-  --  imageSetaRight:update();
-  --
-  --  local imageSetaDown= TImage.new();
-  --  imageSetaDown:setSrcArquivoExterno("../media/seta_down.png");
-  --  imageSetaDown:update();
-  --
-  --  px = px + 1 + imageSetaLeft:getLargura();
-  --
-  --  imageSetaUp:setPx(px);
-  --  imageSetaUp:setPy(py);
-  --
-  --  py = py + imageSetaUp:getAltura() + 1;
-  --  px = 5;
-  --
-  --  imageSetaLeft:setPx(px);
-  --  imageSetaLeft:setPy(py);
-  --
-  --  px = px + imageSetaLeft:getLargura() + 1 + imageSetaUp:getLargura() + 1;
-  --
-  --  imageSetaRight:setPx(px);
-  --  imageSetaRight:setPy(py);
-  --
-  --  py = py + imageSetaRight:getAltura() + 1;
-  --  px = imageSetaUp:getPx();
-  --
-  --  imageSetaDown:setPx(px);
-  --  imageSetaDown:setPy(py);
-  --
-  --  py = py + imageSetaRight:getAltura() + 1;
-  --  px = px + 1 + imageSetaUp:getLargura() + 1;
-  --
-  --  local labelNavegar = TLabel.new();
-  --  labelNavegar:setTexto("Navegar");
-  --  labelNavegar:setFonte(CenaEstatisticas.font_data);
-  --  labelNavegar:update();
-  --  labelNavegar:setPx(imageSetaRight:getPx() + imageSetaRight:getLargura() + 2);
-  --  labelNavegar:setPy(imageSetaRight:getPy() - 2);
-  --
-  --  local labelBuscar = TLabel.new();
-  --  labelBuscar:setTexto("Buscar");
-  --  labelBuscar:setFonte(CenaEstatisticas.font_data);
-  --  labelBuscar:update();
-  --
-  --  local imageBuscar= TImage.new();
-  --  imageBuscar:setSrcArquivoExterno("../media/legenda_verde_30.png");
-  --  imageBuscar:update();
-  --
-  --  local iconeBuscar= TIcon.new();
-  --  iconeBuscar:setTImage(imageBuscar);
-  --  iconeBuscar:setTLabel(labelBuscar);
-  --  iconeBuscar:setOrientacao(TIcon.TITULO_RIGHT);
-  --  iconeBuscar:update();
-  --  iconeBuscar:setPx(7);
-  --  iconeBuscar:setPy(imageSetaDown:getPy() + imageSetaDown:getAltura() + 10);
-  --
-  --  local labelMenu = TLabel.new();
-  --  labelMenu:setTexto("Menu");
-  --  labelMenu:setFonte(CenaEstatisticas.font_data);
-  --
-  --  local imageMenu= TImage.new();
-  --  imageMenu:setSrcArquivoExterno("../media/legenda_vermelho_30.png");
-  --
-  --  local iconeMenu= TIcon.new();
-  --  iconeMenu:setTImage(imageMenu);
-  --  iconeMenu:setTLabel(labelMenu);
-  --  iconeMenu:setOrientacao(TIcon.TITULO_RIGHT);
-  --  iconeMenu:setPx(7);
-  --  iconeMenu:setPy(iconeBuscar:getPy() + iconeBuscar:getAltura() + 10);
-  --
-  --  panel:addComponent(imageSetaUp,2);
-  --  panel:addComponent(imageSetaLeft,3);
-  --  panel:addComponent(imageSetaRight,4);
-  --  panel:addComponent(imageSetaDown,5);
-  --  panel:addComponent(labelNavegar,6);
-  --  panel:addComponent(iconeBuscar,7);
-  --  panel:addComponent(iconeMenu,8);
-
-  --
   ----------------------------------------
 
   return panel;
@@ -811,7 +659,7 @@ function CenaEstatisticas:buildPainelResultados()
   local tamanhoJanela = 10;
   if(FrameEstatisticas.mostrarPioresMelhores)then
     tamanhoJanela = 9;
-    CenaEstatisticas:getItensResultadoMelhoresPiores(resultados);
+--    CenaEstatisticas:getItensResultadoMelhoresPiores(resultados);
 
 --    pxComponent,pyComponent = CenaEstatisticas:buildHeader(panelResultados,204,sizeEstatisticaMelhoresPiores,pxComponent,pyComponent,false);
     pxComponent,pyComponent = CenaEstatisticas:buildHeaderMelhores(panelResultados,204,sizeEstatisticaMelhoresPiores,pxComponent,pyComponent,false);
@@ -819,7 +667,7 @@ function CenaEstatisticas:buildPainelResultados()
 
   else
 
-    CenaEstatisticas:getItensResultado(resultados);
+--    CenaEstatisticas:getItensResultado(resultados);
     pxComponent,pyComponent = CenaEstatisticas:buildHeader(panelResultados,sizeFields,sizeEstatistica,pxComponent,pyComponent,true);
 
   end
