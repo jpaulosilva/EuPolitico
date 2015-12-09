@@ -738,7 +738,7 @@ end
 function CenaBusca:buildPainelConsultarPoliticoAvancado(frame)
   -- Incluir componentes gráficos
   local panel= TPanel.new();
-  panel:setLargura(630);
+  panel:setLargura(1270);--630
   panel:setAltura(385);
   panel:setPx(5);
   panel:setPy(5);

@@ -216,7 +216,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes()
   labelCargo:setTexto("Cargo:");
   labelCargo:setFonte(font_label);
   
-  local cargo = tostring(CenaBusca.politicoSelecionado:getPartido());
+  local cargo = tostring(CenaBusca.politicoSelecionado:getCargo());
   local fieldCargo = TField.new();
   fieldCargo:setFonte(font_data);
   fieldCargo:setTLabel(labelCargo);
@@ -225,7 +225,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes()
   fieldCargo:setLimiteMax(20);
   fieldCargo:setPx(5);
   fieldCargo:setPy(160);
-  fieldCargo:getTLabelTexto():setLargura(110);
+  fieldCargo:getTLabelTexto():setLargura(210);
   fieldCargo:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
   
   panelDetalhesPolitico:addComponent(fieldCargo,8);

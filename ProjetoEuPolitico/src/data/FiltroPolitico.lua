@@ -1,27 +1,46 @@
 FiltroPolitico = {}
 
-FiltroPolitico.id = nil;
+--Características simples
+FiltroPolitico.nomeParlamentar = nil;
+FiltroPolitico.nomeParlamentarAlterado = false;
 
 FiltroPolitico.regiao = nil;
 FiltroPolitico.regiaoAlterado = false;
 
-FiltroPolitico.cidade = nil;
-FiltroPolitico.cidadeAlterado = false;
-
 FiltroPolitico.estado = nil;
 FiltroPolitico.estadoAlterado = false;
 
-FiltroPolitico.nomeParlamentar = nil;
-FiltroPolitico.nomeParlamentarAlterado = false;
-
-FiltroPolitico.nomeCompleto = nil;
-FiltroPolitico.nomeCompletoAlterado = false;
+FiltroPolitico.cidade = nil;
+FiltroPolitico.cidadeAlterado = false;
 
 FiltroPolitico.cargo = nil;
 FiltroPolitico.cargoAlterado = false;
 
 FiltroPolitico.partido = nil;
 FiltroPolitico.partidoAlterado = false;
+
+--Características avançadas
+FiltroPolitico.id = nil;
+FiltroPolitico.idAlterado = false;
+
+FiltroPolitico.nomeCompleto = nil;
+FiltroPolitico.nomeCompletoAlterado = false;
+
+FiltroPolitico.idade = nil;
+FiltroPolitico.idadeAlterado = false;
+
+FiltroPolitico.ocupacao = nil;
+FiltroPolitico.ocupacaoAlterado = false;
+
+
+FiltroPolitico.reeleicao = nil;
+FiltroPolitico.reeleicaoAlterado = false;
+
+FiltroPolitico.totalBensDeclarados = nil;
+FiltroPolitico.totalBensDeclaradosAlterado = false;
+
+FiltroPolitico.totalDoacoesRecebidas = nil;
+FiltroPolitico.totalDoacoesRecebidasAlterado = false;
 
 FiltroPolitico.mandato = nil;
 FiltroPolitico.mandatoAlterado = false;
@@ -38,11 +57,32 @@ FiltroPolitico.emailAlterado = false;
 FiltroPolitico.nascimento = nil;
 FiltroPolitico.nascimentoAlterado = false;
 
+FiltroPolitico.faixaEtaria = nil;
+FiltroPolitico.faixaEtariaAlterado = false;
+
+FiltroPolitico.escolaridade = nil;
+FiltroPolitico.escolaridadeAterado = false;
+
+FiltroPolitico.situacao = nil;
+FiltroPolitico.situacaoAlterado = false;
+
+FiltroPolitico.numeroMandatos = nil;
+FiltroPolitico.numeroMandatosAlterado = false;
+
 FiltroPolitico.gastoTotal = nil;
 FiltroPolitico.gastoTotalAlterado = false;
 
 FiltroPolitico.gastoPorDia = nil;
 FiltroPolitico.gastoPorDiaAlterado = false;
+
+FiltroPolitico.assiduidade = nil;
+FiltroPolitico.assiduidadeAlterado = false;
+
+FiltroPolitico.numeroComissoes = nil;
+FiltroPolitico.numeroComissoesAlterado = false;
+
+FiltroPolitico.numeroProjetos = nil;
+FiltroPolitico.numeroProjetosAlterado = false;
 
 
 function FiltroPolitico:new(o)
@@ -53,12 +93,28 @@ function FiltroPolitico:new(o)
 end
 
 
+function FiltroPolitico:getNomeParlamentar()
+  return self.nomeParlamentar;
+end
+function FiltroPolitico:setNomeParlamentar(nomeParlamentar)
+  self.nomeParlamentar = nomeParlamentar;
+  self.nomeParlamentarAlterado = true;
+end
+
 function FiltroPolitico:getRegiao()
 	return self.regiao;
 end
 function FiltroPolitico:setRegiao(regiao)
 	self.regiao = regiao;
 	self.regiaoAlterado = true;
+end
+
+function FiltroPolitico:getEstado()
+  return self.estado;
+end
+function FiltroPolitico:setEstado(estado)
+  self.estado = estado;
+  self.estadoAlterado = true;
 end
 
 function FiltroPolitico:getCidade()
@@ -69,20 +125,30 @@ function FiltroPolitico:setCidade(cidade)
 	self.cidadeAlterado = true;
 end
 
-function FiltroPolitico:getEstado()
-	return self.estado;
+function FiltroPolitico:getCargo()
+  return self.cargo;
 end
-function FiltroPolitico:setEstado(estado)
-	self.estado = estado;
-	self.estadoAlterado = true;
+function FiltroPolitico:setCargo(cargo)
+  self.cargo = cargo;
+  self.cargoAlterado = true;
 end
 
-function FiltroPolitico:getNomeParlamentar()
-	return self.nomeParlamentar;
+function FiltroPolitico:getPartido()
+  return self.partido;
 end
-function FiltroPolitico:setNomeParlamentar(nomeParlamentar)
-	self.nomeParlamentar = nomeParlamentar;
-	self.nomeParlamentarAlterado = true;
+function FiltroPolitico:setPartido(partido)
+  self.partido = partido;
+  self.partidoAlterado = true;
+end
+
+
+
+function FiltroPolitico:getId()
+  return self.id;
+end
+function FiltroPolitico:setId(id)
+  self.id = id;
+  self.idAlterado = true;
 end
 
 function FiltroPolitico:getNomeCompleto()
@@ -93,20 +159,44 @@ function FiltroPolitico:setNomeCompleto(nomeCompleto)
 	self.nomeCompletoAlterado = true;
 end
 
-function FiltroPolitico:getCargo()
-	return self.cargo;
+function FiltroPolitico:getIdade()
+  return self.idade;
 end
-function FiltroPolitico:setCargo(cargo)
-	self.cargo = cargo;
-	self.cargoAlterado = true;
+function FiltroPolitico:setIdade(idade)
+  self.idade = idade;
+  self.idadeAlterado = true;
 end
 
-function FiltroPolitico:getPartido()
-	return self.partido;
+function FiltroPolitico:getOcupacao()
+  return self.ocupacao;
 end
-function FiltroPolitico:setPartido(partido)
-	self.partido = partido;
-	self.partidoAlterado = true;
+function FiltroPolitico:setOcupacao(ocupacao)
+  self.ocupacao = ocupacao;
+  self.ocupacaoAlterado = true;
+end
+
+function FiltroPolitico:getReeleicao()
+  return self.reeleicao;
+end
+function FiltroPolitico:setReeleicao(reeleicao)
+  self.reeleicao = reeleicao;
+  self.reeleicaoAlterado = true;
+end
+
+function FiltroPolitico:getTotalBensDeclarados()
+  return self.totalBensDeclarados;
+end
+function FiltroPolitico:setTotalBensDeclarados(totalBensDeclarados)
+  self.totalBensDeclarados = totalBensDeclarados;
+  self.totalBensDeclaradosAlterado = true;
+end
+
+function FiltroPolitico:getTotalDoacoesRecebidas()
+  return self.totalDoacoesRecebidas;
+end
+function FiltroPolitico:setTotalDoacoesRecebidas(totalDoacoesRecebidas)
+  self.totalDoacoesRecebidas = totalDoacoesRecebidas;
+  self.totalDoacoesRecebidasAlterado = true;
 end
 
 function FiltroPolitico:getMandato()
@@ -149,6 +239,38 @@ function FiltroPolitico:setNascimento(nascimento)
 	self.nascimentoAlterado = true;
 end
 
+function FiltroPolitico:getFaixaEtaria()
+  return self.faixaEtaria;
+end
+function FiltroPolitico:setFaixaEtaria(faixaEtaria)
+  self.faixaEtaria = faixaEtaria;
+  self.faixaEtariaAlterado = true;
+end
+
+function FiltroPolitico:getEscolaridade()
+  return self.escolaridade;
+end
+function FiltroPolitico:setEscolaridade(escolaridade)
+  self.escolaridade = escolaridade;
+  self.escolaridadeAlterado = true;
+end
+
+function FiltroPolitico:getSituacao()
+  return self.situacao;
+end
+function FiltroPolitico:setSituacao(situacao)
+  self.situacao = situacao;
+  self.situacaoAlterado = true;
+end
+
+function FiltroPolitico:getNumeroMandatos()
+  return self.numeroMandatos;
+end
+function FiltroPolitico:setNumeroMandatos(numeroMandatos)
+  self.numeroMandatos = numeroMandatos;
+  self.numeroMandatosAlterado = true;
+end
+
 function FiltroPolitico:getGastoTotal()
 	return self.gastoTotal;
 end
@@ -163,6 +285,30 @@ end
 function FiltroPolitico:setGastoPorDia(gastoPorDia)
 	self.gastoPorDia = gastoPorDia;
 	self.gastoPorDiaAlterado = true;
+end
+
+function FiltroPolitico:getAssiduidade()
+  return self.assiduidade;
+end
+function FiltroPolitico:setAssiduidade(assiduidade)
+  self.assiduidade = assiduidade;
+  self.assiduidadeAlterado = true;
+end
+
+function FiltroPolitico:getNumeroComissoes()
+  return self.numeroComissoes;
+end
+function FiltroPolitico:setNumeroComissoes(numeroComissoes)
+  self.numeroComissoes = numeroComissoes;
+  self.numeroComissoesAlterado = true;
+end
+
+function FiltroPolitico:getNumeroProjetos()
+  return self.numeroProjetos;
+end
+function FiltroPolitico:setNumeroProjetos(numeroProjetos)
+  self.numeroProjetos = numeroProjetos;
+  self.numeroProjetosAlterado = true;
 end
 
 
