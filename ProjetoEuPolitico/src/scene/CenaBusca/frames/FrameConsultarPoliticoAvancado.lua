@@ -5,7 +5,7 @@ BibliotecaAuxiliarScript.execute('framework.src.gui.TLabel');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TPanel');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TField');
 BibliotecaAuxiliarScript.execute('framework.src.gui.TChoicer');
-BibliotecaAuxiliarScript.execute('data.ListaDeputados');
+BibliotecaAuxiliarScript.execute('data.ListaPoliticos');
 BibliotecaAuxiliarScript.execute('data.Politico');
 BibliotecaAuxiliarScript.execute('data.FiltroPolitico');
 
@@ -23,7 +23,7 @@ function FrameConsultarPoliticoAvancado:inicialize()
   FrameConsultarPoliticoAvancado:setPy(0);
   FrameConsultarPoliticoAvancado:setCorFundo(CenaBusca.cor);
 
---  CenaBusca.painelConsultarPolitico = CenaBusca:buildPainelConsultarPolitico(FrameConsultarPoliticoAvancado);
+  CenaBusca.painelConsultarPolitico = CenaBusca:buildPainelConsultarPolitico(FrameConsultarPoliticoAvancado);
   CenaBusca.painelResultados = CenaBusca:buildPainelResultados(FrameConsultarPoliticoAvancado);
   CenaBusca.painelConsultarPoliticoAvancado = CenaBusca:buildPainelConsultarPoliticoAvancado(FrameConsultarPoliticoAvancado);
 
@@ -35,22 +35,22 @@ function FrameConsultarPoliticoAvancado:inicialize()
   end
   
   FrameConsultarPoliticoAvancado:addComponent(buildBackground(),1);
---  FrameConsultarPoliticoAvancado:addComponent(CenaBusca.painelConsultarPolitico,2);
+  FrameConsultarPoliticoAvancado:addComponent(CenaBusca.painelConsultarPolitico,2);
   FrameConsultarPoliticoAvancado:addComponent(CenaBusca.painelConsultarPoliticoAvancado,3);
   FrameConsultarPoliticoAvancado:addComponent(CenaBusca.painelResultados,4);
   FrameConsultarPoliticoAvancado:addComponent(buildPainelLegendas("NAVEGAÇÃO",acaoOk,nil,"MENU",acaoVerde,"TROCAR","VOLTAR"),5);
   
   if(CenaBusca.panelFoco == "painelResultados")then
     atualizarFoco(CenaBusca.painelResultados:getComponents(),CenaBusca.indexFoco,CenaBusca.indexFocoVisible);
---    atualizarFoco(CenaBusca.painelConsultarPolitico:getComponents(),nil,nil);
+    atualizarFoco(CenaBusca.painelConsultarPolitico:getComponents(),nil,nil);
     atualizarFoco(CenaBusca.painelConsultarPoliticoAvancado:getComponents(),nil,nil);
   elseif(CenaBusca.panelFoco == "painelConsultarPolitico") then
     atualizarFoco(CenaBusca.painelResultados:getComponents(),nil,nil);
---    atualizarFoco(CenaBusca.painelConsultarPolitico:getComponents(),CenaBusca.indexFoco,CenaBusca.indexFocoVisible);
+    atualizarFoco(CenaBusca.painelConsultarPolitico:getComponents(),CenaBusca.indexFoco,CenaBusca.indexFocoVisible);
     atualizarFoco(CenaBusca.painelConsultarPoliticoAvancado:getComponents(),nil,nil);
   elseif(CenaBusca.panelFoco == "painelConsultarPoliticoAvancado") then
     atualizarFoco(CenaBusca.painelResultados:getComponents(),nil,nil);
---    atualizarFoco(CenaBusca.painelConsultarPolitico:getComponents(),nil,nil);
+    atualizarFoco(CenaBusca.painelConsultarPolitico:getComponents(),nil,nil);
     atualizarFoco(CenaBusca.painelConsultarPoliticoAvancado:getComponents(),CenaBusca.indexFoco,CenaBusca.indexFocoVisible);
   end
 
@@ -83,7 +83,7 @@ function FrameConsultarPoliticoAvancado:action(evt)
   elseif(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoVerde(evt)) then
 
     if(CenaBusca.panelFoco == "painelConsultarPolitico" or CenaBusca.panelFoco == "painelConsultarPoliticoAvancado")then
-      CenaBusca:pesquisarDeputados(FrameConsultarPoliticoAvancado);
+      CenaBusca:pesquisarPoliticos(FrameConsultarPoliticoAvancado);
       
     elseif(CenaBusca.panelFoco == "painelResultados") then
       CenaBusca.indexFocoVisible = 1;

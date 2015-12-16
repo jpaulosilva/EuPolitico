@@ -4,7 +4,7 @@ BibliotecaAuxiliarScript.execute('scene.CenaBusca.frames.FrameConsultarPoliticoA
 BibliotecaAuxiliarScript.execute('scene.CenaBusca.frames.FrameVisualizarPolitico');
 BibliotecaAuxiliarScript.execute('scene.CenaBusca.frames.FramePesquisasResultados');
 BibliotecaAuxiliarScript.execute('data.Localizacoes');
-BibliotecaAuxiliarScript.execute('data.ListaDeputados');
+BibliotecaAuxiliarScript.execute('data.ListaPoliticos');
 BibliotecaAuxiliarScript.execute('data.Politico');
 BibliotecaAuxiliarScript.execute('data.FiltroPolitico');
 BibliotecaAuxiliarScript.execute('utils.Utils');
@@ -19,7 +19,7 @@ CenaBusca.font_data = Fonte.new({nome='tiresias', tamanho=20,is_negrito = false,
 CenaBusca.cor_header = Cor.new({r=0,g=255,b=0,alpha=120});
 CenaBusca.cor_line = Cor.new({r=0,g=255,b=0,alpha=30});
 
-CenaBusca.lista = ListaDeputados:new();
+CenaBusca.lista = ListaPoliticos:new();
 CenaBusca.filtro = FiltroPolitico:new();
 CenaBusca.regiaoSelecionada = " - ";
 CenaBusca.estadoSelecionado = " - ";
@@ -48,9 +48,24 @@ CenaBusca.indiceItemMenuAvancadoDetalhado = 1;
 CenaBusca.indiceItemMenuAvancadoDetalhadoJanela = 1;
 CenaBusca.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
 CenaBusca.frameCorrente = nil;
+CenaBusca.painelTabela = nil;
+CenaBusca.tabelaEscolhida = nil;
+CenaBusca.action = nil;
 
 
 function CenaBusca:inicialize()
+
+  CenaBusca.itensMenuAvancado = {
+    {'../media/regulamentacao.png','Faixa Etária',detalhesMultselect=false,detalhes={"18-23","24-30","31-40","41-50","51-60","61-70"},mascara={}},
+    {'../media/regulamentacao.png','Sexo',detalhesMultselect=false,detalhes={"Masculino","Feminino"},mascara={}},
+    {'../media/regulamentacao.png','Escolaridade',detalhesMultselect=false,detalhes={"Ens. Fundamental","Ens. Médio","Ens. Superior"},mascara={}},
+    {'../media/regulamentacao.png','Situação',detalhesMultselect=false,detalhes={"Afastado"},mascara={}},
+    {'../media/regulamentacao.png','Nº Mandatos',detalhesMultselect=true,detalhes={"1","2","3","4","5","6","7","8","9","10"},mascara={}},
+    {'../media/regulamentacao.png','Gastos Totais',detalhesMultselect=true,detalhes={"0-50 mil","51-100 mil","101-500 mil","501 mil-1 milhão","Maior que 1 milhão"},mascara={}},
+    {'../media/regulamentacao.png','Gastos por Dia',detalhesMultselect=true,detalhes={"0-1 mil","1 mil-10 mil","11 mil-50 mil"},mascara={}},
+    {'../media/regulamentacao.png','Assiduidade',detalhesMultselect=true,detalhes={"0%-10%","11%-20%","21%-30%","31%-40%","41%-50%","51%-60%","61%-70%","71%-80%","81%-90%","91%-100%"},mascara={}},
+    {'../media/regulamentacao.png','Nº Comissões',detalhesMultselect=true,detalhes={"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"},mascara={}}
+  };
 
   CenaBusca:addFrame(FrameConsultarPolitico,FrameConsultarPolitico.id);
   CenaBusca:addFrame(FrameConsultarPoliticoAvancado,FrameConsultarPoliticoAvancado.id);
@@ -63,8 +78,7 @@ function CenaBusca:inicialize()
   FrameVisualizarPolitico:inicialize();
   FramePesquisasResultados:inicialize();
 
-  CenaBusca.resultado = CenaBusca.lista:getDeputados();
-
+  CenaBusca.resultado = CenaBusca.lista:getPoliticos();
 
 end
 
@@ -116,9 +130,9 @@ function CenaBusca:getDadosCargos()
   local retorno = {};
   table.insert(retorno," - ");
 
-  cargos = {"Deputado Federal", "Senador"}
+  local cargos = {"Deputado Federal", "Senador"}
   for i,v in pairs(cargos) do
-    table.insert(retorno,tostring(v));
+    table.insert(retorno,v);
   end
 
 
@@ -131,10 +145,12 @@ function CenaBusca:getDadosPartidos()
   local retorno = {};
   table.insert(retorno," - ");
 
-  partidos = {"PT", "PMDB", "DEM", "PP", "PR", "PSDB"}
-
-  for i,v in pairs(partidos) do
-    table.insert(retorno,tostring(v));
+  
+  if (CenaBusca.cargoSelecionado ~= nil and CenaBusca.cargoSelecionado ~= " - ") then
+    local partidos = {"PT", "PMDB", "DEM", "PP", "PR", "PSDB"};
+    for i,v in pairs(partidos) do
+      table.insert(retorno,v);
+    end
   end
 
   return retorno;
@@ -147,7 +163,7 @@ function CenaBusca:getItensResultado(itens)
   for i,v in pairs(CenaBusca.resultado) do
 
     local partido = v:getPartido() or "-";
-    local cargo =  "-"; --v:getCargo() or
+    local cargo = v:getCargo() or "-";
     local nome = v:getNomeParlamentar() or "-";
     local cidade =  "-"; --v:getCidade() or
     local estado = v:getUf() or "-";
@@ -160,13 +176,13 @@ function CenaBusca:getItensResultado(itens)
     line:setAltura(40);
 
     line:addComponent(createField(partido,0,5,100,CenaBusca.font_header,CenaBusca.cor_header,true));
-    line:addComponent(createField(cargo,110,5,110,CenaBusca.font_header,CenaBusca.cor_header,true));
-    line:addComponent(createField(nome,230,5,400,CenaBusca.font_header,CenaBusca.cor_header,true));
-    line:addComponent(createField(cidade,640,5,200,CenaBusca.font_header,CenaBusca.cor_header,true));
-    line:addComponent(createField(estado,850,5,70,CenaBusca.font_header,CenaBusca.cor_header,true));
-    line:addComponent(createField(idade,930,5,70,CenaBusca.font_header,CenaBusca.cor_header,true));
-    line:addComponent(createField(sexo,1010,5,70,CenaBusca.font_header,CenaBusca.cor_header,true));
-    line:addComponent(createField(escolaridade,1090,5,170,CenaBusca.font_header,CenaBusca.cor_header,true));
+    line:addComponent(createField(cargo,110,5,230,CenaBusca.font_header,CenaBusca.cor_header,true));
+    line:addComponent(createField(nome,350,5,300,CenaBusca.font_header,CenaBusca.cor_header,true));
+    line:addComponent(createField(cidade,660,5,100,CenaBusca.font_header,CenaBusca.cor_header,true));
+    line:addComponent(createField(estado,770,5,70,CenaBusca.font_header,CenaBusca.cor_header,true));
+    line:addComponent(createField(idade,850,5,70,CenaBusca.font_header,CenaBusca.cor_header,true));
+    line:addComponent(createField(sexo,930,5,100,CenaBusca.font_header,CenaBusca.cor_header,true));
+    line:addComponent(createField(escolaridade,1040,5,220,CenaBusca.font_header,CenaBusca.cor_header,true));
 
     line.action = function (self,evt)
 
@@ -181,6 +197,12 @@ function CenaBusca:getItensResultado(itens)
       local APP = coroutine.create (
         function ()
           print("Criou corrotina!!!!!!!");
+
+          for key, var in pairs(CenaBusca.politicoSelecionado) do
+            print(tostring(key).." = "..tostring(var));
+
+          end
+
           local f_callback = function(politicoModificado)
             CenaBusca.politicoSelecionado = politicoModificado;
             FrameVisualizarPolitico:inicialize();
@@ -193,7 +215,7 @@ function CenaBusca:getItensResultado(itens)
             Display.show();
           end
 
-          carregaDetalhesDeputado(f_callback,CenaBusca.politicoSelecionado);
+          carregaDetalhesPolitico(f_callback,CenaBusca.politicoSelecionado);
           print("CHAMOU CARREGA DETALHES POLÍTICO!!")
         end
       )
@@ -204,6 +226,215 @@ function CenaBusca:getItensResultado(itens)
     table.insert(itens,line);
 
   end
+end
+
+
+function CenaBusca:updateFiltro(frame)
+  local indiceFaixaEtaria = 1;
+  local indiceSexo = 2;
+  local indiceEscolaridade = 3;
+  local indiceSituacao = 4;
+  local indiceNMandatos = 5;
+  local indiceGastosTotais = 6;
+  local indiceGastosDia = 7;
+  local indiceAssiduidade = 8;
+  local indiceNComissoes = 9;
+ 
+
+  CenaBusca.filtro:limparCaracteristicas();
+
+  if(frame.id == FrameConsultarPoliticoAvancado.id)then
+
+        for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceFaixaEtaria].mascara) do
+          if(opcaoSelecionada)then
+            if (indice == 1) then
+            	CenaBusca.filtro:setFaixaEtaria("18-23");
+            elseif (indice == 2)then
+              CenaBusca.filtro:setFaixaEtaria("24-30");
+            elseif (indice == 3)then
+              CenaBusca.filtro:setFaixaEtaria("31-40");
+            elseif (indice == 4)then
+              CenaBusca.filtro:setFaixaEtaria("41-50");
+            elseif (indice == 5)then
+              CenaBusca.filtro:setFaixaEtaria("51-60");
+            elseif (indice == 6)then
+              CenaBusca.filtro:setFaixaEtaria("61-70");         	
+            end
+           
+            break;
+          end
+        end
+    
+    for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceSexo].mascara) do
+      if(opcaoSelecionada)then
+        if (indice == 1) then
+          if (CenaBusca.filtro:getCargo() == "Senador") then
+            CenaBusca.filtro:setSexo("Masculino");
+          else
+            CenaBusca.filtro:setSexo("M");
+          end
+        end
+        if (indice == 2) then
+          if (CenaBusca.filtro:getCargo() == "Senador") then
+            CenaBusca.filtro:setSexo("Feminino");
+          else
+            CenaBusca.filtro:setSexo("F");
+
+          end
+        end
+
+        break;
+      end
+    end
+    
+        for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceEscolaridade].mascara) do
+          if(opcaoSelecionada)then
+            if (indice == 1) then
+            	CenaBusca.filtro:setEscolaridade("Ens. Fundamental");
+            elseif (indice == 2)then
+              CenaBusca.filtro:setEscolaridade("Ens. Médio");
+            elseif (indice == 3)then
+              CenaBusca.filtro:setEscolaridade("Ens. Superior");  	
+            end
+           
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceSituacao].mascara) do
+          if(opcaoSelecionada)then
+            if (indice == 1) then
+            	CenaBusca.filtro:setSituacao("Afastado");
+            end
+           
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceNMandatos].mascara) do
+          if(opcaoSelecionada)then
+            if(indice == 1)then
+             CenaBusca.filtro:setNumeroMandatos("1");
+            elseif(indice == 2)then
+             CenaBusca.filtro:setNumeroMandatos("2");
+            elseif(indice == 3)then
+             CenaBusca.filtro:setNumeroMandatos("3");
+            elseif(indice == 4)then
+             CenaBusca.filtro:setNumeroMandatos("4");
+            elseif(indice == 5)then
+             CenaBusca.filtro:setNumeroMandatos("5");
+            elseif(indice == 6)then
+             CenaBusca.filtro:setNumeroMandatos("6");
+            elseif(indice == 7)then
+             CenaBusca.filtro:setNumeroMandatos("7");
+            elseif(indice == 8)then
+             CenaBusca.filtro:setNumeroMandatos("8");
+            elseif(indice == 9)then
+             CenaBusca.filtro:setNumeroMandatos("9");
+            elseif(indice == 10)then
+             CenaBusca.filtro:setNumeroMandatos("10");    
+            end
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceGastosTotais].mascara) do
+          if(opcaoSelecionada)then
+            if(indice == 1)then
+             CenaBusca.filtro:setGastoTotal("0-50000");
+            elseif(indice == 2)then
+             CenaBusca.filtro:setGastoTotal("51000-100000");
+            elseif(indice == 3)then
+             CenaBusca.filtro:setGastoTotal("101000-500000");
+            elseif(indice == 4)then
+             CenaBusca.filtro:setGastoTotal("501000-1000000");
+            elseif(indice == 5)then
+             CenaBusca.filtro:setGastoTotal(">1000000"); 
+            end
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceGastosDia].mascara) do
+          if(opcaoSelecionada)then
+            if(indice == 1)then
+             CenaBusca.filtro:setGastoPorDia("0-1000");
+            elseif(indice == 2)then
+             CenaBusca.filtro:setGastoPorDia("1000-10000");
+            elseif(indice == 3)then
+             CenaBusca.filtro:setGastoPorDia("11000-50000");
+            end
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceAssiduidade].mascara) do
+          if(opcaoSelecionada)then
+            if(indice == 1)then
+             CenaBusca.filtro:setAssiduidade("0-10");
+            elseif(indice == 2)then
+             CenaBusca.filtro:setAssiduidade("11-20");
+            elseif(indice == 3)then
+             CenaBusca.filtro:setAssiduidade("21-30");
+            elseif(indice == 4)then
+             CenaBusca.filtro:setAssiduidade("31-40");
+            elseif(indice == 5)then
+             CenaBusca.filtro:setAssiduidade("41-50");
+            elseif(indice == 6)then
+             CenaBusca.filtro:setAssiduidade("51-60");
+            elseif(indice == 7)then
+             CenaBusca.filtro:setAssiduidade("61-70");
+            elseif(indice == 8)then
+             CenaBusca.filtro:setAssiduidade("71-80");
+            elseif(indice == 9)then
+             CenaBusca.filtro:setAssiduidade("81-90");
+            elseif(indice == 10)then
+             CenaBusca.filtro:setAssiduidade("91-100");    
+            end
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceNComissoes].mascara) do
+          if(opcaoSelecionada)then
+            if(indice == 1)then
+             CenaBusca.filtro:setNumeroComissoes("1");
+            elseif(indice == 2)then
+             CenaBusca.filtro:setNumeroComissoes("2");
+            elseif(indice == 3)then
+             CenaBusca.filtro:setNumeroComissoes("3");
+            elseif(indice == 4)then
+             CenaBusca.filtro:setNumeroComissoes("4");
+            elseif(indice == 5)then
+             CenaBusca.filtro:setNumeroComissoes("5");
+            elseif(indice == 6)then
+             CenaBusca.filtro:setNumeroComissoes("6");
+            elseif(indice == 7)then
+             CenaBusca.filtro:setNumeroComissoes("7");
+            elseif(indice == 8)then
+             CenaBusca.filtro:setNumeroComissoes("8");
+            elseif(indice == 9)then
+             CenaBusca.filtro:setNumeroComissoes("9");
+            elseif(indice == 10)then
+             CenaBusca.filtro:setNumeroComissoes("10");
+            elseif(indice == 11)then
+             CenaBusca.filtro:setNumeroComissoes("11");
+            elseif(indice == 12)then
+             CenaBusca.filtro:setNumeroComissoes("12");
+            elseif(indice == 13)then
+             CenaBusca.filtro:setNumeroComissoes("13");
+            elseif(indice == 14)then
+             CenaBusca.filtro:setNumeroComissoes("14");
+            elseif(indice == 15)then
+             CenaBusca.filtro:setNumeroComissoes("15");
+            end
+            break;
+          end
+        end
+ 
+
+  end
+
 end
 
 
@@ -219,6 +450,10 @@ function CenaBusca:pesquisarPoliticos(frame)
   local APP = coroutine.create (
 
       function ()
+
+        CenaBusca:updateFiltro(frame);
+
+        --print("OPÇÃO SELECIONADA: ########################### "..CenaBusca.filtro:getSexo());
 
 
         if(CenaBusca.filtro.nomeParlamentar == "")then
@@ -242,10 +477,10 @@ function CenaBusca:pesquisarPoliticos(frame)
         end
 
 
-        CenaBusca.lista:pesquisarDeputados(CenaBusca.filtro);
+        CenaBusca.lista:pesquisarPoliticos(CenaBusca.filtro);
         CenaBusca.isCarregandoPesquisa = false;
 
-        CenaBusca.resultado = CenaBusca.lista:getDeputados();
+        CenaBusca.resultado = CenaBusca.lista:getPoliticos();
 
         if(#CenaBusca.resultado > 0)then
           CenaBusca.indexFocoVisible = 2
@@ -268,7 +503,7 @@ end
 
 --Limpa os campos de pesquisa
 function CenaBusca:clear()
-  CenaBusca.lista = ListaDeputados:new();
+  CenaBusca.lista = ListaPoliticos:new();
   CenaBusca.filtro = FiltroPolitico:new();
   CenaBusca.regiaoSelecionada = " - ";
   CenaBusca.estadoSelecionado = " - ";
@@ -284,6 +519,126 @@ function CenaBusca:clear()
   CenaBusca.politicoSelecionado = nil;
   CenaBusca.indicePoliticoMenu = 1;
 end
+
+
+--Carrega itens para a busca avançada
+function CenaBusca:getItensMenuAvancado(frame)
+
+  local itens = {};
+
+  for i,v in pairs(CenaBusca.itensMenuAvancado) do
+    local src = v[1];
+    local nome = v[2];
+
+    local image = TImage.new();
+    image:setSrcArquivoExterno(src);
+
+    local label = TLabel.new();
+    label:setTexto(nome);
+    label:setFonte(CenaBusca.font_label);
+
+    local icone = TIcon.new();
+    icone:setTImage(image);
+    icone:setTLabel(label);
+    icone:setOrientacao(TIcon.TITULO_RIGHT);
+
+    icone.handler = function (self,evt)
+      if(BibliotecaAuxiliarEvento.isEventoControle(evt)) then
+
+        if(BibliotecaAuxiliarEvento.isBotaoCima(evt) and CenaBusca.indiceItemMenuAvancado > 1)then
+          CenaBusca.indiceItemMenuAvancado = CenaBusca.indiceItemMenuAvancado - 1;
+          CenaBusca.indiceItemMenuAvancadoDetalhado = 1;
+          CenaBusca.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
+          frame:inicialize();
+        elseif(BibliotecaAuxiliarEvento.isBotaoBaixo(evt) and CenaBusca.indiceItemMenuAvancado < #CenaBusca.itensMenuAvancado)then
+          CenaBusca.indiceItemMenuAvancado = CenaBusca.indiceItemMenuAvancado + 1;
+          CenaBusca.indiceItemMenuAvancadoDetalhado = 1;
+          CenaBusca.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
+          frame:inicialize();
+        elseif(BibliotecaAuxiliarEvento.isBotaoDireita(evt)) then
+          CenaBusca.indexFocoVisible = 3;
+          CenaBusca.indexFoco = 3;
+          CenaBusca.panelFoco = "painelConsultarPoliticoAvancado";
+          frame:inicialize();
+        end
+      end
+    end
+
+    table.insert(itens,icone);
+
+  end
+
+  return itens;
+end
+
+
+--Detalha os itens da busca avançada
+function CenaBusca:getItensMenuAvancadoDetalhes(frame,indiceItemSelecionado,menu)
+
+  local itens = {};
+
+
+
+  for i,v in pairs(CenaBusca.itensMenuAvancado[indiceItemSelecionado].detalhes) do
+    local nome = v;
+
+    if(CenaBusca.itensMenuAvancado[indiceItemSelecionado].mascara[i] == nil)then
+      CenaBusca.itensMenuAvancado[indiceItemSelecionado].mascara[i] = false;
+    end
+
+    local image = TImage.new();
+    if(CenaBusca.itensMenuAvancado[indiceItemSelecionado].mascara[i])then
+      image:setSrcArquivoExterno("../media/check_habilitado.png");
+    else
+      image:setSrcArquivoExterno("../media/check_desabilitado.png");
+    end
+
+    local label = TLabel.new();
+    label:setTexto(nome);
+    label:setFonte(CenaBusca.font_label);
+
+    local icone = TIcon.new();
+    icone:setTImage(image);
+    icone:setTLabel(label);
+    icone:setOrientacao(TIcon.TITULO_RIGHT);
+
+    icone.action = function (self,evt)
+      CenaBusca.itensMenuAvancado[indiceItemSelecionado].mascara[i] = not CenaBusca.itensMenuAvancado[indiceItemSelecionado].mascara[i];
+
+      if((not CenaBusca.itensMenuAvancado[indiceItemSelecionado].detalhesMultselect) and CenaBusca.itensMenuAvancado[indiceItemSelecionado].mascara[i])then
+        for indiceItem,valorItem in pairs(CenaBusca.itensMenuAvancado[indiceItemSelecionado].detalhes) do
+          if(indiceItem ~=i) then
+            CenaBusca.itensMenuAvancado[indiceItemSelecionado].mascara[indiceItem] = false;
+          end
+        end
+      end
+
+      frame:inicialize();
+    end
+
+    icone.handler = function (self,evt)
+      CenaBusca.indiceItemMenuAvancadoDetalhado = menu:getOpcaoSelecionada();
+      CenaBusca.indiceItemMenuAvancadoDetalhadoJanela = menu:getOpcaoSelecionadaJanela();
+      CenaBusca.indiceItemMenuAvancadoDetalhadoJanelaInicio = menu:getInicioJanela();
+
+      if(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoEsquerda(evt)) then
+        CenaBusca.indiceItemMenuAvancadoDetalhado = 1;
+        CenaBusca.indiceItemMenuAvancadoDetalhadoJanela = 1;
+        CenaBusca.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
+        CenaBusca.indexFocoVisible = 1;
+        CenaBusca.indexFoco = 1;
+        CenaBusca.panelFoco = "painelConsultarPoliticoAvancado";
+        frame:inicialize();
+      end
+    end
+
+    table.insert(itens,icone);
+
+  end
+
+  return itens;
+end
+
 
 --Constrói o painel no qual os dados são inseridos para busca de políticos
 function CenaBusca:buildPainelConsultarPolitico(frame)
@@ -409,7 +764,7 @@ function CenaBusca:buildPainelConsultarPolitico(frame)
   tchoicerEstado:update();
   CenaBusca.estadoSelecionado = tchoicerEstado:getItens()[tchoicerEstado:getOpcaoSelecionada(CenaBusca.indiceEstado)]:getTexto();
   CenaBusca.filtro:setEstado(CenaBusca.estadoSelecionado);
-  
+
   panel:addComponent(labelChoicerEstado,labelChoicerEstado.indice);
   panel:addComponent(tchoicerEstado,tchoicerEstado.indice);
 
@@ -615,6 +970,7 @@ function CenaBusca:buildPainelConsultarPolitico(frame)
 
     if(BibliotecaAuxiliarEvento.isEventoControle(evt) and (BibliotecaAuxiliarEvento.isBotaoDireita(evt) or BibliotecaAuxiliarEvento.isBotaoEsquerda(evt))) then
       CenaBusca.indiceCargo = tchoicerCargo:getOpcaoSelecionada();
+      CenaBusca.indicePartido = 1;
       frame.inicialize();
 
     elseif(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoCima(evt)) then
@@ -675,13 +1031,13 @@ function CenaBusca:buildPainelResultados(frame)
   line:setPy(pyComponent);
 
   line:addComponent(createField("PARTIDO",0,5,100,CenaBusca.font_header,CenaBusca.cor_header,true));
-  line:addComponent(createField("CARGO",110,5,110,CenaBusca.font_header,CenaBusca.cor_header,true));
-  line:addComponent(createField("NOME",230,5,400,CenaBusca.font_header,CenaBusca.cor_header,true));
-  line:addComponent(createField("CIDADE",640,5,200,CenaBusca.font_header,CenaBusca.cor_header,true));
-  line:addComponent(createField("UF",850,5,70,CenaBusca.font_header,CenaBusca.cor_header,true));
-  line:addComponent(createField("IDADE",930,5,70,CenaBusca.font_header,CenaBusca.cor_header,true));
-  line:addComponent(createField("SEXO",1010,5,70,CenaBusca.font_header,CenaBusca.cor_header,true));
-  line:addComponent(createField("ESCOLARIDADE",1090,5,170,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("CARGO",110,5,230,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("NOME",350,5,300,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("CIDADE",660,5,100,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("UF",770,5,70,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("IDADE",850,5,70,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("SEXO",930,5,100,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("ESCOLARIDADE",1040,5,220,CenaBusca.font_header,CenaBusca.cor_header,true));
 
   pyComponent = pyComponent + line:getAltura() + 2;
 
@@ -738,12 +1094,49 @@ end
 function CenaBusca:buildPainelConsultarPoliticoAvancado(frame)
   -- Incluir componentes gráficos
   local panel= TPanel.new();
-  panel:setLargura(1270);--630
+  panel:setLargura(630);
   panel:setAltura(385);
   panel:setPx(5);
   panel:setPy(5);
-  panel:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  panel:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));--{r=200,g=255,b=255,alpha=255}));
 
+  local menuOpcoes = TMenu.new();
+  menuOpcoes:addAllItens(CenaBusca:getItensMenuAvancado(frame));
+  menuOpcoes:setOpcaoSelecionada(CenaBusca.indiceItemMenuAvancado);
+  menuOpcoes:setOpcaoSelecionadaJanela(CenaBusca.indiceItemMenuAvancado);
+  menuOpcoes:setOrientacao(TMenu.VERTICAL);
+  menuOpcoes:setTamanhoJanela(9);
+  menuOpcoes:setIsItensCentralizados(false);
+  menuOpcoes:update();
+
+  menuOpcoes:setPx(5)--(FramePrincipal:getLargura() - menu:getLargura())/2);
+  menuOpcoes:setPy(5)--(FramePrincipal:getAltura() - menu:getAltura())/2);
+
+  panel:addComponent(menuOpcoes,1)
+
+  local imageSeta = TImage.new();
+  imageSeta:setSrcArquivoExterno("../media/seta_right.png");
+  imageSeta:update();
+  imageSeta:setPx(menuOpcoes:getLargura() + 20)--(FramePrincipal:getLargura() - menu:getLargura())/2);
+  imageSeta:setPy(19 + (38 * (CenaBusca.indiceItemMenuAvancado-1)) + imageSeta:getAltura()/2 + 2);
+
+  panel:addComponent(imageSeta,2)
+
+  local menuDetalhes = TMenu.new();
+  menuDetalhes:setOpcaoSelecionada(CenaBusca.indiceItemMenuAvancadoDetalhado);
+  menuDetalhes:setOpcaoSelecionadaJanela(CenaBusca.indiceItemMenuAvancadoDetalhadoJanela);
+  menuDetalhes:setInicioJanela(CenaBusca.indiceItemMenuAvancadoDetalhadoJanelaInicio);
+  local itens = CenaBusca:getItensMenuAvancadoDetalhes(frame,menuOpcoes:getOpcaoSelecionada(),menuDetalhes);
+  menuDetalhes:addAllItens(itens);
+  menuDetalhes:setOrientacao(TMenu.VERTICAL);
+  menuDetalhes:setTamanhoJanela(math.min(#itens,9));
+  menuDetalhes:setIsItensCentralizados(false);
+  menuDetalhes:update();
+
+  menuDetalhes:setPx(imageSeta:getPx() + imageSeta:getLargura() + 20)--(FramePrincipal:getLargura() - menu:getLargura())/2);
+  menuDetalhes:setPy(5)--(FramePrincipal:getAltura() - menu:getAltura())/2);
+
+  panel:addComponent(menuDetalhes,3)
 
   return panel;
 end
@@ -761,25 +1154,157 @@ end
 
 
 
-function CenaBusca:getItensMenuDetalhesPolitico()
+function CenaBusca:carregarTabelaGastosTipo(frame)
+
+  local panelTabelaGastosTipo= TPanel.new();
+  panelTabelaGastosTipo:setLargura(1270);
+  panelTabelaGastosTipo:setAltura(240)--645);
+  panelTabelaGastosTipo:setPx(5);
+  panelTabelaGastosTipo:setPy(410);
+  panelTabelaGastosTipo:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
+  
+  
+  local pxComponent = 5;
+  local pyComponent = 5;
+  
+  local line = TConteiner.new();
+  line:setLargura(1000);
+  line:setAltura(40);
+  line:setPx((panelTabelaGastosTipo:getLargura() - line:getLargura())/2);
+  line:setPy(pyComponent);
+  line:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=255}));
+
+  line:addComponent(createField("TIPO",0,5,400,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("VALOR",410,5,300,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("VALOR POR DIA",720,5,275,CenaBusca.font_header,CenaBusca.cor_header,true));
+  
+  panelTabelaGastosTipo:addComponent(line,1);
+
+  
+  return panelTabelaGastosTipo;
+  
+  
+end
+
+
+function CenaBusca:carregarTabelaGastosEmpresa(frame)
+
+  local panelTabelaGastosEmpresa= TPanel.new();
+  panelTabelaGastosEmpresa:setLargura(1270);
+  panelTabelaGastosEmpresa:setAltura(240)--645);
+  panelTabelaGastosEmpresa:setPx(5);
+  panelTabelaGastosEmpresa:setPy(410);
+  panelTabelaGastosEmpresa:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
+  
+  
+  local pxComponent = 5;
+  local pyComponent = 5;
+  
+  local line = TConteiner.new();
+  line:setLargura(1000);
+  line:setAltura(40);
+  line:setPx((panelTabelaGastosEmpresa:getLargura() - line:getLargura())/2);
+  line:setPy(pyComponent);
+  line:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=255}));
+
+  line:addComponent(createField("EMPRESA",0,5,400,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("VALOR",410,5,300,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("VALOR POR DIA",720,5,275,CenaBusca.font_header,CenaBusca.cor_header,true));
+  
+  panelTabelaGastosEmpresa:addComponent(line,1);
+
+  
+  return panelTabelaGastosEmpresa;
+  
+  
+end
+
+
+function CenaBusca:carregarTabelaProjetos(frame)
+
+  local panelTabelaProjetos= TPanel.new();
+  panelTabelaProjetos:setLargura(1270);
+  panelTabelaProjetos:setAltura(240)--645);
+  panelTabelaProjetos:setPx(5);
+  panelTabelaProjetos:setPy(410);
+  panelTabelaProjetos:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
+  
+  
+  local pxComponent = 5;
+  local pyComponent = 5;
+  
+  local line = TConteiner.new();
+  line:setLargura(715);
+  line:setAltura(40);
+  line:setPx((panelTabelaProjetos:getLargura() - line:getLargura())/2);
+  line:setPy(pyComponent);
+  line:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=255}));
+
+  line:addComponent(createField("PROJETO",0,5,400,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("DATA",410,5,300,CenaBusca.font_header,CenaBusca.cor_header,true));
+--  line:addComponent(createField("",720,5,275,CenaBusca.font_header,CenaBusca.cor_header,true));
+  
+  panelTabelaProjetos:addComponent(line,1);
+
+  
+  return panelTabelaProjetos;
+  
+  
+end
+
+
+function CenaBusca:carregarTabelaComissoes(frame)
+
+  local panelTabelaComissoes= TPanel.new();
+  panelTabelaComissoes:setLargura(1270);
+  panelTabelaComissoes:setAltura(240)--645);
+  panelTabelaComissoes:setPx(5);
+  panelTabelaComissoes:setPy(410);
+  panelTabelaComissoes:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
+  
+  
+  local pxComponent = 5;
+  local pyComponent = 5;
+  
+  local line = TConteiner.new();
+  line:setLargura(715);
+  line:setAltura(40);
+  line:setPx((panelTabelaComissoes:getLargura() - line:getLargura())/2);
+  line:setPy(pyComponent);
+  line:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=255}));
+
+  line:addComponent(createField("COMISSÃO",0,5,400,CenaBusca.font_header,CenaBusca.cor_header,true));
+  line:addComponent(createField("DATA",410,5,300,CenaBusca.font_header,CenaBusca.cor_header,true));
+--  line:addComponent(createField("",720,5,275,CenaBusca.font_header,CenaBusca.cor_header,true));
+  
+  panelTabelaComissoes:addComponent(line,19);
+
+  
+  return panelTabelaComissoes;
+  
+  
+end
+
+
+function CenaBusca:getItensMenuDetalhesPolitico(frame)
 
   local itensPrimitivos = {
-    {'../media/icone.png'    ,'Gastos por Tipo',''},
-    {'../media/icone.png' , 'Gastos por Empresa', ''},
-    {'../media/icone.png'   ,'Projetos',''},
-    {'../media/icone.png','Comissões',''},
-  };
+    {'../media/ajuda.png'     ,'Gasto por Tipo', 1},
+    {'../media/quem_somos.png'    ,'Gasto por Empresas', 2},
+    {'../media/quem_somos.png' , 'Projetos', 3},
+    {'../media/indices.png'   ,'Comissões', 4}};
+
 
   local itens = {};
 
   local font_data= Fonte.new({nome='tiresias', tamanho=32,is_negrito = true});
-  font_data.cor = Cor.new({r=255,g=94,b=94})
+  font_data.cor = Cor.new({r=255,g=255,b=0})--{r=153,g=204,b=51});--{r=255,g=94,b=94});
 
 
   for i,v in pairs(itensPrimitivos) do
     local src = v[1];
     local nome = v[2];
-    local action = v[3];
+--    CenaBusca.action = v[3];
 
     local image = TImage.new();
     image:setSrcArquivoExterno(src);
@@ -794,7 +1319,33 @@ function CenaBusca:getItensMenuDetalhesPolitico()
     icone:setOrientacao(TIcon.TITULO_RIGHT);
 
     icone.action = function (self,evt)
-      evt.rule_key = action;
+    
+      if v[3] == 1 then
+
+         CenaBusca.tabelaEscolhida = CenaBusca:carregarTabelaGastosTipo();
+         frame.inicialize();
+         
+      end
+      if v[3] == 2 then
+      
+        CenaBusca.tabelaEscolhida = CenaBusca:carregarTabelaGastosEmpresa();
+        frame.inicialize();
+        
+      end
+       if v[3] == 3 then
+      
+        CenaBusca.tabelaEscolhida = CenaBusca:carregarTabelaProjetos();
+        frame.inicialize();
+        
+      end
+       if v[3] == 4 then
+      
+        CenaBusca.tabelaEscolhida = CenaBusca:carregarTabelaComissoes();
+        frame.inicialize();
+        
+      end
+--      evt.rule_key = action;
+      
     end
 
     table.insert(itens,icone);
@@ -804,5 +1355,4 @@ function CenaBusca:getItensMenuDetalhesPolitico()
   return itens;
 
 end
-
 

@@ -29,7 +29,9 @@ local function extrairCandidatos(str)
 
         print(campo);
 
-        chave,valor = string.match(campo,'"(.*)":"(.*)"')
+        chave,valor = string.match(campo,'"(.*)":(.*)')
+        
+        valor = string.match(valor,'"(.*)"') or valor --Elimina aspas
 
         if chave == "id" then
           candidato:setId(valor);
@@ -38,7 +40,7 @@ local function extrairCandidatos(str)
         elseif chave == "cidade" then
           candidato:setCidade(valor);
         elseif chave == "uf" then
-          candidato:setEstado(valor);
+          candidato:setUf(valor);
         elseif chave == "nomeParlamentar" then
           candidato:setNomeParlamentar(valor);
         elseif chave == "nomeCompleto" then
@@ -147,10 +149,9 @@ local function extrairDetalhesCandidato(str,candidato)
   local data = string.match(str,"{(.*)}")
 
   for campo in data:split(",") do
-    chave,valor = string.match(campo,'"(.*)":"(.*)"')
+    chave,valor = string.match(campo,'"(.*)":(.*)')
 
-    --    if(valor ~= nil) then
-    --      valor = string.match(valor,'"(.*)"') or valor
+    valor = string.match(valor,'"(.*)"') or valor
 
     if chave == "id" then
       candidato:setId(valor);
@@ -159,7 +160,7 @@ local function extrairDetalhesCandidato(str,candidato)
     elseif chave == "cidade" then
       candidato:setCidade(valor);
     elseif chave == "uf" then
-      candidato:setEstado(valor);
+      candidato:setUf(valor);
     elseif chave == "nomeParlamentar" then
       candidato:setNomeParlamentar(valor);
     elseif chave == "nomeCompleto" then
@@ -202,7 +203,6 @@ local function extrairDetalhesCandidato(str,candidato)
       candidato:setCodParlamentarAtual(valor);
     end
 
-    --    end
   end
 
 end
@@ -211,8 +211,12 @@ end
 function carregaDetalhesCandidato(f_callback, candidato)
 
   local url = 'http://meucongressonacional.com/api/001/candidato/2014/'..candidato:getId();
+  
+  print("ID CANDIDATO: "..candidato:getId());
+  
 
   local dados = webs_get(url,{});
+  
 
   if (dados ~= nil and dados ~= 0) then
 

@@ -3,14 +3,13 @@ Candidato = {};
 Candidato.idade = nil;
 Candidato.partido = nil;
 Candidato.regiao = nil;
-Candidato.estado = nil;
 Candidato.cidade = nil;
 Candidato.ocupacao = nil;
 Candidato.reeleicao = nil;
 
 
 Candidato.id = nil;
-Candidato.estado = nil;
+Candidato.uf = nil;
 Candidato.nomeCargo = nil;
 Candidato.nomeParlamentar = nil;
 Candidato.nomeCompleto = nil;
@@ -80,11 +79,11 @@ function Candidato:setId(id)
   self.id = id;
 end
 
-function Candidato:getEstado()
-  return self.estado;
+function Candidato:getUf()
+  return self.uf;
 end
-function Candidato:setEstado(estado)
-  self.estado = estado;
+function Candidato:setUf(uf)
+  self.uf = uf;
 end
 
 function Candidato:getNomeCargo()

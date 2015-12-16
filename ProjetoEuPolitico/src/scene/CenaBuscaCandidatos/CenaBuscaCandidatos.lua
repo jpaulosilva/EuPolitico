@@ -147,7 +147,7 @@ function CenaBuscaCandidatos:getItensResultado(itens)
     local cargo = v:getNomeCargo() or "-";
     local nome = v:getNomeParlamentar() or "-";
     local cidade = v:getCidade() or "-";
-    local estado = v:getEstado() or "-";
+    local estado = v:getUf() or "-";
     local idade = v:getIdade() or "-";
     local sexo =  "-"; --v:getSexo() or
     local escolaridade =  "-"; --v:getNomeEscolaridade() or
@@ -178,7 +178,12 @@ function CenaBuscaCandidatos:getItensResultado(itens)
       local APP = coroutine.create (
         function ()
           print("Criou corrotina!!!!!!!");
-
+          
+          for key, var in pairs(CenaBuscaCandidatos.candidatoSelecionado) do
+          	print(tostring(key).." = "..tostring(var));
+          	
+          end
+    
           local f_callback = function(candidatoModificado)
             CenaBuscaCandidatos.candidatoSelecionado = candidatoModificado;
             FrameVisualizarCandidato:inicialize();
@@ -766,6 +771,51 @@ function CenaBuscaCandidatos:getEstatistica(estatistica, isPercentual)
     estatistica = string.format("%.2f",tonumber(estatistica));
   end
   return estatistica;
+end
+
+
+function CenaBuscaCandidatos:getItensMenuDetalhesCandidato()
+
+  local itensPrimitivos = {
+    {'../media/icone.png'    ,'Gastos por Tipo',''},
+    {'../media/icone.png' , 'Gastos por Empresa', ''},
+    {'../media/icone.png'   ,'Projetos',''},
+    {'../media/icone.png','Comissões',''},
+  };
+
+  local itens = {};
+
+  local font_data= Fonte.new({nome='tiresias', tamanho=32,is_negrito = true});
+  font_data.cor = Cor.new({r=255,g=94,b=94})
+
+
+  for i,v in pairs(itensPrimitivos) do
+    local src = v[1];
+    local nome = v[2];
+    local action = v[3];
+
+    local image = TImage.new();
+    image:setSrcArquivoExterno(src);
+
+    local label = TLabel.new();
+    label:setTexto(nome);
+    label:setFonte(font_data);
+
+    local icone = TIcon.new();
+    icone:setTImage(image);
+    icone:setTLabel(label);
+    icone:setOrientacao(TIcon.TITULO_RIGHT);
+
+    icone.action = function (self,evt)
+      evt.rule_key = action;
+    end
+
+    table.insert(itens,icone);
+
+  end
+
+  return itens;
+
 end
 
 

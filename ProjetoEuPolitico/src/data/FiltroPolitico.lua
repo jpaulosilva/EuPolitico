@@ -313,6 +313,15 @@ end
 
 
 
+function FiltroPolitico:limparCaracteristicas()
+
+  self.sexo = nil;
+  self.sexoAlterado = false;
+	
+end
+
+
+
 function FiltroPolitico:toParams()
 
 	local params = {};

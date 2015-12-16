@@ -286,5 +286,15 @@
 				<to scene="CenaPrincipal" frame="FramePrincipal" />
 			</navigationCase>
 		</navigationRule>
+		
+		
+		<navigationRule>
+			<from scene="CenaBusca" frame="FrameVisualizarPolitico" />
+			<navigationCase>
+				<key class="ruleKey" key="acessarTelaInicial" />
+				<to scene="CenaPrincipal" frame="FramePrincipal" />
+			</navigationCase>
+		</navigationRule>
+		
 	</navigations>
 </moondoConfig>
