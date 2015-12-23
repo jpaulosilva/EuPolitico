@@ -47,9 +47,22 @@ CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhado = 1;
 CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanela = 1;
 CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
 CenaBuscaCandidatos.frameCorrente = nil;
+CenaBuscaCandidatos.tabelaEscolhida = nil;
 
 
 function CenaBuscaCandidatos:inicialize()
+
+   CenaBuscaCandidatos.itensMenuAvancado = {
+    {'../media/regulamentacao.png','Faixa Etária',detalhesMultselect=false,detalhes={"18-23","24-30","31-40","41-50","51-60","61-70"},mascara={}},
+    {'../media/regulamentacao.png','Sexo',detalhesMultselect=false,detalhes={"Masculino","Feminino"},mascara={}},
+    {'../media/regulamentacao.png','Escolaridade',detalhesMultselect=false,detalhes={"Ens. Fundamental","Ens. Médio","Ens. Superior"},mascara={}},
+    {'../media/regulamentacao.png','Ocupação',detalhesMultselect=false,detalhes={"Médico", "Advogado", "Engenheiro"},mascara={}},
+    {'../media/regulamentacao.png','Reeleição',detalhesMultselect=true,detalhes={"Sim","Não"},mascara={}},
+    {'../media/regulamentacao.png','Total de Bens',detalhesMultselect=true,detalhes={"50 mil","100 mil","500 mil","1 milhão","Maior que 1 milhão"},mascara={}},
+    {'../media/regulamentacao.png','Total de Doações',detalhesMultselect=true,detalhes={"1 mil","10 mil","50 mil"},mascara={}},
+    {'../media/regulamentacao.png','Total de Gastos',detalhesMultselect=true,detalhes={"50 mil","100 mil","150 mil","200 mim","250 mil","500 mil","1 milhão","Maior que 1 milhão"},mascara={}},
+    {'../media/regulamentacao.png','Nº Propostas',detalhesMultselect=true,detalhes={"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"},mascara={}}
+  };
 
   CenaBuscaCandidatos:addFrame(FrameConsultarCandidato,FrameConsultarCandidato.id);
   CenaBuscaCandidatos:addFrame(FrameConsultarCandidatoAvancado,FrameConsultarCandidatoAvancado.id);
@@ -123,7 +136,7 @@ function CenaBuscaCandidatos:getDadosCargos()
 end
 
 
---Seleciona índices do IDEB
+--Seleciona os partidos
 function CenaBuscaCandidatos:getDadosPartidos()
   local retorno = {};
   table.insert(retorno," - ");
@@ -212,6 +225,197 @@ function CenaBuscaCandidatos:getItensResultado(itens)
 end
 
 
+function CenaBuscaCandidatos:updateFiltro(frame)
+  local indiceFaixaEtaria = 1;
+  local indiceSexo = 2;
+  local indiceEscolaridade = 3;
+  local indiceOcupacao = 4;
+  local indiceReeleicao = 5;
+  local indiceTotalBens = 6;
+  local indiceDoacoes = 7;
+  local indiceGastos = 8;
+  local indiceNPropostas = 9;
+ 
+
+  CenaBuscaCandidatos.filtro:limparCaracteristicas();
+
+  if(frame.id == FrameConsultarPoliticoAvancado.id)then
+
+        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceFaixaEtaria].mascara) do
+          if(opcaoSelecionada)then
+            if (indice == 1) then
+              CenaBuscaCandidatos.filtro:setFaixaEtaria("18-23");
+            elseif (indice == 2)then
+              CenaBuscaCandidatos.filtro:setFaixaEtaria("24-30");
+            elseif (indice == 3)then
+              CenaBuscaCandidatos.filtro:setFaixaEtaria("31-40");
+            elseif (indice == 4)then
+              CenaBuscaCandidatos.filtro:setFaixaEtaria("41-50");
+            elseif (indice == 5)then
+              CenaBuscaCandidatos.filtro:setFaixaEtaria("51-60");
+            elseif (indice == 6)then
+              CenaBuscaCandidatos.filtro:setFaixaEtaria("61-70");           
+            end
+           
+            break;
+          end
+        end
+    
+    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceSexo].mascara) do
+      if(opcaoSelecionada)then
+        if (indice == 1) then
+          if (CenaBuscaCandidatos.filtro:getCargo() == "Senador") then
+            CenaBuscaCandidatos.filtro:setSexo("Masculino");
+          else
+            CenaBuscaCandidatos.filtro:setSexo("M");
+          end
+        end
+        if (indice == 2) then
+          if (CenaBuscaCandidatos.filtro:getCargo() == "Senador") then
+            CenaBuscaCandidatos.filtro:setSexo("Feminino");
+          else
+            CenaBuscaCandidatos.filtro:setSexo("F");
+
+          end
+        end
+
+        break;
+      end
+    end
+    
+        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceEscolaridade].mascara) do
+          if(opcaoSelecionada)then
+            if (indice == 1) then
+              CenaBuscaCandidatos.filtro:setEscolaridade("Ens. Fundamental");
+            elseif (indice == 2)then
+              CenaBuscaCandidatos.filtro:setEscolaridade("Ens. Médio");
+            elseif (indice == 3)then
+              CenaBuscaCandidatos.filtro:setEscolaridade("Ens. Superior");    
+            end
+           
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceOcupacao].mascara) do
+          if(opcaoSelecionada)then
+            if (indice == 1) then
+              CenaBuscaCandidatos.filtro:setNomeOcupacao("Médico");
+            end
+           
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceReeleicao].mascara) do
+          if(opcaoSelecionada)then
+            if(indice == 1)then
+             CenaBuscaCandidatos.filtro:setReeleicao("Sim");
+            elseif(indice == 2)then
+             CenaBuscaCandidatos.filtro:setReeleicao("Não");
+          end
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceTotalBens].mascara) do
+          if(opcaoSelecionada)then
+            if(indice == 1)then
+             CenaBuscaCandidatos.filtro:setGastoTotal("50000");
+            elseif(indice == 2)then
+             CenaBuscaCandidatos.filtro:setGastoTotal("100000");
+            elseif(indice == 3)then
+             CenaBuscaCandidatos.filtro:setGastoTotal("500000");
+            elseif(indice == 4)then
+             CenaBuscaCandidatos.filtro:setGastoTotal("1000000");
+            elseif(indice == 5)then
+             CenaBuscaCandidatos.filtro:setGastoTotal("2000000"); 
+            end
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceDoacoes].mascara) do
+          if(opcaoSelecionada)then
+            if(indice == 1)then
+             CenaBuscaCandidatos.filtro:setTotalArrecadado("1000");
+            elseif(indice == 2)then
+             CenaBuscaCandidatos.filtro:setTotalArrecadado("10000");
+            elseif(indice == 3)then
+             CenaBuscaCandidatos.filtro:setTotalArrecadado("50000");
+            end
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceGastos].mascara) do
+          if(opcaoSelecionada)then
+            if(indice == 1)then
+             CenaBuscaCandidatos.filtro:setTotalGastos("50000");
+            elseif(indice == 2)then
+             CenaBuscaCandidatos.filtro:setTotalGastos("100000");
+            elseif(indice == 3)then
+             CenaBuscaCandidatos.filtro:setTotalGastos("150000");
+            elseif(indice == 4)then
+             CenaBuscaCandidatos.filtro:setTotalGastos("200000");
+            elseif(indice == 5)then
+             CenaBuscaCandidatos.filtro:setTotalGastos("250000");
+            elseif(indice == 6)then
+             CenaBuscaCandidatos.filtro:setTotalGastos("500000");
+            elseif(indice == 7)then
+             CenaBuscaCandidatos.filtro:setTotalGastos("1000000");
+            elseif(indice == 8)then
+             CenaBuscaCandidatos.filtro:setTotalGastos("2000000");
+             
+            end
+            break;
+          end
+        end
+    
+        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceNPropostas].mascara) do
+          if(opcaoSelecionada)then
+            if(indice == 1)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("1");
+            elseif(indice == 2)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("2");
+            elseif(indice == 3)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("3");
+            elseif(indice == 4)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("4");
+            elseif(indice == 5)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("5");
+            elseif(indice == 6)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("6");
+            elseif(indice == 7)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("7");
+            elseif(indice == 8)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("8");
+            elseif(indice == 9)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("9");
+            elseif(indice == 10)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("10");
+            elseif(indice == 11)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("11");
+            elseif(indice == 12)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("12");
+            elseif(indice == 13)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("13");
+            elseif(indice == 14)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("14");
+            elseif(indice == 15)then
+             CenaBuscaCandidatos.filtro:setNumeroPropostas("15");
+            end
+            break;
+          end
+        end
+ 
+
+  end
+
+end
+
+
+
 --Função filtro para pesquisar candidatos
 function CenaBuscaCandidatos:pesquisarCandidatos(frame)
 
@@ -223,6 +427,8 @@ function CenaBuscaCandidatos:pesquisarCandidatos(frame)
   local APP = coroutine.create (
 
       function ()
+      
+        CenaBuscaCandidatos:updateFiltro(frame);
 
 
         if(CenaBuscaCandidatos.filtro.nomeParlamentar == "")then
@@ -291,6 +497,126 @@ function CenaBuscaCandidatos:clear()
   CenaBuscaCandidatos.candidatoSelecionado = nil;
   CenaBuscaCandidatos.indiceCandidatoMenu = 1;
 end
+
+
+--Carrega itens para a busca avançada
+function CenaBuscaCandidatos:getItensMenuAvancado(frame)
+
+  local itens = {};
+
+  for i,v in pairs(CenaBuscaCandidatos.itensMenuAvancado) do
+    local src = v[1];
+    local nome = v[2];
+
+    local image = TImage.new();
+    image:setSrcArquivoExterno(src);
+
+    local label = TLabel.new();
+    label:setTexto(nome);
+    label:setFonte(CenaBusca.font_label);
+
+    local icone = TIcon.new();
+    icone:setTImage(image);
+    icone:setTLabel(label);
+    icone:setOrientacao(TIcon.TITULO_RIGHT);
+
+    icone.handler = function (self,evt)
+      if(BibliotecaAuxiliarEvento.isEventoControle(evt)) then
+
+        if(BibliotecaAuxiliarEvento.isBotaoCima(evt) and CenaBuscaCandidatos.indiceItemMenuAvancado > 1)then
+          CenaBuscaCandidatos.indiceItemMenuAvancado = CenaBusca.indiceItemMenuAvancado - 1;
+          CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhado = 1;
+          CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
+          frame:inicialize();
+        elseif(BibliotecaAuxiliarEvento.isBotaoBaixo(evt) and CenaBuscaCandidatos.indiceItemMenuAvancado < #CenaBuscaCandidatos.itensMenuAvancado)then
+          CenaBuscaCandidatos.indiceItemMenuAvancado = CenaBuscaCandidatos.indiceItemMenuAvancado + 1;
+          CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhado = 1;
+          CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
+          frame:inicialize();
+        elseif(BibliotecaAuxiliarEvento.isBotaoDireita(evt)) then
+          CenaBuscaCandidatos.indexFocoVisible = 3;
+          CenaBuscaCandidatos.indexFoco = 3;
+          CenaBuscaCandidatos.panelFoco = "painelConsultarCandidatoAvancado";
+          frame:inicialize();
+        end
+      end
+    end
+
+    table.insert(itens,icone);
+
+  end
+
+  return itens;
+end
+
+
+--Detalha os itens da busca avançada
+function CenaBuscaCandidatos:getItensMenuAvancadoDetalhes(frame,indiceItemSelecionado,menu)
+
+  local itens = {};
+
+
+
+  for i,v in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].detalhes) do
+    local nome = v;
+
+    if(CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i] == nil)then
+      CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i] = false;
+    end
+
+    local image = TImage.new();
+    if(CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i])then
+      image:setSrcArquivoExterno("../media/check_habilitado.png");
+    else
+      image:setSrcArquivoExterno("../media/check_desabilitado.png");
+    end
+
+    local label = TLabel.new();
+    label:setTexto(nome);
+    label:setFonte(CenaBuscaCandidatos.font_label);
+
+    local icone = TIcon.new();
+    icone:setTImage(image);
+    icone:setTLabel(label);
+    icone:setOrientacao(TIcon.TITULO_RIGHT);
+
+    icone.action = function (self,evt)
+      CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i] = not CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i];
+
+      if((not CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].detalhesMultselect) and CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[i])then
+        for indiceItem,valorItem in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].detalhes) do
+          if(indiceItem ~=i) then
+            CenaBuscaCandidatos.itensMenuAvancado[indiceItemSelecionado].mascara[indiceItem] = false;
+          end
+        end
+      end
+
+      frame:inicialize();
+    end
+
+    icone.handler = function (self,evt)
+      CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhado = menu:getOpcaoSelecionada();
+      CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanela = menu:getOpcaoSelecionadaJanela();
+      CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanelaInicio = menu:getInicioJanela();
+
+      if(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoEsquerda(evt)) then
+        CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhado = 1;
+        CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanela = 1;
+        CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanelaInicio = 1;
+        CenaBuscaCandidatos.indexFocoVisible = 1;
+        CenaBuscaCandidatos.indexFoco = 1;
+        CenaBuscaCandidatos.panelFoco = "painelConsultarCandidatoAvancado";
+        frame:inicialize();
+      end
+    end
+
+    table.insert(itens,icone);
+
+  end
+
+  return itens;
+end
+
 
 
 
@@ -755,9 +1081,45 @@ function CenaBuscaCandidatos:buildPainelConsultarCandidatoAvancado(frame)
   panel:setAltura(385);
   panel:setPx(5);
   panel:setPy(5);
-  panel:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  panel:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));--{r=200,g=255,b=255,alpha=255}));
 
+  local menuOpcoes = TMenu.new();
+  menuOpcoes:addAllItens(CenaBuscaCandidatos:getItensMenuAvancado(frame));
+  menuOpcoes:setOpcaoSelecionada(CenaBuscaCandidatos.indiceItemMenuAvancado);
+  menuOpcoes:setOpcaoSelecionadaJanela(CenaBuscaCandidatos.indiceItemMenuAvancado);
+  menuOpcoes:setOrientacao(TMenu.VERTICAL);
+  menuOpcoes:setTamanhoJanela(9);
+  menuOpcoes:setIsItensCentralizados(false);
+  menuOpcoes:update();
 
+  menuOpcoes:setPx(5)--(FramePrincipal:getLargura() - menu:getLargura())/2);
+  menuOpcoes:setPy(5)--(FramePrincipal:getAltura() - menu:getAltura())/2);
+
+  panel:addComponent(menuOpcoes,1)
+
+  local imageSeta = TImage.new();
+  imageSeta:setSrcArquivoExterno("../media/seta_right.png");
+  imageSeta:update();
+  imageSeta:setPx(menuOpcoes:getLargura() + 20)--(FramePrincipal:getLargura() - menu:getLargura())/2);
+  imageSeta:setPy(19 + (38 * (CenaBuscaCandidatos.indiceItemMenuAvancado-1)) + imageSeta:getAltura()/2 + 2);
+
+  panel:addComponent(imageSeta,2)
+
+  local menuDetalhes = TMenu.new();
+  menuDetalhes:setOpcaoSelecionada(CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhado);
+  menuDetalhes:setOpcaoSelecionadaJanela(CenaBuscaCandidatos.indiceItemMenuAvancadoDetalhadoJanela);
+  menuDetalhes:setInicioJanela(CenaBusca.indiceItemMenuAvancadoDetalhadoJanelaInicio);
+  local itens = CenaBuscaCandidatos:getItensMenuAvancadoDetalhes(frame,menuOpcoes:getOpcaoSelecionada(),menuDetalhes);
+  menuDetalhes:addAllItens(itens);
+  menuDetalhes:setOrientacao(TMenu.VERTICAL);
+  menuDetalhes:setTamanhoJanela(math.min(#itens,9));
+  menuDetalhes:setIsItensCentralizados(false);
+  menuDetalhes:update();
+
+  menuDetalhes:setPx(imageSeta:getPx() + imageSeta:getLargura() + 20)--(FramePrincipal:getLargura() - menu:getLargura())/2);
+  menuDetalhes:setPy(5)--(FramePrincipal:getAltura() - menu:getAltura())/2);
+
+  panel:addComponent(menuDetalhes,3)
 
   return panel;
 end
@@ -774,25 +1136,156 @@ function CenaBuscaCandidatos:getEstatistica(estatistica, isPercentual)
 end
 
 
-function CenaBuscaCandidatos:getItensMenuDetalhesCandidato()
+function CenaBuscaCandidatos:carregarTabelaBens(frame)
+
+  local panelTabelaBens= TPanel.new();
+  panelTabelaBens:setLargura(1270);
+  panelTabelaBens:setAltura(240)--645);
+  panelTabelaBens:setPx(5);
+  panelTabelaBens:setPy(410);
+  panelTabelaBens:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
+  
+  
+  local pxComponent = 5;
+  local pyComponent = 5;
+  
+  local line = TConteiner.new();
+  line:setLargura(1000);
+  line:setAltura(40);
+  line:setPx((panelTabelaBens:getLargura() - line:getLargura())/2);
+  line:setPy(pyComponent);
+  line:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=255}));
+
+  line:addComponent(createField("TIPO",0,5,400,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
+  line:addComponent(createField("DESCRIÇÃO",410,5,300,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
+  line:addComponent(createField("VALOR",720,5,275,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
+  
+  panelTabelaBens:addComponent(line,1);
+
+  
+  return panelTabelaBens;
+  
+  
+end
+
+
+function CenaBuscaCandidatos:carregarTabelaDoacoesRecebidas(frame)
+
+  local panelTabelaDoacoesRecebidas= TPanel.new();
+  panelTabelaDoacoesRecebidas:setLargura(1270);
+  panelTabelaDoacoesRecebidas:setAltura(240)--645);
+  panelTabelaDoacoesRecebidas:setPx(5);
+  panelTabelaDoacoesRecebidas:setPy(410);
+  panelTabelaDoacoesRecebidas:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
+  
+  
+  local pxComponent = 5;
+  local pyComponent = 5;
+  
+  local line = TConteiner.new();
+  line:setLargura(1000);
+  line:setAltura(40);
+  line:setPx((panelTabelaDoacoesRecebidas:getLargura() - line:getLargura())/2);
+  line:setPy(pyComponent);
+  line:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=255}));
+
+  line:addComponent(createField("TIPO",0,5,400,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
+  line:addComponent(createField("DESCRIÇÃO",410,5,300,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
+  line:addComponent(createField("VALOR",720,5,275,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
+  
+  panelTabelaDoacoesRecebidas:addComponent(line,1);
+
+  
+  return panelTabelaDoacoesRecebidas;
+  
+  
+end
+
+
+function CenaBuscaCandidatos:carregarTabelaPropostas(frame)
+
+  local panelTabelaPropostas= TPanel.new();
+  panelTabelaPropostas:setLargura(1270);
+  panelTabelaPropostas:setAltura(240)--645);
+  panelTabelaPropostas:setPx(5);
+  panelTabelaPropostas:setPy(410);
+  panelTabelaPropostas:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
+  
+  
+  local pxComponent = 5;
+  local pyComponent = 5;
+  
+  local line = TConteiner.new();
+  line:setLargura(715);
+  line:setAltura(40);
+  line:setPx((panelTabelaPropostas:getLargura() - line:getLargura())/2);
+  line:setPy(pyComponent);
+  line:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=255}));
+
+  line:addComponent(createField("TÍTULO",0,5,400,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
+  line:addComponent(createField("DESCRIÇÃO",410,5,300,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
+--  line:addComponent(createField("",720,5,275,CenaBusca.font_header,CenaBusca.cor_header,true));
+  
+  panelTabelaPropostas:addComponent(line,1);
+
+  
+  return panelTabelaPropostas;
+  
+  
+end
+
+
+--function CenaBuscaCandidatos:carregarTabelaComissoes(frame)
+--
+--  local panelTabelaComissoes= TPanel.new();
+--  panelTabelaComissoes:setLargura(1270);
+--  panelTabelaComissoes:setAltura(240)--645);
+--  panelTabelaComissoes:setPx(5);
+--  panelTabelaComissoes:setPy(410);
+--  panelTabelaComissoes:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
+--  
+--  
+--  local pxComponent = 5;
+--  local pyComponent = 5;
+--  
+--  local line = TConteiner.new();
+--  line:setLargura(715);
+--  line:setAltura(40);
+--  line:setPx((panelTabelaComissoes:getLargura() - line:getLargura())/2);
+--  line:setPy(pyComponent);
+--  line:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=255}));
+--
+--  line:addComponent(createField("COMISSÃO",0,5,400,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
+--  line:addComponent(createField("DATA",410,5,300,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
+----  line:addComponent(createField("",720,5,275,CenaBusca.font_header,CenaBusca.cor_header,true));
+--  
+--  panelTabelaComissoes:addComponent(line,19);
+--
+--  
+--  return panelTabelaComissoes;
+--  
+--  
+--end
+
+
+function CenaBuscaCandidatos:getItensMenuDetalhesCandidato(frame)
 
   local itensPrimitivos = {
-    {'../media/icone.png'    ,'Gastos por Tipo',''},
-    {'../media/icone.png' , 'Gastos por Empresa', ''},
-    {'../media/icone.png'   ,'Projetos',''},
-    {'../media/icone.png','Comissões',''},
-  };
+    {'../media/ajuda.png'     ,'Bens', 1},
+    {'../media/quem_somos.png'    ,'Doações Recebidas', 2},
+    {'../media/quem_somos.png' , 'Propostas', 3}};
+
 
   local itens = {};
 
   local font_data= Fonte.new({nome='tiresias', tamanho=32,is_negrito = true});
-  font_data.cor = Cor.new({r=255,g=94,b=94})
+  font_data.cor = Cor.new({r=255,g=255,b=0})--{r=153,g=204,b=51});--{r=255,g=94,b=94});
 
 
   for i,v in pairs(itensPrimitivos) do
     local src = v[1];
     local nome = v[2];
-    local action = v[3];
+--    CenaBusca.action = v[3];
 
     local image = TImage.new();
     image:setSrcArquivoExterno(src);
@@ -807,7 +1300,33 @@ function CenaBuscaCandidatos:getItensMenuDetalhesCandidato()
     icone:setOrientacao(TIcon.TITULO_RIGHT);
 
     icone.action = function (self,evt)
-      evt.rule_key = action;
+    
+      if v[3] == 1 then
+
+         CenaBuscaCandidatos.tabelaEscolhida = CenaBuscaCandidatos:carregarTabelaBens();
+         frame.inicialize();
+         
+      end
+      if v[3] == 2 then
+      
+        CenaBuscaCandidatos.tabelaEscolhida = CenaBuscaCandidatos:carregarTabelaDoacoesRecebidas();
+        frame.inicialize();
+        
+      end
+       if v[3] == 3 then
+      
+        CenaBuscaCandidatos.tabelaEscolhida = CenaBuscaCandidatos:carregarTabelaPropostas();
+        frame.inicialize();
+        
+      end
+--       if v[3] == 4 then
+--      
+--        CenaBuscaCandidatos.tabelaEscolhida = CenaBuscaCandidatos:carregarTabelaComissoes();
+--        frame.inicialize();
+--        
+--      end
+--      evt.rule_key = action;
+      
     end
 
     table.insert(itens,icone);

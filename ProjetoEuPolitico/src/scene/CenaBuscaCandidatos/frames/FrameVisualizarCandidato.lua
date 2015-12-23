@@ -45,6 +45,7 @@ function FrameVisualizarCandidato:inicialize()
 
 
     FrameVisualizarCandidato:addComponent(FrameVisualizarCandidato:buildPainelDetalhes(),2);
+    FrameVisualizarCandidato:addComponent(CenaBuscaCandidatos.tabelaEscolhida,4);
   
 
   else
@@ -69,7 +70,7 @@ function FrameVisualizarCandidato:buildPainelDetalhes()
   -- Incluir componentes gráficos
   local panelDetalhesCandidato= TPanel.new();
   panelDetalhesCandidato:setLargura(1270);
-  panelDetalhesCandidato:setAltura(300)--645);
+  panelDetalhesCandidato:setAltura(645);
   panelDetalhesCandidato:setPx(5);
   panelDetalhesCandidato:setPy(5);
   panelDetalhesCandidato:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))--{r=200,g=255,b=255,alpha=255})); --{r=153,g=204,b=51,alpha=255}))
@@ -82,26 +83,6 @@ function FrameVisualizarCandidato:buildPainelDetalhes()
   labelCandidato:setPx(0);
   labelCandidato:setPy(0);
   panelDetalhesCandidato:addComponent(labelCandidato,1);
-
-
-
-
---  local labelCod = TLabel.new();
---  labelCod:setTexto("Código:");
---  labelCod:setFonte(font_label);
---
---  local cod = tostring(CenaBuscaCandidatos.candidatoSelecionado:getCod());
---  local fieldCod = TField.new();
---  fieldCod:setFonte(font_data);
---  fieldCod:setTLabel(labelCod);
---  fieldCod:setIsEditable(false);
---  fieldCod:setTexto(cod);
---  fieldCod:setPx(1000);
---  fieldCod:setPy(0);
---  fieldCod:getTLabelTexto():setLargura(300);
---  fieldCod:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
---  panelDetalhesEscola:addComponent(fieldCod,2);
-
 
 
   local labelNome = TLabel.new();
@@ -292,110 +273,125 @@ function FrameVisualizarCandidato:buildPainelDetalhes()
   
   
   
-  local labelNumeroMandatos = TLabel.new();
-  labelNumeroMandatos:setTexto("Número de Mandatos:");
-  labelNumeroMandatos:setFonte(font_label);
+  local labelOcupacao = TLabel.new();
+  labelOcupacao:setTexto("Ocupação:");
+  labelOcupacao:setFonte(font_label);
   
-  local fieldNumeroMandatos = TField.new();
-  fieldNumeroMandatos:setFonte(font_data);
-  fieldNumeroMandatos:setTLabel(labelNumeroMandatos);
-  fieldNumeroMandatos:setIsEditable(false);
-  fieldNumeroMandatos:setLimiteMax(20);
-  fieldNumeroMandatos:setPx(380);
-  fieldNumeroMandatos:setPy(160);
-  fieldNumeroMandatos:getTLabelTexto():setLargura(50);
-  fieldNumeroMandatos:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
+  local fieldOcupacao = TField.new();
+  fieldOcupacao:setFonte(font_data);
+  fieldOcupacao:setTLabel(labelOcupacao);
+  fieldOcupacao:setIsEditable(false);
+  fieldOcupacao:setLimiteMax(20);
+  fieldOcupacao:setPx(380);
+  fieldOcupacao:setPy(160);
+  fieldOcupacao:getTLabelTexto():setLargura(50);
+  fieldOcupacao:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
   
-  panelDetalhesCandidato:addComponent(fieldNumeroMandatos,11);
-  
-  
-  local labelSituacao = TLabel.new();
-  labelSituacao:setTexto("Situação:");
-  labelSituacao:setFonte(font_label);
-  
-  local fieldSituacao = TField.new();
-  fieldSituacao:setFonte(font_data);
-  fieldSituacao:setTLabel(labelSituacao);
-  fieldSituacao:setIsEditable(false);
-  fieldSituacao:setLimiteMax(20);
-  fieldSituacao:setPx(380);
-  fieldSituacao:setPy(200);
-  fieldSituacao:getTLabelTexto():setLargura(110);
-  fieldSituacao:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
-  
-  panelDetalhesCandidato:addComponent(fieldSituacao,12);
+  panelDetalhesCandidato:addComponent(fieldOcupacao,11);
   
   
-  local labelTotalArrecadado = TLabel.new();
-  labelTotalArrecadado:setTexto("Total Arrecadado:");
-  labelTotalArrecadado:setFonte(font_label);
+  local labelReeleicao = TLabel.new();
+  labelReeleicao:setTexto("Cand. Reeleição:");
+  labelReeleicao:setFonte(font_label);
   
-  local totalArrecadado = tostring(CenaBuscaCandidatos.candidatoSelecionado:getTotalArrecadado());
-  local fieldTotalArrecadado = TField.new();
-  fieldTotalArrecadado:setFonte(font_data);
-  fieldTotalArrecadado:setTLabel(labelTotalArrecadado);
-  fieldTotalArrecadado:setIsEditable(false);
-  fieldTotalArrecadado:setTexto(totalArrecadado);
-  fieldTotalArrecadado:setLimiteMax(20);
-  fieldTotalArrecadado:setPx(800);
-  fieldTotalArrecadado:setPy(80);
-  fieldTotalArrecadado:getTLabelTexto():setLargura(210);
-  fieldTotalArrecadado:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
+  local fieldReeleicao = TField.new();
+  fieldReeleicao:setFonte(font_data);
+  fieldReeleicao:setTLabel(labelReeleicao);
+  fieldReeleicao:setIsEditable(false);
+  fieldReeleicao:setLimiteMax(20);
+  fieldReeleicao:setPx(380);
+  fieldReeleicao:setPy(200);
+  fieldReeleicao:getTLabelTexto():setLargura(110);
+  fieldReeleicao:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
   
-  panelDetalhesCandidato:addComponent(fieldTotalArrecadado,13);
+  panelDetalhesCandidato:addComponent(fieldReeleicao,12);
   
   
-  local labelTotalBens = TLabel.new();
-  labelTotalBens:setTexto("Total Bens:");
-  labelTotalBens:setFonte(font_label);
+  local labelTotalBensDeclarados = TLabel.new();
+  labelTotalBensDeclarados:setTexto("Total Bens Declarados:");
+  labelTotalBensDeclarados:setFonte(font_label);
   
-  local totalBens = tostring(CenaBuscaCandidatos.candidatoSelecionado:getTotalBens());
-  local fieldTotalBens = TField.new();
-  fieldTotalBens:setFonte(font_data);
-  fieldTotalBens:setTLabel(labelTotalBens);
-  fieldTotalBens:setIsEditable(false);
-  fieldTotalBens:setLimiteMax(20);
-  fieldTotalBens:setTexto(totalBens);
-  fieldTotalBens:setPx(800);
-  fieldTotalBens:setPy(120);
-  fieldTotalBens:getTLabelTexto():setLargura(200);
-  fieldTotalBens:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
+  local totalBensDeclarados = tostring(CenaBuscaCandidatos.candidatoSelecionado:getTotalBens());
+  local fieldTotalBensDeclarados = TField.new();
+  fieldTotalBensDeclarados:setFonte(font_data);
+  fieldTotalBensDeclarados:setTLabel(labelTotalBensDeclarados);
+  fieldTotalBensDeclarados:setIsEditable(false);
+  fieldTotalBensDeclarados:setTexto(totalBensDeclarados);
+  fieldTotalBensDeclarados:setLimiteMax(20);
+  fieldTotalBensDeclarados:setPx(800);
+  fieldTotalBensDeclarados:setPy(80);
+  fieldTotalBensDeclarados:getTLabelTexto():setLargura(210);
+  fieldTotalBensDeclarados:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
   
-  panelDetalhesCandidato:addComponent(fieldTotalBens,14);
-  
-  
-  local labelAssiduidade = TLabel.new();
-  labelAssiduidade:setTexto("Assiduidade:");
-  labelAssiduidade:setFonte(font_label);
-  
-  local fieldAssiduidade = TField.new();
-  fieldAssiduidade:setFonte(font_data);
-  fieldAssiduidade:setTLabel(labelAssiduidade);
-  fieldAssiduidade:setIsEditable(false);
-  fieldAssiduidade:setLimiteMax(20);
-  fieldAssiduidade:setPx(800);
-  fieldAssiduidade:setPy(160);
-  fieldAssiduidade:getTLabelTexto():setLargura(110);
-  fieldAssiduidade:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
-  
-  panelDetalhesCandidato:addComponent(fieldAssiduidade,15);
+  panelDetalhesCandidato:addComponent(fieldTotalBensDeclarados,13);
   
   
-  local labelNumeroComissoes = TLabel.new();
-  labelNumeroComissoes:setTexto("Nº de comissões:");
-  labelNumeroComissoes:setFonte(font_label);
+  local labelDoacoes = TLabel.new();
+  labelDoacoes:setTexto("Doações:");
+  labelDoacoes:setFonte(font_label);
   
-  local fieldNumeroComissoes = TField.new();
-  fieldNumeroComissoes:setFonte(font_data);
-  fieldNumeroComissoes:setTLabel(labelNumeroComissoes);
-  fieldNumeroComissoes:setIsEditable(false);
-  fieldNumeroComissoes:setLimiteMax(20);
-  fieldNumeroComissoes:setPx(800);
-  fieldNumeroComissoes:setPy(200);
-  fieldNumeroComissoes:getTLabelTexto():setLargura(110);
-  fieldNumeroComissoes:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
+  local doacoes = tostring(CenaBuscaCandidatos.candidatoSelecionado:getTotalArrecadado());
+  local fieldDoacoes = TField.new();
+  fieldDoacoes:setFonte(font_data);
+  fieldDoacoes:setTLabel(labelDoacoes);
+  fieldDoacoes:setIsEditable(false);
+  fieldDoacoes:setLimiteMax(20);
+  fieldDoacoes:setTexto(doacoes);
+  fieldDoacoes:setPx(800);
+  fieldDoacoes:setPy(120);
+  fieldDoacoes:getTLabelTexto():setLargura(200);
+  fieldDoacoes:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
   
-  panelDetalhesCandidato:addComponent(fieldNumeroComissoes,16);
+  panelDetalhesCandidato:addComponent(fieldDoacoes,14);
+  
+  
+  local labelGastos = TLabel.new();
+  labelGastos:setTexto("Total de Gastos:");
+  labelGastos:setFonte(font_label);
+  
+  local fieldGastos = TField.new();
+  fieldGastos:setFonte(font_data);
+  fieldGastos:setTLabel(labelGastos);
+  fieldGastos:setIsEditable(false);
+  fieldGastos:setLimiteMax(20);
+  fieldGastos:setPx(800);
+  fieldGastos:setPy(160);
+  fieldGastos:getTLabelTexto():setLargura(110);
+  fieldGastos:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
+  
+  panelDetalhesCandidato:addComponent(fieldGastos,15);
+  
+  
+  local labelNumeroPropostas = TLabel.new();
+  labelNumeroPropostas:setTexto("Nº de Propostas:");
+  labelNumeroPropostas:setFonte(font_label);
+  
+  local fieldNumeroPropostas = TField.new();
+  fieldNumeroPropostas:setFonte(font_data);
+  fieldNumeroPropostas:setTLabel(labelNumeroPropostas);
+  fieldNumeroPropostas:setIsEditable(false);
+  fieldNumeroPropostas:setLimiteMax(20);
+  fieldNumeroPropostas:setPx(800);
+  fieldNumeroPropostas:setPy(200);
+  fieldNumeroPropostas:getTLabelTexto():setLargura(110);
+  fieldNumeroPropostas:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
+  
+  panelDetalhesCandidato:addComponent(fieldNumeroPropostas,16);
+  
+  
+  local menu = TMenu.new();
+  menu:addAllItens(CenaBuscaCandidatos:getItensMenuDetalhesCandidato(FrameVisualizarCandidato));
+  menu:setOrientacao(TMenu.HORIZONTAL);
+  menu:setTamanhoJanela(3);
+  menu:setIsVisibleSetas(false);
+  menu:setIsItensCentralizados(false);
+  --  menu:setCorFoco(Cor.new({r=255,g=255,b=0,alpha=255}));
+  menu:update();
+
+  menu:setPx((panelDetalhesCandidato:getLargura() - menu:getLargura())/2);
+  menu:setPy(300)
+  
+  panelDetalhesCandidato:addComponent(menu,17);
   
 
   return panelDetalhesCandidato;
@@ -403,65 +399,6 @@ function FrameVisualizarCandidato:buildPainelDetalhes()
 end
 
 
-function FrameVisualizarCandidato:getItensMenuDetalhesCandidato()
-
-  local itensPrimitivos = {
-    {'../media/icone.png'    ,'Gastos por Tipo',''},
-    {'../media/icone.png' , 'Gastos por Empresa', ''},
-    {'../media/icone.png'   ,'Projetos',''},
-    {'../media/icone.png','Comissões',''},
-  };
-
-  local itens = {};
-
-  local font_data= Fonte.new({nome='tiresias', tamanho=32,is_negrito = true});
-  font_data.cor = Cor.new({r=255,g=94,b=94})
-
-
-  for i,v in pairs(itensPrimitivos) do
-    local src = v[1];
-    local nome = v[2];
-    local action = v[3];
-
-    local image = TImage.new();
-    image:setSrcArquivoExterno(src);
-
-    local label = TLabel.new();
-    label:setTexto(nome);
-    label:setFonte(font_data);
-
-    local icone = TIcon.new();
-    icone:setTImage(image);
-    icone:setTLabel(label);
-    icone:setOrientacao(TIcon.TITULO_RIGHT);
-
-    icone.action = function (self,evt)
-      evt.rule_key = action;
-    end
-
-    table.insert(itens,icone);
-
-  end
-
-  return itens;
-
-end
-
-
-
---  local menuDetalhes = TMenu.new();
---  menuDetalhes:addAllItens(FrameVisualizarCandidato:getItensMenuDetalhesCandidato());
---  menuDetalhes:setOrientacao(TMenu.HORIZONTAL);
---  menuDetalhes:setTamanhoJanela(4);
---  menuDetalhes:setIsVisibleSetas(false);
---  menuDetalhes:setIsItensCentralizados(false);
---  menuDetalhes:setCorFoco(Cor.new({r=255,g=255,b=0,alpha=255}));
---  menuDetalhes:update();
---
---  menuDetalhes:setPx(15)
---  menuDetalhes:setPy(400)
---  
---  FrameVisualizarCandidato:addComponent(menuDetalhes,17);
 
 
 --Controla a ação ao pressionar o botão amarelo (voltar) e o botão verde (tela de comparação com os dados estatísticos) 

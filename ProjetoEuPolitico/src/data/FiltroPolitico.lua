@@ -33,8 +33,8 @@ FiltroPolitico.ocupacao = nil;
 FiltroPolitico.ocupacaoAlterado = false;
 
 
-FiltroPolitico.reeleicao = nil;
-FiltroPolitico.reeleicaoAlterado = false;
+--FiltroPolitico.reeleicao = nil;
+--FiltroPolitico.reeleicaoAlterado = false;
 
 FiltroPolitico.totalBensDeclarados = nil;
 FiltroPolitico.totalBensDeclaradosAlterado = false;

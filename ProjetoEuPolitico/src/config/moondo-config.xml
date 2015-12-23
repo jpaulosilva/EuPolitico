@@ -253,6 +253,11 @@
 				<key class="controlKey" key="RED" />
 				<to scene="CenaPrincipal" frame="FramePrincipal" />
 			</navigationCase>
+			
+			<navigationCase>
+				<key class="controlKey" key="YELLOW" />
+				<to scene="CenaBuscaCandidatos" frame="FrameConsultarCandidato" />
+			</navigationCase>
 		</navigationRule>
 		
 		<navigationRule>
@@ -287,14 +292,6 @@
 			</navigationCase>
 		</navigationRule>
 		
-		
-		<navigationRule>
-			<from scene="CenaBusca" frame="FrameVisualizarPolitico" />
-			<navigationCase>
-				<key class="ruleKey" key="acessarTelaInicial" />
-				<to scene="CenaPrincipal" frame="FramePrincipal" />
-			</navigationCase>
-		</navigationRule>
 		
 	</navigations>
 </moondoConfig>

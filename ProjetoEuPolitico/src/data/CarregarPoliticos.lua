@@ -37,9 +37,13 @@ local function extrairPoliticos(str)
         --        print("VALOR PEGO NO FILTRO: "..CenaBusca.filtro:getPartido());
 
 
-        if chave == "partido" and valor == CenaBusca.filtro:getPartido()then
-          politicosSelecionados = politicosSelecionados..'},{'..linhaPolitico
-        end
+--        if chave == "partido" and valor == CenaBusca.filtro:getPartido()then
+--          politicosSelecionados = politicosSelecionados..'},{'..linhaPolitico
+--        end
+
+          if chave == "sexo" and valor == CenaBusca.filtro:getSexo()then
+            politicosSelecionados = politicosSelecionados..'},{'..linhaPolitico
+          end
 
       end
 

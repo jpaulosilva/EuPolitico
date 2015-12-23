@@ -61,9 +61,9 @@ function CenaBusca:inicialize()
     {'../media/regulamentacao.png','Escolaridade',detalhesMultselect=false,detalhes={"Ens. Fundamental","Ens. Médio","Ens. Superior"},mascara={}},
     {'../media/regulamentacao.png','Situação',detalhesMultselect=false,detalhes={"Afastado"},mascara={}},
     {'../media/regulamentacao.png','Nº Mandatos',detalhesMultselect=true,detalhes={"1","2","3","4","5","6","7","8","9","10"},mascara={}},
-    {'../media/regulamentacao.png','Gastos Totais',detalhesMultselect=true,detalhes={"0-50 mil","51-100 mil","101-500 mil","501 mil-1 milhão","Maior que 1 milhão"},mascara={}},
-    {'../media/regulamentacao.png','Gastos por Dia',detalhesMultselect=true,detalhes={"0-1 mil","1 mil-10 mil","11 mil-50 mil"},mascara={}},
-    {'../media/regulamentacao.png','Assiduidade',detalhesMultselect=true,detalhes={"0%-10%","11%-20%","21%-30%","31%-40%","41%-50%","51%-60%","61%-70%","71%-80%","81%-90%","91%-100%"},mascara={}},
+    {'../media/regulamentacao.png','Gastos Totais',detalhesMultselect=true,detalhes={"50 mil","100 mil","500 mil","1 milhão","Maior que 1 milhão"},mascara={}},
+    {'../media/regulamentacao.png','Gastos por Dia',detalhesMultselect=true,detalhes={"1 mil","10 mil","50 mil"},mascara={}},
+    {'../media/regulamentacao.png','Assiduidade',detalhesMultselect=true,detalhes={"10%","20%","30%","40%","50%","60%","70%","80%","90%","100%"},mascara={}},
     {'../media/regulamentacao.png','Nº Comissões',detalhesMultselect=true,detalhes={"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"},mascara={}}
   };
 
@@ -140,7 +140,7 @@ function CenaBusca:getDadosCargos()
 end
 
 
---Seleciona índices do IDEB
+--Seleciona índices do Partido
 function CenaBusca:getDadosPartidos()
   local retorno = {};
   table.insert(retorno," - ");
@@ -341,15 +341,15 @@ function CenaBusca:updateFiltro(frame)
         for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceGastosTotais].mascara) do
           if(opcaoSelecionada)then
             if(indice == 1)then
-             CenaBusca.filtro:setGastoTotal("0-50000");
+             CenaBusca.filtro:setGastoTotal("50000");
             elseif(indice == 2)then
-             CenaBusca.filtro:setGastoTotal("51000-100000");
+             CenaBusca.filtro:setGastoTotal("100000");
             elseif(indice == 3)then
-             CenaBusca.filtro:setGastoTotal("101000-500000");
+             CenaBusca.filtro:setGastoTotal("500000");
             elseif(indice == 4)then
-             CenaBusca.filtro:setGastoTotal("501000-1000000");
+             CenaBusca.filtro:setGastoTotal("1000000");
             elseif(indice == 5)then
-             CenaBusca.filtro:setGastoTotal(">1000000"); 
+             CenaBusca.filtro:setGastoTotal("2000000"); 
             end
             break;
           end
@@ -358,11 +358,11 @@ function CenaBusca:updateFiltro(frame)
         for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceGastosDia].mascara) do
           if(opcaoSelecionada)then
             if(indice == 1)then
-             CenaBusca.filtro:setGastoPorDia("0-1000");
+             CenaBusca.filtro:setGastoPorDia("1000");
             elseif(indice == 2)then
-             CenaBusca.filtro:setGastoPorDia("1000-10000");
+             CenaBusca.filtro:setGastoPorDia("10000");
             elseif(indice == 3)then
-             CenaBusca.filtro:setGastoPorDia("11000-50000");
+             CenaBusca.filtro:setGastoPorDia("50000");
             end
             break;
           end
@@ -371,25 +371,25 @@ function CenaBusca:updateFiltro(frame)
         for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceAssiduidade].mascara) do
           if(opcaoSelecionada)then
             if(indice == 1)then
-             CenaBusca.filtro:setAssiduidade("0-10");
+             CenaBusca.filtro:setAssiduidade("10");
             elseif(indice == 2)then
-             CenaBusca.filtro:setAssiduidade("11-20");
+             CenaBusca.filtro:setAssiduidade("20");
             elseif(indice == 3)then
-             CenaBusca.filtro:setAssiduidade("21-30");
+             CenaBusca.filtro:setAssiduidade("30");
             elseif(indice == 4)then
-             CenaBusca.filtro:setAssiduidade("31-40");
+             CenaBusca.filtro:setAssiduidade("40");
             elseif(indice == 5)then
-             CenaBusca.filtro:setAssiduidade("41-50");
+             CenaBusca.filtro:setAssiduidade("50");
             elseif(indice == 6)then
-             CenaBusca.filtro:setAssiduidade("51-60");
+             CenaBusca.filtro:setAssiduidade("60");
             elseif(indice == 7)then
-             CenaBusca.filtro:setAssiduidade("61-70");
+             CenaBusca.filtro:setAssiduidade("70");
             elseif(indice == 8)then
-             CenaBusca.filtro:setAssiduidade("71-80");
+             CenaBusca.filtro:setAssiduidade("80");
             elseif(indice == 9)then
-             CenaBusca.filtro:setAssiduidade("81-90");
+             CenaBusca.filtro:setAssiduidade("90");
             elseif(indice == 10)then
-             CenaBusca.filtro:setAssiduidade("91-100");    
+             CenaBusca.filtro:setAssiduidade("100");    
             end
             break;
           end

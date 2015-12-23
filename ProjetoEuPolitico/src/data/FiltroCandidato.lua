@@ -1,21 +1,29 @@
 FiltroCandidato = {}
 
-FiltroCandidato.id = nil;
+--Características Simples
+FiltroCandidato.nomeParlamentar = nil;
+FiltroCandidato.nomeParlamentarAlterado = false;
 
 FiltroCandidato.regiao = nil;
 FiltroCandidato.regiaoAlterado = false;
 
-FiltroCandidato.cidade = nil;
-FiltroCandidato.cidadeAlterado = false;
-
 FiltroCandidato.estado = nil;
 FiltroCandidato.estadoAlterado = false;
+
+FiltroCandidato.cidade = nil;
+FiltroCandidato.cidadeAlterado = false;
 
 FiltroCandidato.nomeCargo = nil;
 FiltroCandidato.nomeCargoAlterado = false;
 
-FiltroCandidato.nomeParlamentar = nil;
-FiltroCandidato.nomeParlamentarAlterado = false;
+FiltroCandidato.nomePartido = nil;
+FiltroCandidato.nomePartidoAlterado = false;
+
+
+
+--Características Avançadas
+FiltroCandidato.id = nil;
+FiltroCandidato.idAlterado = false;
 
 FiltroCandidato.nomeCompleto = nil;
 FiltroCandidato.nomeCompletoAlterado = false;
@@ -29,8 +37,10 @@ FiltroCandidato.nomeSitCandidaturaAlterado = false;
 FiltroCandidato.siglaPartido= nil;
 FiltroCandidato.siglaPartidoAlterado = false;
 
-FiltroCandidato.nomePartido = nil;
-FiltroCandidato.nomePartidoAlterado = false;
+
+FiltroCandidato.reeleicao = nil;
+FiltroCandidato.reeleicaoAlterado = false;
+
 
 FiltroCandidato.codLegenda = nil;
 FiltroCandidato.codLegendaAlterado = false;
@@ -73,6 +83,15 @@ FiltroCandidato.cargoParlamentarAtualAlterado = false;
 
 FiltroCandidato.codParlamentarAtual = nil;
 FiltroCandidato.codParlamentarAtualAlterado = false;
+
+FiltroCandidato.totalGastos = nil;
+FiltroCandidato.totalGastosAlterado = false;
+
+FiltroCandidato.numeroPropostas = nil;
+FiltroCandidato.numeroPropostasAlterado = false;
+
+FiltroCandidato.numeroProcessosJustica = nil;
+FiltroCandidato.numeroProcessosJusticaAlterado = false;
 
 
 function FiltroCandidato:new(o)
@@ -153,6 +172,14 @@ end
 function FiltroCandidato:setSiglaPartido(siglaPartido)
   self.siglaPartido = siglaPartido;
   self.siglaPartidoAlterado = true;
+end
+
+function FiltroCandidato:getReeleicao()
+  return self.reeleicao;
+end
+function FiltroCandidato:setReeleicao(reeleicao)
+  self.reeleicao = reeleicao;
+  self.reeleicaoAlterado = true;
 end
 
 function FiltroCandidato:getNomePartido()
@@ -274,6 +301,40 @@ end
 function FiltroCandidato:setCodParlamentarAtual(codParlamentarAtual)
   self.codParlamentarAtual = codParlamentarAtual;
   self.codParlamentarAtualAlterado = true;
+end
+
+function FiltroCandidato:getTotalGastos()
+	return self.totalGastos;
+end
+function FiltroCandidato:setTotalGastos(totalGastos)
+	self.totalGastos = totalGastos;
+	self.totalGastosAlterado = true;
+end
+
+
+function FiltroCandidato:getNumeroPropostas()
+  return self.numeroPropostas;
+end
+function FiltroCandidato:setNumeroPropostas(numeroPropostas)
+  self.numeroPropostas = numeroPropostas;
+  self.numeroPropostasAlterado = true;
+end
+
+
+function FiltroCandidato:getNumeroProcessosJustica()
+  return self.numeroProcessosJustica;
+end
+function FiltroCandidato:setNumeroProcessosJustica(numeroProcessosJustica)
+  self.numeroProcessosJustica = numeroProcessosJustica;
+  self.numeroProcessosJusticaAlterado = true;
+end
+
+
+function FiltroCandidato:limparCaracteristicas()
+
+  self.sexo = nil;
+  self.sexoAlterado = false;
+  
 end
 
 

@@ -83,7 +83,7 @@ function FrameConsultarCandidatoAvancado:action(evt)
   elseif(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoVerde(evt)) then
 
     if(CenaBuscaCandidatos.panelFoco == "painelConsultarCandidato" or CenaBuscaCandidatos.panelFoco == "painelConsultarCandidatoAvancado")then
-      CenaBuscaCandidatos:pesquisarEscolas(FrameConsultarCandidatoAvancado);
+      CenaBuscaCandidatos:pesquisarCandidatos(FrameConsultarCandidatoAvancado);
       
     elseif(CenaBuscaCandidatos.panelFoco == "painelResultados") then
       CenaBuscaCandidatos.indexFocoVisible = 1;
@@ -96,7 +96,7 @@ function FrameConsultarCandidatoAvancado:action(evt)
       FrameConsultarCandidatoAvancado.inicialize();
     end
   elseif(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoAzul(evt)) then
-    FrameConsultarEscola.inicialize();
+    FrameConsultarCandidato.inicialize();
     CenaBuscaCandidatos.panelFoco = "painelConsultarCandidato";
     CenaBuscaCandidatos.indexFocoVisible = 1;
     CenaBuscaCandidatos.indexFoco = 2;
