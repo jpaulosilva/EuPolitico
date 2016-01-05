@@ -39,8 +39,6 @@ function FrameVisualizarPolitico:inicialize()
   FrameVisualizarPolitico:setCorFundo(CenaBusca.cor);
 
 
-  --  FrameVisualizarEscolaComparar:setComponents({});
-
   if (CenaBusca.politicoSelecionado ~= nil and not CenaBusca.isCarregandoDetalhes) then
 
 
@@ -64,9 +62,7 @@ function FrameVisualizarPolitico:inicialize()
 
 end
 
---[[Painel onde são mostrados todos os detalhes referentes à escola selecionada como endereço, situação de funcionamento,
-
-notas de enem e ideb, assim como apresenta sua infraestrutura básica e os tipos de dependência presentes na escola]]--
+--[[Painel onde são mostrados todos os detalhes referentes ao político selecionado]]--
 function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   -- Incluir componentes gráficos
   local panelDetalhesPolitico= TPanel.new();
@@ -174,7 +170,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldCidade:setPx(5);
   fieldCidade:setPy(80);
   fieldCidade:getTLabelTexto():setLargura(110);
-  fieldCidade:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldCidade:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldCidade,6);
 
@@ -193,7 +189,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldUF:setPx(5);
   fieldUF:setPy(120);
   fieldUF:getTLabelTexto():setLargura(110);
-  fieldUF:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldUF:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldUF,7);
 
@@ -212,7 +208,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldCargo:setPx(5);
   fieldCargo:setPy(160);
   fieldCargo:getTLabelTexto():setLargura(210);
-  fieldCargo:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldCargo:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldCargo,8);
 
@@ -231,7 +227,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldDataNascimento:setPx(5);
   fieldDataNascimento:setPy(200);
   fieldDataNascimento:getTLabelTexto():setLargura(110);
-  fieldDataNascimento:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldDataNascimento:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldDataNascimento,9);
 
@@ -250,7 +246,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldSexo:setPx(380);
   fieldSexo:setPy(80);
   fieldSexo:getTLabelTexto():setLargura(110);
-  fieldSexo:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldSexo:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldSexo,10);
 
@@ -267,7 +263,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldEscolaridade:setPx(380);
   fieldEscolaridade:setPy(120);
   fieldEscolaridade:getTLabelTexto():setLargura(110);
-  fieldEscolaridade:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldEscolaridade:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldEscolaridade,11);
 
@@ -285,7 +281,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldNumeroMandatos:setPx(380);
   fieldNumeroMandatos:setPy(160);
   fieldNumeroMandatos:getTLabelTexto():setLargura(50);
-  fieldNumeroMandatos:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldNumeroMandatos:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldNumeroMandatos,12);
 
@@ -302,7 +298,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldSituacao:setPx(380);
   fieldSituacao:setPy(200);
   fieldSituacao:getTLabelTexto():setLargura(110);
-  fieldSituacao:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldSituacao:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldSituacao,13);
 
@@ -321,7 +317,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldGastosTotais:setPx(700);
   fieldGastosTotais:setPy(80);
   fieldGastosTotais:getTLabelTexto():setLargura(210);
-  fieldGastosTotais:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldGastosTotais:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldGastosTotais,14);
 
@@ -340,7 +336,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldGastosDia:setPx(700);
   fieldGastosDia:setPy(120);
   fieldGastosDia:getTLabelTexto():setLargura(200);
-  fieldGastosDia:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldGastosDia:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldGastosDia,15);
 
@@ -357,7 +353,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldAssiduidade:setPx(700);
   fieldAssiduidade:setPy(160);
   fieldAssiduidade:getTLabelTexto():setLargura(110);
-  fieldAssiduidade:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldAssiduidade:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldAssiduidade,16);
 
@@ -374,7 +370,7 @@ function FrameVisualizarPolitico:buildPainelDetalhes(frame)
   fieldNumeroComissoes:setPx(700);
   fieldNumeroComissoes:setPy(200);
   fieldNumeroComissoes:getTLabelTexto():setLargura(110);
-  fieldNumeroComissoes:getTLabelTexto():setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
+  fieldNumeroComissoes:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
 
   panelDetalhesPolitico:addComponent(fieldNumeroComissoes,17);
 
@@ -400,9 +396,7 @@ end
 
 
 
-
-
---Controla a ação ao pressionar o botão amarelo (voltar) e o botão verde (tela de comparação com os dados estatísticos)
+--Controla a ação ao pressionar o botão amarelo (voltar)
 function FrameVisualizarPolitico:action(evt)
   if(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoAmarelo(evt)) then
 
@@ -413,13 +407,6 @@ function FrameVisualizarPolitico:action(evt)
     elseif(CenaBusca.frameCorrente == FrameConsultarPoliticoAvancado)then
       evt.rule_key = "acessarFrameConsultarPoliticoAvancado";
     end
-  elseif(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoVerde(evt)) then
-    CenaBusca.filtroNacional:setTipoLocal("NAC");
-    CenaBusca.filtroRegional:setRegiaoGeografica(CenaBusca.politicoSelecionado:getRegiao());
-    CenaBusca.filtroEstadual:setEstado(CenaBusca.politicoSelecionado:getEstado());
-    CenaBusca.filtroMunicipal:setCidade(CenaBusca.politicoSelecionado:getCodMunicipio());
 
---    CenaBusca:pesquisarVisualizarEscolaComparar();
---    evt.rule_key = "acessarFrameVisualizarEscolaComparar";
   end
 end

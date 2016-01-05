@@ -3,9 +3,10 @@ BibliotecaAuxiliarScript.execute('utils.tcp');
 BibliotecaAuxiliarScript.execute('utils.Webs');
 BibliotecaAuxiliarScript.execute('data.Politico');
 BibliotecaAuxiliarScript.execute('data.FiltroPolitico');
+--[[A busca de políticos está sendo feita apenas na busca avançada, sendo necessário
+setar o cargo e o sexo]]
 
-
--- Função para tratar os dados brutos
+-- Função para tratar os dados brutos com todos os políticos
 local function extrairPoliticos(str)
 
   local politicos = {};
@@ -31,18 +32,22 @@ local function extrairPoliticos(str)
 
         valor = string.match(valor,'"(.*)"') or valor --Elimina aspas
 
-        --        print("CHAVE -> "..chave);
-        --        print("VALOR -> "..valor);
-        --
-        --        print("VALOR PEGO NO FILTRO: "..CenaBusca.filtro:getPartido());
+          --[[Aqui é onde o filtro é aplicado. Apenas um filtro por vez, ou seja,
+          ou um para busca simples, ou um para busca avançada]]
 
-
+          --Busca simples sendo filtrado pelo parâmetro 'partido'
 --        if chave == "partido" and valor == CenaBusca.filtro:getPartido()then
 --          politicosSelecionados = politicosSelecionados..'},{'..linhaPolitico
 --        end
-
+          
+          --Busca avançada sendo filtrado os políticos pelo parâmetro 'sexo'
           if chave == "sexo" and valor == CenaBusca.filtro:getSexo()then
-            politicosSelecionados = politicosSelecionados..'},{'..linhaPolitico
+          
+          --[[A 'linha político' que contiver a chave e valor passados como parâmetro
+          serão concatenadas numa nova string chamada 'políticos selecionados']]
+          
+            politicosSelecionados = politicosSelecionados..'},{'..linhaPolitico 
+            
           end
 
       end
@@ -51,6 +56,9 @@ local function extrairPoliticos(str)
       print("************************************************")
 
     end
+    
+    --[[Aqui é feita a quebra da string 'políticos selecionados' para que seus valores
+    sejam setados na entidade de retorno]]
 
     if politicosSelecionados ~= "" then
 
@@ -123,7 +131,7 @@ end
 
 
 
--- Função que busca os dados politicos da web
+-- Função que busca os dados de politicos da web
 function carregaPoliticosWeb(f_callback,parametros)
 
   local url;
@@ -134,7 +142,8 @@ function carregaPoliticosWeb(f_callback,parametros)
 
   print("***Buscando politicos***")
 
-
+  --[[De acordo com a opção de cargo que estiver na interface a busca é feita por Senador ou Deputado.
+  Aqui vem o resultado bruto com todos os políticos, pois nenhum filtro é passado no corpo da URL]]
   if (CenaBusca.filtro:getCargo() == "Senador") then
     url = 'http://www.meucongressonacional.com/api/001/senador';
   else
@@ -151,6 +160,7 @@ function carregaPoliticosWeb(f_callback,parametros)
 
     print("Endereço encontrado!")
 
+    --Os dados brutos são extraídos e é passado um filtro
     politicos = extrairPoliticos(dados);
 
     if #politicos ~= 0 then
@@ -176,12 +186,12 @@ function carregaPoliticosWeb(f_callback,parametros)
 
 end
 
---Carregar detalhes politicos
+--[[Os detalhes do político são extraídos e setados na entidade de retorno
+para serem mostrados na tela de detalhes]]
 local function extrairDetalhesPolitico(str,politico)
 
   local data = string.match(str,"{(.*)}")
 
-  print("DATA %$%$%$%$%$%$%$ "..data);
 
 
   for campo in data:split(",") do
@@ -226,11 +236,13 @@ local function extrairDetalhesPolitico(str,politico)
 
 end
 
-
+--[[Após um político ser escolhido na tabela de resultados, esta função carrega seus destalhes, sendo passado
+ o seu ID]]
 function carregaDetalhesPolitico(f_callback, politico)
 
   local url;
 
+  --De acordo com a opção que estiver setada na interface a busca por detalhes de senador ou deputado é efetuada
   if (CenaBusca.filtro:getCargo() == "Senador") then
     url = 'http://meucongressonacional.com/api/001/senador/'..politico:getId();
   else

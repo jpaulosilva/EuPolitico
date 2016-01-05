@@ -12,11 +12,13 @@ function ListaPoliticos:new(o)
   return o
 end
 
+--[[Função onde se obtém o resultado da busca]]
 function ListaPoliticos:getPoliticos()
   return self.politicos;
 end
 
-
+--[[Função que é chamada quando se aperta o botão verde na interface
+para a busca de políticos. Aqui se chama o método 'carregaPoliticosWeb' para consumo do Web Service]]
 function ListaPoliticos:pesquisarPoliticos(filtroPolitico)
 
   self.politicos = {};

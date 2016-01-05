@@ -39,7 +39,6 @@ function FrameVisualizarCandidato:inicialize()
   FrameVisualizarCandidato:setPy(0);
   FrameVisualizarCandidato:setCorFundo(CenaBuscaCandidatos.cor);
 
---  FrameVisualizarEscolaComparar:setComponents({});
 
   if (CenaBuscaCandidatos.candidatoSelecionado ~= nil and not CenaBuscaCandidatos.isCarregandoDetalhes) then
 
@@ -64,8 +63,7 @@ function FrameVisualizarCandidato:inicialize()
 
 end
 
---[[Painel onde são mostrados todos os detalhes referentes à escola selecionada como endereço, situação de funcionamento,
-notas de enem e ideb, assim como apresenta sua infraestrutura básica e os tipos de dependência presentes na escola]]--
+--[[Painel onde são mostrados todos os detalhes referentes ao candidato selecionado]]--
 function FrameVisualizarCandidato:buildPainelDetalhes()
   -- Incluir componentes gráficos
   local panelDetalhesCandidato= TPanel.new();
@@ -73,7 +71,7 @@ function FrameVisualizarCandidato:buildPainelDetalhes()
   panelDetalhesCandidato:setAltura(645);
   panelDetalhesCandidato:setPx(5);
   panelDetalhesCandidato:setPy(5);
-  panelDetalhesCandidato:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))--{r=200,g=255,b=255,alpha=255})); --{r=153,g=204,b=51,alpha=255}))
+  panelDetalhesCandidato:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
 
 
 
@@ -277,14 +275,16 @@ function FrameVisualizarCandidato:buildPainelDetalhes()
   labelOcupacao:setTexto("Ocupação:");
   labelOcupacao:setFonte(font_label);
   
+  local ocupacao = tostring(CenaBuscaCandidatos.candidatoSelecionado:getNomeOcupacao());
   local fieldOcupacao = TField.new();
   fieldOcupacao:setFonte(font_data);
   fieldOcupacao:setTLabel(labelOcupacao);
   fieldOcupacao:setIsEditable(false);
   fieldOcupacao:setLimiteMax(20);
+  fieldOcupacao:setTexto(ocupacao);
   fieldOcupacao:setPx(380);
   fieldOcupacao:setPy(160);
-  fieldOcupacao:getTLabelTexto():setLargura(50);
+  fieldOcupacao:getTLabelTexto():setLargura(310);
   fieldOcupacao:getTLabelTexto():setCorFundo(Cor.new({r=255,g=255,b=255,alpha=0}));
   
   panelDetalhesCandidato:addComponent(fieldOcupacao,11);
@@ -378,7 +378,7 @@ function FrameVisualizarCandidato:buildPainelDetalhes()
   
   panelDetalhesCandidato:addComponent(fieldNumeroPropostas,16);
   
-  
+  --Menu na tela de detalhes
   local menu = TMenu.new();
   menu:addAllItens(CenaBuscaCandidatos:getItensMenuDetalhesCandidato(FrameVisualizarCandidato));
   menu:setOrientacao(TMenu.HORIZONTAL);
@@ -401,7 +401,7 @@ end
 
 
 
---Controla a ação ao pressionar o botão amarelo (voltar) e o botão verde (tela de comparação com os dados estatísticos) 
+--Controla a ação ao pressionar o botão amarelo (voltar) 
 function FrameVisualizarCandidato:action(evt)
   if(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoAmarelo(evt)) then
 
@@ -410,13 +410,6 @@ function FrameVisualizarCandidato:action(evt)
     elseif(CenaBuscaCandidatos.frameCorrente == FrameConsultarCandidatoAvancado)then
       evt.rule_key = "acessarFrameConsultarCandidatoAvancado";
     end
-  elseif(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoVerde(evt)) then
-    CenaBuscaCandidatos.filtroNacional:setTipoLocal("NAC");
-    CenaBuscaCandidatos.filtroRegional:setRegiaoGeografica(CenaBuscaCandidatos.candidatoSelecionado:getRegiao());
-    CenaBuscaCandidatos.filtroEstadual:setEstado(CenaBuscaCandidatos.candidatoSelecionado:getEstado());
-    CenaBuscaCandidatos.filtroMunicipal:setCidade(CenaBuscaCandidatos.candidatoSelecionado:getCodMunicipio());
 
-    CenaBuscaCandidatos:pesquisarVisualizarEscolaComparar();
-    evt.rule_key = "acessarFrameVisualizarEscolaComparar";
   end
 end

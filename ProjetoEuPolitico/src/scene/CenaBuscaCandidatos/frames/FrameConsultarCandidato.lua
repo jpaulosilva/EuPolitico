@@ -47,7 +47,7 @@ function FrameConsultarCandidato:inicialize()
 
 end
 
---[[Controla a ação ao pressionar o botão verde (busca de escolas, caso o foco esteja no painel de consulta ou 
+--[[Controla a ação ao pressionar o botão verde (busca de candidatos, caso o foco esteja no painel de consulta ou 
 limpar os resultados da busca, caso o foco esteja no painel de resultados de uma busca) e o botão azul (ir para a busca avançada]]--
 function FrameConsultarCandidato:action(evt)
   if(BibliotecaAuxiliarEvento.isEventoControle(evt) and BibliotecaAuxiliarEvento.isBotaoVerde(evt)) then

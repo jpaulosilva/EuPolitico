@@ -140,7 +140,7 @@ function CenaBusca:getDadosCargos()
 end
 
 
---Seleciona índices do Partido
+--Seleciona o Partido
 function CenaBusca:getDadosPartidos()
   local retorno = {};
   table.insert(retorno," - ");
@@ -228,7 +228,7 @@ function CenaBusca:getItensResultado(itens)
   end
 end
 
-
+--Atualiza o filtro com parâmetros da busca avançada
 function CenaBusca:updateFiltro(frame)
   local indiceFaixaEtaria = 1;
   local indiceSexo = 2;
@@ -439,7 +439,7 @@ end
 
 
 
---Função filtro para pesquisar políticos
+--Função para pesquisar políticos
 function CenaBusca:pesquisarPoliticos(frame)
 
   CenaBusca.isCarregandoPesquisa = true;
@@ -452,8 +452,6 @@ function CenaBusca:pesquisarPoliticos(frame)
       function ()
 
         CenaBusca:updateFiltro(frame);
-
-        --print("OPÇÃO SELECIONADA: ########################### "..CenaBusca.filtro:getSexo());
 
 
         if(CenaBusca.filtro.nomeParlamentar == "")then
@@ -1030,6 +1028,7 @@ function CenaBusca:buildPainelResultados(frame)
   line:setPx((panelResultados:getLargura() - line:getLargura())/2);
   line:setPy(pyComponent);
 
+  --Cabeçalho da tabela de resultados
   line:addComponent(createField("PARTIDO",0,5,100,CenaBusca.font_header,CenaBusca.cor_header,true));
   line:addComponent(createField("CARGO",110,5,230,CenaBusca.font_header,CenaBusca.cor_header,true));
   line:addComponent(createField("NOME",350,5,300,CenaBusca.font_header,CenaBusca.cor_header,true));
@@ -1060,7 +1059,8 @@ function CenaBusca:buildPainelResultados(frame)
       panelResultados:addComponent(menu,2);
     end
   end
-
+  
+  --Label mostrado enquanto a pesquisa é carregada
   if (CenaBusca.isCarregandoPesquisa)then
     panelResultados.components[2] = nil;
     local labelCarregando = TLabel.new();
@@ -1073,7 +1073,7 @@ function CenaBusca:buildPainelResultados(frame)
     panelResultados:addComponent(labelCarregando,11);
   end
 
-
+  --Label é mostrado se nenhum resultado for encontrado
   if (CenaBusca.isNenhumResultado)then
     panelResultados.components[2] = nil;
     local labelNenhumResultado = TLabel.new();
@@ -1090,7 +1090,7 @@ function CenaBusca:buildPainelResultados(frame)
   return panelResultados;
 end
 
---Constrói o painel no qual os dados são inseridos para busca avançada de escolas
+--Constrói o painel no qual os dados são inseridos para busca avançada de políticos
 function CenaBusca:buildPainelConsultarPoliticoAvancado(frame)
   -- Incluir componentes gráficos
   local panel= TPanel.new();
@@ -1098,7 +1098,7 @@ function CenaBusca:buildPainelConsultarPoliticoAvancado(frame)
   panel:setAltura(385);
   panel:setPx(5);
   panel:setPy(5);
-  panel:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));--{r=200,g=255,b=255,alpha=255}));
+  panel:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}));
 
   local menuOpcoes = TMenu.new();
   menuOpcoes:addAllItens(CenaBusca:getItensMenuAvancado(frame));
@@ -1142,18 +1142,8 @@ function CenaBusca:buildPainelConsultarPoliticoAvancado(frame)
 end
 
 
---Formata o dado estatístico em duas casas decimais após a vírgula
-function CenaBusca:getEstatistica(estatistica, isPercentual)
-  if(estatistica ~= nil and isPercentual)then
-    estatistica = string.format("%.2f",tonumber(estatistica) * 100) .. "%";
-  elseif(estatistica ~= nil)then
-    estatistica = string.format("%.2f",tonumber(estatistica));
-  end
-  return estatistica;
-end
 
-
-
+--Tabela 'gasto por tipo' exibida nos detalhes dos políticos
 function CenaBusca:carregarTabelaGastosTipo(frame)
 
   local panelTabelaGastosTipo= TPanel.new();
@@ -1186,7 +1176,7 @@ function CenaBusca:carregarTabelaGastosTipo(frame)
   
 end
 
-
+--Tabela 'gasto por empresa' exibida nos detalhes dos políticos
 function CenaBusca:carregarTabelaGastosEmpresa(frame)
 
   local panelTabelaGastosEmpresa= TPanel.new();
@@ -1219,7 +1209,7 @@ function CenaBusca:carregarTabelaGastosEmpresa(frame)
   
 end
 
-
+--Tabela 'projetos' exibida nos detalhes dos políticos
 function CenaBusca:carregarTabelaProjetos(frame)
 
   local panelTabelaProjetos= TPanel.new();
@@ -1252,7 +1242,7 @@ function CenaBusca:carregarTabelaProjetos(frame)
   
 end
 
-
+--Tabela 'comissões' exibida nos detalhes dos políticos
 function CenaBusca:carregarTabelaComissoes(frame)
 
   local panelTabelaComissoes= TPanel.new();
@@ -1285,7 +1275,7 @@ function CenaBusca:carregarTabelaComissoes(frame)
   
 end
 
-
+--Função para carregar o menu na tela de detalhes
 function CenaBusca:getItensMenuDetalhesPolitico(frame)
 
   local itensPrimitivos = {

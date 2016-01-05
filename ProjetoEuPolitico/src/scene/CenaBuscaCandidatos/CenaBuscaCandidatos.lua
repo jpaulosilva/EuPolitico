@@ -52,7 +52,7 @@ CenaBuscaCandidatos.tabelaEscolhida = nil;
 
 function CenaBuscaCandidatos:inicialize()
 
-   CenaBuscaCandidatos.itensMenuAvancado = {
+  CenaBuscaCandidatos.itensMenuAvancado = {
     {'../media/regulamentacao.png','Faixa Etária',detalhesMultselect=false,detalhes={"18-23","24-30","31-40","41-50","51-60","61-70"},mascara={}},
     {'../media/regulamentacao.png','Sexo',detalhesMultselect=false,detalhes={"Masculino","Feminino"},mascara={}},
     {'../media/regulamentacao.png','Escolaridade',detalhesMultselect=false,detalhes={"Ens. Fundamental","Ens. Médio","Ens. Superior"},mascara={}},
@@ -191,12 +191,12 @@ function CenaBuscaCandidatos:getItensResultado(itens)
       local APP = coroutine.create (
         function ()
           print("Criou corrotina!!!!!!!");
-          
+
           for key, var in pairs(CenaBuscaCandidatos.candidatoSelecionado) do
-          	print(tostring(key).." = "..tostring(var));
-          	
+            print(tostring(key).." = "..tostring(var));
+
           end
-    
+
           local f_callback = function(candidatoModificado)
             CenaBuscaCandidatos.candidatoSelecionado = candidatoModificado;
             FrameVisualizarCandidato:inicialize();
@@ -224,7 +224,7 @@ function CenaBuscaCandidatos:getItensResultado(itens)
   end
 end
 
-
+--Atualiza o filtro com parâmetros da busca avançada
 function CenaBuscaCandidatos:updateFiltro(frame)
   local indiceFaixaEtaria = 1;
   local indiceSexo = 2;
@@ -235,180 +235,175 @@ function CenaBuscaCandidatos:updateFiltro(frame)
   local indiceDoacoes = 7;
   local indiceGastos = 8;
   local indiceNPropostas = 9;
- 
+
 
   CenaBuscaCandidatos.filtro:limparCaracteristicas();
 
-  if(frame.id == FrameConsultarPoliticoAvancado.id)then
+  if(frame.id == FrameConsultarCandidatoAvancado.id)then
 
-        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceFaixaEtaria].mascara) do
-          if(opcaoSelecionada)then
-            if (indice == 1) then
-              CenaBuscaCandidatos.filtro:setFaixaEtaria("18-23");
-            elseif (indice == 2)then
-              CenaBuscaCandidatos.filtro:setFaixaEtaria("24-30");
-            elseif (indice == 3)then
-              CenaBuscaCandidatos.filtro:setFaixaEtaria("31-40");
-            elseif (indice == 4)then
-              CenaBuscaCandidatos.filtro:setFaixaEtaria("41-50");
-            elseif (indice == 5)then
-              CenaBuscaCandidatos.filtro:setFaixaEtaria("51-60");
-            elseif (indice == 6)then
-              CenaBuscaCandidatos.filtro:setFaixaEtaria("61-70");           
-            end
-           
-            break;
-          end
-        end
-    
-    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceSexo].mascara) do
+    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceFaixaEtaria].mascara) do
       if(opcaoSelecionada)then
         if (indice == 1) then
-          if (CenaBuscaCandidatos.filtro:getCargo() == "Senador") then
-            CenaBuscaCandidatos.filtro:setSexo("Masculino");
-          else
-            CenaBuscaCandidatos.filtro:setSexo("M");
-          end
-        end
-        if (indice == 2) then
-          if (CenaBuscaCandidatos.filtro:getCargo() == "Senador") then
-            CenaBuscaCandidatos.filtro:setSexo("Feminino");
-          else
-            CenaBuscaCandidatos.filtro:setSexo("F");
-
-          end
+          CenaBuscaCandidatos.filtro:setFaixaEtaria("18-23");
+        elseif (indice == 2)then
+          CenaBuscaCandidatos.filtro:setFaixaEtaria("24-30");
+        elseif (indice == 3)then
+          CenaBuscaCandidatos.filtro:setFaixaEtaria("31-40");
+        elseif (indice == 4)then
+          CenaBuscaCandidatos.filtro:setFaixaEtaria("41-50");
+        elseif (indice == 5)then
+          CenaBuscaCandidatos.filtro:setFaixaEtaria("51-60");
+        elseif (indice == 6)then
+          CenaBuscaCandidatos.filtro:setFaixaEtaria("61-70");
         end
 
         break;
       end
     end
-    
-        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceEscolaridade].mascara) do
-          if(opcaoSelecionada)then
-            if (indice == 1) then
-              CenaBuscaCandidatos.filtro:setEscolaridade("Ens. Fundamental");
-            elseif (indice == 2)then
-              CenaBuscaCandidatos.filtro:setEscolaridade("Ens. Médio");
-            elseif (indice == 3)then
-              CenaBuscaCandidatos.filtro:setEscolaridade("Ens. Superior");    
-            end
-           
-            break;
-          end
+
+    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceSexo].mascara) do
+      if(opcaoSelecionada)then
+        if (indice == 1) then
+
+          CenaBuscaCandidatos.filtro:setSexo("MASCULINO");
+
+
+        elseif (indice == 2) then
+
+          CenaBuscaCandidatos.filtro:setSexo("FEMININO");
+
         end
-    
-        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceOcupacao].mascara) do
-          if(opcaoSelecionada)then
-            if (indice == 1) then
-              CenaBuscaCandidatos.filtro:setNomeOcupacao("Médico");
-            end
-           
-            break;
-          end
+
+        break;
+      end
+    end
+
+    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceEscolaridade].mascara) do
+      if(opcaoSelecionada)then
+        if (indice == 1) then
+          CenaBuscaCandidatos.filtro:setEscolaridade("Ens. Fundamental");
+        elseif (indice == 2)then
+          CenaBuscaCandidatos.filtro:setEscolaridade("Ens. Médio");
+        elseif (indice == 3)then
+          CenaBuscaCandidatos.filtro:setEscolaridade("Ens. Superior");
         end
-    
-        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceReeleicao].mascara) do
-          if(opcaoSelecionada)then
-            if(indice == 1)then
-             CenaBuscaCandidatos.filtro:setReeleicao("Sim");
-            elseif(indice == 2)then
-             CenaBuscaCandidatos.filtro:setReeleicao("Não");
-          end
-            break;
-          end
+
+        break;
+      end
+    end
+
+    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceOcupacao].mascara) do
+      if(opcaoSelecionada)then
+        if (indice == 1) then
+          CenaBuscaCandidatos.filtro:setNomeOcupacao("Médico");
         end
-    
-        for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceTotalBens].mascara) do
-          if(opcaoSelecionada)then
-            if(indice == 1)then
-             CenaBuscaCandidatos.filtro:setGastoTotal("50000");
-            elseif(indice == 2)then
-             CenaBuscaCandidatos.filtro:setGastoTotal("100000");
-            elseif(indice == 3)then
-             CenaBuscaCandidatos.filtro:setGastoTotal("500000");
-            elseif(indice == 4)then
-             CenaBuscaCandidatos.filtro:setGastoTotal("1000000");
-            elseif(indice == 5)then
-             CenaBuscaCandidatos.filtro:setGastoTotal("2000000"); 
-            end
-            break;
-          end
+
+        break;
+      end
+    end
+
+    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceReeleicao].mascara) do
+      if(opcaoSelecionada)then
+        if(indice == 1)then
+          CenaBuscaCandidatos.filtro:setReeleicao("Sim");
+        elseif(indice == 2)then
+          CenaBuscaCandidatos.filtro:setReeleicao("Não");
         end
-    
-        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceDoacoes].mascara) do
-          if(opcaoSelecionada)then
-            if(indice == 1)then
-             CenaBuscaCandidatos.filtro:setTotalArrecadado("1000");
-            elseif(indice == 2)then
-             CenaBuscaCandidatos.filtro:setTotalArrecadado("10000");
-            elseif(indice == 3)then
-             CenaBuscaCandidatos.filtro:setTotalArrecadado("50000");
-            end
-            break;
-          end
+        break;
+      end
+    end
+
+    for indice,opcaoSelecionada in pairs(CenaBusca.itensMenuAvancado[indiceTotalBens].mascara) do
+      if(opcaoSelecionada)then
+        if(indice == 1)then
+          CenaBuscaCandidatos.filtro:setGastoTotal("50000");
+        elseif(indice == 2)then
+          CenaBuscaCandidatos.filtro:setGastoTotal("100000");
+        elseif(indice == 3)then
+          CenaBuscaCandidatos.filtro:setGastoTotal("500000");
+        elseif(indice == 4)then
+          CenaBuscaCandidatos.filtro:setGastoTotal("1000000");
+        elseif(indice == 5)then
+          CenaBuscaCandidatos.filtro:setGastoTotal("2000000");
         end
-    
-        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceGastos].mascara) do
-          if(opcaoSelecionada)then
-            if(indice == 1)then
-             CenaBuscaCandidatos.filtro:setTotalGastos("50000");
-            elseif(indice == 2)then
-             CenaBuscaCandidatos.filtro:setTotalGastos("100000");
-            elseif(indice == 3)then
-             CenaBuscaCandidatos.filtro:setTotalGastos("150000");
-            elseif(indice == 4)then
-             CenaBuscaCandidatos.filtro:setTotalGastos("200000");
-            elseif(indice == 5)then
-             CenaBuscaCandidatos.filtro:setTotalGastos("250000");
-            elseif(indice == 6)then
-             CenaBuscaCandidatos.filtro:setTotalGastos("500000");
-            elseif(indice == 7)then
-             CenaBuscaCandidatos.filtro:setTotalGastos("1000000");
-            elseif(indice == 8)then
-             CenaBuscaCandidatos.filtro:setTotalGastos("2000000");
-             
-            end
-            break;
-          end
+        break;
+      end
+    end
+
+    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceDoacoes].mascara) do
+      if(opcaoSelecionada)then
+        if(indice == 1)then
+          CenaBuscaCandidatos.filtro:setTotalArrecadado("1000");
+        elseif(indice == 2)then
+          CenaBuscaCandidatos.filtro:setTotalArrecadado("10000");
+        elseif(indice == 3)then
+          CenaBuscaCandidatos.filtro:setTotalArrecadado("50000");
         end
-    
-        for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceNPropostas].mascara) do
-          if(opcaoSelecionada)then
-            if(indice == 1)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("1");
-            elseif(indice == 2)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("2");
-            elseif(indice == 3)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("3");
-            elseif(indice == 4)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("4");
-            elseif(indice == 5)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("5");
-            elseif(indice == 6)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("6");
-            elseif(indice == 7)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("7");
-            elseif(indice == 8)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("8");
-            elseif(indice == 9)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("9");
-            elseif(indice == 10)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("10");
-            elseif(indice == 11)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("11");
-            elseif(indice == 12)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("12");
-            elseif(indice == 13)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("13");
-            elseif(indice == 14)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("14");
-            elseif(indice == 15)then
-             CenaBuscaCandidatos.filtro:setNumeroPropostas("15");
-            end
-            break;
-          end
+        break;
+      end
+    end
+
+    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceGastos].mascara) do
+      if(opcaoSelecionada)then
+        if(indice == 1)then
+          CenaBuscaCandidatos.filtro:setTotalGastos("50000");
+        elseif(indice == 2)then
+          CenaBuscaCandidatos.filtro:setTotalGastos("100000");
+        elseif(indice == 3)then
+          CenaBuscaCandidatos.filtro:setTotalGastos("150000");
+        elseif(indice == 4)then
+          CenaBuscaCandidatos.filtro:setTotalGastos("200000");
+        elseif(indice == 5)then
+          CenaBuscaCandidatos.filtro:setTotalGastos("250000");
+        elseif(indice == 6)then
+          CenaBuscaCandidatos.filtro:setTotalGastos("500000");
+        elseif(indice == 7)then
+          CenaBuscaCandidatos.filtro:setTotalGastos("1000000");
+        elseif(indice == 8)then
+          CenaBuscaCandidatos.filtro:setTotalGastos("2000000");
+
         end
- 
+        break;
+      end
+    end
+
+    for indice,opcaoSelecionada in pairs(CenaBuscaCandidatos.itensMenuAvancado[indiceNPropostas].mascara) do
+      if(opcaoSelecionada)then
+        if(indice == 1)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("1");
+        elseif(indice == 2)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("2");
+        elseif(indice == 3)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("3");
+        elseif(indice == 4)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("4");
+        elseif(indice == 5)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("5");
+        elseif(indice == 6)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("6");
+        elseif(indice == 7)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("7");
+        elseif(indice == 8)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("8");
+        elseif(indice == 9)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("9");
+        elseif(indice == 10)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("10");
+        elseif(indice == 11)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("11");
+        elseif(indice == 12)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("12");
+        elseif(indice == 13)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("13");
+        elseif(indice == 14)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("14");
+        elseif(indice == 15)then
+          CenaBuscaCandidatos.filtro:setNumeroPropostas("15");
+        end
+        break;
+      end
+    end
+
 
   end
 
@@ -416,7 +411,7 @@ end
 
 
 
---Função filtro para pesquisar candidatos
+--Função para pesquisar candidatos
 function CenaBuscaCandidatos:pesquisarCandidatos(frame)
 
   CenaBuscaCandidatos.isCarregandoPesquisa = true;
@@ -427,7 +422,7 @@ function CenaBuscaCandidatos:pesquisarCandidatos(frame)
   local APP = coroutine.create (
 
       function ()
-      
+
         CenaBuscaCandidatos:updateFiltro(frame);
 
 
@@ -991,6 +986,7 @@ function CenaBuscaCandidatos:buildPainelConsultarCandidato(frame)
   return panel;
 end
 
+
 --Função que constrói o painel onde é mostrado o resultado da busca
 function CenaBuscaCandidatos:buildPainelResultados(frame)
   local panelResultados= TPanel.new();
@@ -1013,6 +1009,7 @@ function CenaBuscaCandidatos:buildPainelResultados(frame)
   line:setPx((panelResultados:getLargura() - line:getLargura())/2);
   line:setPy(pyComponent);
 
+  --Cabeçalho da tabela de resultados
   line:addComponent(createField("PARTIDO",0,5,100,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
   line:addComponent(createField("CARGO",110,5,110,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
   line:addComponent(createField("NOME",230,5,400,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
@@ -1125,17 +1122,9 @@ function CenaBuscaCandidatos:buildPainelConsultarCandidatoAvancado(frame)
 end
 
 
---Formata o dado estatístico em duas casas decimais após a vírgula
-function CenaBuscaCandidatos:getEstatistica(estatistica, isPercentual)
-  if(estatistica ~= nil and isPercentual)then
-    estatistica = string.format("%.2f",tonumber(estatistica) * 100) .. "%";
-  elseif(estatistica ~= nil)then
-    estatistica = string.format("%.2f",tonumber(estatistica));
-  end
-  return estatistica;
-end
 
 
+--Função que constrói a tabela 'bens' na tela de detalhes dos candidatos
 function CenaBuscaCandidatos:carregarTabelaBens(frame)
 
   local panelTabelaBens= TPanel.new();
@@ -1144,11 +1133,11 @@ function CenaBuscaCandidatos:carregarTabelaBens(frame)
   panelTabelaBens:setPx(5);
   panelTabelaBens:setPy(410);
   panelTabelaBens:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
-  
-  
+
+
   local pxComponent = 5;
   local pyComponent = 5;
-  
+
   local line = TConteiner.new();
   line:setLargura(1000);
   line:setAltura(40);
@@ -1159,16 +1148,16 @@ function CenaBuscaCandidatos:carregarTabelaBens(frame)
   line:addComponent(createField("TIPO",0,5,400,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
   line:addComponent(createField("DESCRIÇÃO",410,5,300,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
   line:addComponent(createField("VALOR",720,5,275,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
-  
+
   panelTabelaBens:addComponent(line,1);
 
-  
+
   return panelTabelaBens;
-  
-  
+
+
 end
 
-
+--Função que constrói a tabela 'doações recebidas' na tela de detalhes dos candidatos
 function CenaBuscaCandidatos:carregarTabelaDoacoesRecebidas(frame)
 
   local panelTabelaDoacoesRecebidas= TPanel.new();
@@ -1177,11 +1166,11 @@ function CenaBuscaCandidatos:carregarTabelaDoacoesRecebidas(frame)
   panelTabelaDoacoesRecebidas:setPx(5);
   panelTabelaDoacoesRecebidas:setPy(410);
   panelTabelaDoacoesRecebidas:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
-  
-  
+
+
   local pxComponent = 5;
   local pyComponent = 5;
-  
+
   local line = TConteiner.new();
   line:setLargura(1000);
   line:setAltura(40);
@@ -1192,16 +1181,16 @@ function CenaBuscaCandidatos:carregarTabelaDoacoesRecebidas(frame)
   line:addComponent(createField("TIPO",0,5,400,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
   line:addComponent(createField("DESCRIÇÃO",410,5,300,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
   line:addComponent(createField("VALOR",720,5,275,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
-  
+
   panelTabelaDoacoesRecebidas:addComponent(line,1);
 
-  
+
   return panelTabelaDoacoesRecebidas;
-  
-  
+
+
 end
 
-
+--Função que constrói a tabela 'propostas' na tela de detalhes dos candidatos
 function CenaBuscaCandidatos:carregarTabelaPropostas(frame)
 
   local panelTabelaPropostas= TPanel.new();
@@ -1210,11 +1199,11 @@ function CenaBuscaCandidatos:carregarTabelaPropostas(frame)
   panelTabelaPropostas:setPx(5);
   panelTabelaPropostas:setPy(410);
   panelTabelaPropostas:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
-  
-  
+
+
   local pxComponent = 5;
   local pyComponent = 5;
-  
+
   local line = TConteiner.new();
   line:setLargura(715);
   line:setAltura(40);
@@ -1224,50 +1213,19 @@ function CenaBuscaCandidatos:carregarTabelaPropostas(frame)
 
   line:addComponent(createField("TÍTULO",0,5,400,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
   line:addComponent(createField("DESCRIÇÃO",410,5,300,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
---  line:addComponent(createField("",720,5,275,CenaBusca.font_header,CenaBusca.cor_header,true));
-  
+  --  line:addComponent(createField("",720,5,275,CenaBusca.font_header,CenaBusca.cor_header,true));
+
   panelTabelaPropostas:addComponent(line,1);
 
-  
+
   return panelTabelaPropostas;
-  
-  
+
+
 end
 
 
---function CenaBuscaCandidatos:carregarTabelaComissoes(frame)
---
---  local panelTabelaComissoes= TPanel.new();
---  panelTabelaComissoes:setLargura(1270);
---  panelTabelaComissoes:setAltura(240)--645);
---  panelTabelaComissoes:setPx(5);
---  panelTabelaComissoes:setPy(410);
---  panelTabelaComissoes:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=120}))
---  
---  
---  local pxComponent = 5;
---  local pyComponent = 5;
---  
---  local line = TConteiner.new();
---  line:setLargura(715);
---  line:setAltura(40);
---  line:setPx((panelTabelaComissoes:getLargura() - line:getLargura())/2);
---  line:setPy(pyComponent);
---  line:setCorFundo(Cor.new({r=0,g=255,b=0,alpha=255}));
---
---  line:addComponent(createField("COMISSÃO",0,5,400,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
---  line:addComponent(createField("DATA",410,5,300,CenaBuscaCandidatos.font_header,CenaBuscaCandidatos.cor_header,true));
-----  line:addComponent(createField("",720,5,275,CenaBusca.font_header,CenaBusca.cor_header,true));
---  
---  panelTabelaComissoes:addComponent(line,19);
---
---  
---  return panelTabelaComissoes;
---  
---  
---end
 
-
+--Função para carregar o menu na tela de detalhes dos candidatos
 function CenaBuscaCandidatos:getItensMenuDetalhesCandidato(frame)
 
   local itensPrimitivos = {
@@ -1285,7 +1243,7 @@ function CenaBuscaCandidatos:getItensMenuDetalhesCandidato(frame)
   for i,v in pairs(itensPrimitivos) do
     local src = v[1];
     local nome = v[2];
---    CenaBusca.action = v[3];
+    --    CenaBusca.action = v[3];
 
     local image = TImage.new();
     image:setSrcArquivoExterno(src);
@@ -1300,33 +1258,27 @@ function CenaBuscaCandidatos:getItensMenuDetalhesCandidato(frame)
     icone:setOrientacao(TIcon.TITULO_RIGHT);
 
     icone.action = function (self,evt)
-    
+
       if v[3] == 1 then
 
-         CenaBuscaCandidatos.tabelaEscolhida = CenaBuscaCandidatos:carregarTabelaBens();
-         frame.inicialize();
-         
+        CenaBuscaCandidatos.tabelaEscolhida = CenaBuscaCandidatos:carregarTabelaBens();
+        frame.inicialize();
+
       end
       if v[3] == 2 then
-      
+
         CenaBuscaCandidatos.tabelaEscolhida = CenaBuscaCandidatos:carregarTabelaDoacoesRecebidas();
         frame.inicialize();
-        
+
       end
-       if v[3] == 3 then
-      
+      if v[3] == 3 then
+
         CenaBuscaCandidatos.tabelaEscolhida = CenaBuscaCandidatos:carregarTabelaPropostas();
         frame.inicialize();
-        
+
       end
---       if v[3] == 4 then
---      
---        CenaBuscaCandidatos.tabelaEscolhida = CenaBuscaCandidatos:carregarTabelaComissoes();
---        frame.inicialize();
---        
---      end
---      evt.rule_key = action;
-      
+
+
     end
 
     table.insert(itens,icone);
@@ -1336,5 +1288,6 @@ function CenaBuscaCandidatos:getItensMenuDetalhesCandidato(frame)
   return itens;
 
 end
+
 
 

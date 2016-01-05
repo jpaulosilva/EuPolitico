@@ -12,11 +12,13 @@ function ListaCandidatos:new(o)
   return o
 end
 
+--[[Função onde se obtém o resultado da busca]]
 function ListaCandidatos:getCandidatos()
   return self.candidatos;
 end
 
-
+--[[Função que é chamada quando se aperta o botão verde na interface
+para a busca de candidatos. Aqui se chama o método 'carregaCandidatosWeb' para consumo do Web Service]]
 function ListaCandidatos:pesquisarCandidatos(filtroCandidato)
 
   self.candidatos = {};
